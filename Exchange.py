@@ -50,8 +50,6 @@ class TExchange(GeneratedsSuper):
     Avoided product systems are modelled with a negative input from technosphere. WasteToTreatment are modelled like services (hence inputFromTechnosphere). Therefore codes '1' and '3' are not required.
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, number=None, category=None, subCategory=None, localCategory=None, localSubCategory=None, CASNumber=None, name=None, location=None, unit=None, meanValue=None, uncertaintyType=None, standardDeviation95=None, formula=None, referenceToSource=None, pageNumbers=None, generalComment=None, localName=None, infrastructureProcess=None, minValue=None, maxValue=None, mostLikelyValue=None, inputGroup=None, outputGroup=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -109,102 +107,7 @@ class TExchange(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         return TExchange(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_inputGroup(self):
-        return self.inputGroup
-    def set_inputGroup(self, inputGroup):
-        self.inputGroup = inputGroup
-    def get_outputGroup(self):
-        return self.outputGroup
-    def set_outputGroup(self, outputGroup):
-        self.outputGroup = outputGroup
-    def get_number(self):
-        return self.number
-    def set_number(self, number):
-        self.number = number
-    def get_category(self):
-        return self.category
-    def set_category(self, category):
-        self.category = category
-    def get_subCategory(self):
-        return self.subCategory
-    def set_subCategory(self, subCategory):
-        self.subCategory = subCategory
-    def get_localCategory(self):
-        return self.localCategory
-    def set_localCategory(self, localCategory):
-        self.localCategory = localCategory
-    def get_localSubCategory(self):
-        return self.localSubCategory
-    def set_localSubCategory(self, localSubCategory):
-        self.localSubCategory = localSubCategory
-    def get_CASNumber(self):
-        return self.CASNumber
-    def set_CASNumber(self, CASNumber):
-        self.CASNumber = CASNumber
-    def get_name(self):
-        return self.name
-    def set_name(self, name):
-        self.name = name
-    def get_location(self):
-        return self.location
-    def set_location(self, location):
-        self.location = location
-    def get_unit(self):
-        return self.unit
-    def set_unit(self, unit):
-        self.unit = unit
-    def get_meanValue(self):
-        return self.meanValue
-    def set_meanValue(self, meanValue):
-        self.meanValue = meanValue
-    def get_uncertaintyType(self):
-        return self.uncertaintyType
-    def set_uncertaintyType(self, uncertaintyType):
-        self.uncertaintyType = uncertaintyType
-    def get_standardDeviation95(self):
-        return self.standardDeviation95
-    def set_standardDeviation95(self, standardDeviation95):
-        self.standardDeviation95 = standardDeviation95
-    def get_formula(self):
-        return self.formula
-    def set_formula(self, formula):
-        self.formula = formula
-    def get_referenceToSource(self):
-        return self.referenceToSource
-    def set_referenceToSource(self, referenceToSource):
-        self.referenceToSource = referenceToSource
-    def get_pageNumbers(self):
-        return self.pageNumbers
-    def set_pageNumbers(self, pageNumbers):
-        self.pageNumbers = pageNumbers
-    def get_generalComment(self):
-        return self.generalComment
-    def set_generalComment(self, generalComment):
-        self.generalComment = generalComment
-    def get_localName(self):
-        return self.localName
-    def set_localName(self, localName):
-        self.localName = localName
-    def get_infrastructureProcess(self):
-        return self.infrastructureProcess
-    def set_infrastructureProcess(self, infrastructureProcess):
-        self.infrastructureProcess = infrastructureProcess
-    def get_minValue(self):
-        return self.minValue
-    def set_minValue(self, minValue):
-        self.minValue = minValue
-    def get_maxValue(self):
-        return self.maxValue
-    def set_maxValue(self, maxValue):
-        self.maxValue = maxValue
-    def get_mostLikelyValue(self):
-        return self.mostLikelyValue
-    def set_mostLikelyValue(self, mostLikelyValue):
-        self.mostLikelyValue = mostLikelyValue
+    
     def validate_inputGroupType(self, value):
         result = True
         # Validate type inputGroupType, a restriction on xsd:integer.

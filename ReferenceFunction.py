@@ -50,8 +50,6 @@ class TReferenceFunction(GeneratedsSuper):
     Synonyms are a subset of referenceFunction. 0..n entries are allowed with a max. length of 80 each.
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, datasetRelatesToProduct=None, name=None, localName=None, infrastructureProcess=None, amount=None, unit=None, category=None, subCategory=None, localCategory=None, localSubCategory=None, includedProcesses=None, generalComment=None, infrastructureIncluded=True, CASNumber=None, statisticalClassification=None, formula=None, synonym=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -106,84 +104,7 @@ class TReferenceFunction(GeneratedsSuper):
         else:
             return TReferenceFunction(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_synonym(self):
-        return self.synonym
-    def set_synonym(self, synonym):
-        self.synonym = synonym
-    def add_synonym(self, value):
-        self.synonym.append(value)
-    def insert_synonym_at(self, index, value):
-        self.synonym.insert(index, value)
-    def replace_synonym_at(self, index, value):
-        self.synonym[index] = value
-    def get_datasetRelatesToProduct(self):
-        return self.datasetRelatesToProduct
-    def set_datasetRelatesToProduct(self, datasetRelatesToProduct):
-        self.datasetRelatesToProduct = datasetRelatesToProduct
-    def get_name(self):
-        return self.name
-    def set_name(self, name):
-        self.name = name
-    def get_localName(self):
-        return self.localName
-    def set_localName(self, localName):
-        self.localName = localName
-    def get_infrastructureProcess(self):
-        return self.infrastructureProcess
-    def set_infrastructureProcess(self, infrastructureProcess):
-        self.infrastructureProcess = infrastructureProcess
-    def get_amount(self):
-        return self.amount
-    def set_amount(self, amount):
-        self.amount = amount
-    def get_unit(self):
-        return self.unit
-    def set_unit(self, unit):
-        self.unit = unit
-    def get_category(self):
-        return self.category
-    def set_category(self, category):
-        self.category = category
-    def get_subCategory(self):
-        return self.subCategory
-    def set_subCategory(self, subCategory):
-        self.subCategory = subCategory
-    def get_localCategory(self):
-        return self.localCategory
-    def set_localCategory(self, localCategory):
-        self.localCategory = localCategory
-    def get_localSubCategory(self):
-        return self.localSubCategory
-    def set_localSubCategory(self, localSubCategory):
-        self.localSubCategory = localSubCategory
-    def get_includedProcesses(self):
-        return self.includedProcesses
-    def set_includedProcesses(self, includedProcesses):
-        self.includedProcesses = includedProcesses
-    def get_generalComment(self):
-        return self.generalComment
-    def set_generalComment(self, generalComment):
-        self.generalComment = generalComment
-    def get_infrastructureIncluded(self):
-        return self.infrastructureIncluded
-    def set_infrastructureIncluded(self, infrastructureIncluded):
-        self.infrastructureIncluded = infrastructureIncluded
-    def get_CASNumber(self):
-        return self.CASNumber
-    def set_CASNumber(self, CASNumber):
-        self.CASNumber = CASNumber
-    def get_statisticalClassification(self):
-        return self.statisticalClassification
-    def set_statisticalClassification(self, statisticalClassification):
-        self.statisticalClassification = statisticalClassification
-    def get_formula(self):
-        return self.formula
-    def set_formula(self, formula):
-        self.formula = formula
+
     def validate_TString80(self, value):
         result = True
         # Validate type TString80, a restriction on xsd:string.

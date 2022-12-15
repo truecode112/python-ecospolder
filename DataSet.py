@@ -13,8 +13,6 @@ class TDataset(GeneratedsSuper):
     flowData -- contains information about inputs and outputs (to and from nature as well as to and from technosphere) and information about allocation (flows to be allocated, co-products to be allocated to, allocation factors).
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, number=None, internalSchemaVersion=None, generator=None, timestamp=None, validCompanyCodes=None, validRegionalCodes=None, validCategories=None, validUnits=None, metaInformation=None, flowData=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -54,60 +52,7 @@ class TDataset(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         return TDataset(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_metaInformation(self):
-        return self.metaInformation
-    def set_metaInformation(self, metaInformation):
-        self.metaInformation = metaInformation
-    def get_flowData(self):
-        return self.flowData
-    def set_flowData(self, flowData):
-        self.flowData = flowData
-    def add_flowData(self, value):
-        self.flowData.append(value)
-    def insert_flowData_at(self, index, value):
-        self.flowData.insert(index, value)
-    def replace_flowData_at(self, index, value):
-        self.flowData[index] = value
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
-    def get_number(self):
-        return self.number
-    def set_number(self, number):
-        self.number = number
-    def get_internalSchemaVersion(self):
-        return self.internalSchemaVersion
-    def set_internalSchemaVersion(self, internalSchemaVersion):
-        self.internalSchemaVersion = internalSchemaVersion
-    def get_generator(self):
-        return self.generator
-    def set_generator(self, generator):
-        self.generator = generator
-    def get_timestamp(self):
-        return self.timestamp
-    def set_timestamp(self, timestamp):
-        self.timestamp = timestamp
-    def get_validCompanyCodes(self):
-        return self.validCompanyCodes
-    def set_validCompanyCodes(self, validCompanyCodes):
-        self.validCompanyCodes = validCompanyCodes
-    def get_validRegionalCodes(self):
-        return self.validRegionalCodes
-    def set_validRegionalCodes(self, validRegionalCodes):
-        self.validRegionalCodes = validRegionalCodes
-    def get_validCategories(self):
-        return self.validCategories
-    def set_validCategories(self, validCategories):
-        self.validCategories = validCategories
-    def get_validUnits(self):
-        return self.validUnits
-    def set_validUnits(self, validUnits):
-        self.validUnits = validUnits
+    
     def validate_TIndexNumber(self, value):
         # Validate type es:TIndexNumber, a restriction on xsd:int.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:

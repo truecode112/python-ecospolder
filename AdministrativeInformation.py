@@ -17,8 +17,10 @@ class TAdministrativeInformation(GeneratedsSuper):
     
     """
 
-    subclass = None
-    superclass = None
+    ##############################################
+    ### TAdministrativeInformation Constructor ###
+    ##############################################
+
     def __init__(self, dataEntryBy=None, dataGeneratorAndPublication=None, person=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -38,35 +40,23 @@ class TAdministrativeInformation(GeneratedsSuper):
             self.anytypeobjs_ = []
         else:
             self.anytypeobjs_ = anytypeobjs_
+
+    """ Create a new TAdministrativeInformation instance.
+
+        static method
+
+    Args:
+        * *args* (dict): The demand or functional unit. Needs to be a dictionary to indicate amounts, e.g. ``{7: 2.5}``.
+        * *method* (tuple, optional): LCIA Method tuple, e.g. ``("My", "great", "LCIA", "method")``. Can be omitted if only interested in calculating the life cycle inventory.
+    Returns:
+        A new TAdministrativeInformation object
+    """
+
     def factory(*args_, **kwargs_):
         return TAdministrativeInformation(*args_, **kwargs_)
+
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_dataEntryBy(self):
-        return self.dataEntryBy
-    def set_dataEntryBy(self, dataEntryBy):
-        self.dataEntryBy = dataEntryBy
-    def get_dataGeneratorAndPublication(self):
-        return self.dataGeneratorAndPublication
-    def set_dataGeneratorAndPublication(self, dataGeneratorAndPublication):
-        self.dataGeneratorAndPublication = dataGeneratorAndPublication
-    def get_person(self):
-        return self.person
-    def set_person(self, person):
-        self.person = person
-    def add_person(self, value):
-        self.person.append(value)
-    def insert_person_at(self, index, value):
-        self.person.insert(index, value)
-    def replace_person_at(self, index, value):
-        self.person[index] = value
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
+    
     def _hasContent(self):
         if (
             self.dataEntryBy is not None or
@@ -77,6 +67,7 @@ class TAdministrativeInformation(GeneratedsSuper):
             return True
         else:
             return False
+
     def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ', name_='TAdministrativeInformation', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('TAdministrativeInformation')
         if imported_ns_def_ is not None:
@@ -100,8 +91,10 @@ class TAdministrativeInformation(GeneratedsSuper):
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
+
     def _exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='TAdministrativeInformation'):
         pass
+
     def _exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ', name_='TAdministrativeInformation', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -121,6 +114,7 @@ class TAdministrativeInformation(GeneratedsSuper):
                 showIndent(outfile, level, pretty_print)
                 outfile.write(str(obj_))
                 outfile.write('\n')
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -132,8 +126,10 @@ class TAdministrativeInformation(GeneratedsSuper):
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
         return self
+
     def _buildAttributes(self, node, attrs, already_processed):
         pass
+    
     def _buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'dataEntryBy':
             obj_ = TDataEntryBy.factory(parent_object_=self)
@@ -153,4 +149,5 @@ class TAdministrativeInformation(GeneratedsSuper):
         else:
             content_ = self.gds_build_any(child_, 'TAdministrativeInformation')
             self.anytypeobjs_.append(content_)
+
 # end class TAdministrativeInformation    

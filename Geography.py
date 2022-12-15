@@ -16,8 +16,6 @@ class TGeography(GeneratedsSuper):
     Extrapolations should be reported under 'representativeness'.
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, location=None, text=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -31,18 +29,7 @@ class TGeography(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         return TGeography(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_location(self):
-        return self.location
-    def set_location(self, location):
-        self.location = location
-    def get_text(self):
-        return self.text
-    def set_text(self, text):
-        self.text = text
+    
     def validate_TRegionalCode(self, value):
         # Validate type TRegionalCode, a restriction on xsd:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:

@@ -16,8 +16,6 @@ class TModellingAndValidation(GeneratedsSuper):
     
     """
 
-    subclass = None
-    superclass = None
     def __init__(self, representativeness=None, source=None, validation=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -48,32 +46,7 @@ class TModellingAndValidation(GeneratedsSuper):
         else:
             return TModellingAndValidation(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_representativeness(self):
-        return self.representativeness
-    def set_representativeness(self, representativeness):
-        self.representativeness = representativeness
-    def get_source(self):
-        return self.source
-    def set_source(self, source):
-        self.source = source
-    def add_source(self, value):
-        self.source.append(value)
-    def insert_source_at(self, index, value):
-        self.source.insert(index, value)
-    def replace_source_at(self, index, value):
-        self.source[index] = value
-    def get_validation(self):
-        return self.validation
-    def set_validation(self, validation):
-        self.validation = validation
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
+    
     def _hasContent(self):
         if (
             self.representativeness is not None or

@@ -25,8 +25,6 @@ class TPerson(GeneratedsSuper):
     Identifying the co-operation partner together with the companyCode (#5807).
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, number=None, name=None, address=None, telephone=None, telefax=None, email=None, companyCode=None, countryCode=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -60,42 +58,7 @@ class TPerson(GeneratedsSuper):
         else:
             return TPerson(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_number(self):
-        return self.number
-    def set_number(self, number):
-        self.number = number
-    def get_name(self):
-        return self.name
-    def set_name(self, name):
-        self.name = name
-    def get_address(self):
-        return self.address
-    def set_address(self, address):
-        self.address = address
-    def get_telephone(self):
-        return self.telephone
-    def set_telephone(self, telephone):
-        self.telephone = telephone
-    def get_telefax(self):
-        return self.telefax
-    def set_telefax(self, telefax):
-        self.telefax = telefax
-    def get_email(self):
-        return self.email
-    def set_email(self, email):
-        self.email = email
-    def get_companyCode(self):
-        return self.companyCode
-    def set_companyCode(self, companyCode):
-        self.companyCode = companyCode
-    def get_countryCode(self):
-        return self.countryCode
-    def set_countryCode(self, countryCode):
-        self.countryCode = countryCode
+
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:

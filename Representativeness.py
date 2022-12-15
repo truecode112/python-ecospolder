@@ -20,8 +20,6 @@ class TRepresentativeness(GeneratedsSuper):
     uncertaintyAdjustments -- For datasets where the additional uncertainty from lacking representativeness has been included in the quantified uncertainty values ('minValue' and 'maxValue'), thus raising the value in 'percent' of the dataset to 100%, this field also reports the original representativeness, the additional uncertainty and the procedure by which it was assessed or calculated.
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, percent=None, productionVolume=None, samplingProcedure=None, extrapolations=None, uncertaintyAdjustments=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -49,30 +47,7 @@ class TRepresentativeness(GeneratedsSuper):
         else:
             return TRepresentativeness(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_percent(self):
-        return self.percent
-    def set_percent(self, percent):
-        self.percent = percent
-    def get_productionVolume(self):
-        return self.productionVolume
-    def set_productionVolume(self, productionVolume):
-        self.productionVolume = productionVolume
-    def get_samplingProcedure(self):
-        return self.samplingProcedure
-    def set_samplingProcedure(self, samplingProcedure):
-        self.samplingProcedure = samplingProcedure
-    def get_extrapolations(self):
-        return self.extrapolations
-    def set_extrapolations(self, extrapolations):
-        self.extrapolations = extrapolations
-    def get_uncertaintyAdjustments(self):
-        return self.uncertaintyAdjustments
-    def set_uncertaintyAdjustments(self, uncertaintyAdjustments):
-        self.uncertaintyAdjustments = uncertaintyAdjustments
+
     def validate_percentType(self, value):
         # Validate type percentType, a restriction on TPercent.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:

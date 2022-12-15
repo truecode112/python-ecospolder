@@ -12,8 +12,6 @@ class TValidation(GeneratedsSuper):
     otherDetails -- Contains further information from the review process, especially comments received from third parties once the dataset has been published.
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, proofReadingDetails=None, proofReadingValidator=None, otherDetails=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -37,22 +35,7 @@ class TValidation(GeneratedsSuper):
         else:
             return TValidation(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_proofReadingDetails(self):
-        return self.proofReadingDetails
-    def set_proofReadingDetails(self, proofReadingDetails):
-        self.proofReadingDetails = proofReadingDetails
-    def get_proofReadingValidator(self):
-        return self.proofReadingValidator
-    def set_proofReadingValidator(self, proofReadingValidator):
-        self.proofReadingValidator = proofReadingValidator
-    def get_otherDetails(self):
-        return self.otherDetails
-    def set_otherDetails(self, otherDetails):
-        self.otherDetails = otherDetails
+
     def validate_TString32000(self, value):
         # Validate type TString32000, a restriction on xsd:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:

@@ -11,8 +11,6 @@ class TDataEntryBy(GeneratedsSuper):
     qualityNetwork -- Indicates a project team that works on the database. The information is used, e.g., for restricting the accessibility of dataset information to one particular quality network. The code used is: 1=ecoinvent
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, person=None, qualityNetwork=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -28,18 +26,7 @@ class TDataEntryBy(GeneratedsSuper):
         return TDataEntryBy(*args_, **kwargs_)
 
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_person(self):
-        return self.person
-    def set_person(self, person):
-        self.person = person
-    def get_qualityNetwork(self):
-        return self.qualityNetwork
-    def set_qualityNetwork(self, qualityNetwork):
-        self.qualityNetwork = qualityNetwork
+    
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:

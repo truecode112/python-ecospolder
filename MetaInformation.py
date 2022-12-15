@@ -15,8 +15,6 @@ class TMetaInformation(GeneratedsSuper):
     administrativeInformation -- Contains the administrative information about the dataset at issue: type of dataset (unit process, elementary flow, impact category, multi-output process) timestamp, version and internalVersion number as well as language and localLanguage code.
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, processInformation=None, modellingAndValidation=None, administrativeInformation=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -36,26 +34,7 @@ class TMetaInformation(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         return TMetaInformation(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_processInformation(self):
-        return self.processInformation
-    def set_processInformation(self, processInformation):
-        self.processInformation = processInformation
-    def get_modellingAndValidation(self):
-        return self.modellingAndValidation
-    def set_modellingAndValidation(self, modellingAndValidation):
-        self.modellingAndValidation = modellingAndValidation
-    def get_administrativeInformation(self):
-        return self.administrativeInformation
-    def set_administrativeInformation(self, administrativeInformation):
-        self.administrativeInformation = administrativeInformation
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
+    
     def _hasContent(self):
         if (
             self.processInformation is not None or

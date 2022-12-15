@@ -26,8 +26,6 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
     pageNumbers -- Indicates the page numbers in the publication where the table with the unit process raw data, and the characterisation, damage or weighting factors of the impact category, respectively are documented.
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, person=None, dataPublishedIn='0', referenceToPublishedSource=None, copyright=None, accessRestrictedTo=None, companyCode=None, countryCode=None, pageNumbers=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -55,42 +53,7 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
         return TDataGeneratorAndPublication(*args_, **kwargs_)
         
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_person(self):
-        return self.person
-    def set_person(self, person):
-        self.person = person
-    def get_dataPublishedIn(self):
-        return self.dataPublishedIn
-    def set_dataPublishedIn(self, dataPublishedIn):
-        self.dataPublishedIn = dataPublishedIn
-    def get_referenceToPublishedSource(self):
-        return self.referenceToPublishedSource
-    def set_referenceToPublishedSource(self, referenceToPublishedSource):
-        self.referenceToPublishedSource = referenceToPublishedSource
-    def get_copyright(self):
-        return self.copyright
-    def set_copyright(self, copyright):
-        self.copyright = copyright
-    def get_accessRestrictedTo(self):
-        return self.accessRestrictedTo
-    def set_accessRestrictedTo(self, accessRestrictedTo):
-        self.accessRestrictedTo = accessRestrictedTo
-    def get_companyCode(self):
-        return self.companyCode
-    def set_companyCode(self, companyCode):
-        self.companyCode = companyCode
-    def get_countryCode(self):
-        return self.countryCode
-    def set_countryCode(self, countryCode):
-        self.countryCode = countryCode
-    def get_pageNumbers(self):
-        return self.pageNumbers
-    def set_pageNumbers(self, pageNumbers):
-        self.pageNumbers = pageNumbers
+    
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:

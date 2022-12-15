@@ -13,8 +13,6 @@ class TFlowData(GeneratedsSuper):
     allocation -- comprises all referenceToInputOutput.
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, exchange=None, allocation=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -38,34 +36,7 @@ class TFlowData(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         return TFlowData(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_exchange(self):
-        return self.exchange
-    def set_exchange(self, exchange):
-        self.exchange = exchange
-    def add_exchange(self, value):
-        self.exchange.append(value)
-    def insert_exchange_at(self, index, value):
-        self.exchange.insert(index, value)
-    def replace_exchange_at(self, index, value):
-        self.exchange[index] = value
-    def get_allocation(self):
-        return self.allocation
-    def set_allocation(self, allocation):
-        self.allocation = allocation
-    def add_allocation(self, value):
-        self.allocation.append(value)
-    def insert_allocation_at(self, index, value):
-        self.allocation.insert(index, value)
-    def replace_allocation_at(self, index, value):
-        self.allocation[index] = value
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
+    
     def _hasContent(self):
         if (
             self.exchange or

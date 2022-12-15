@@ -21,8 +21,6 @@ class TAllocation(GeneratedsSuper):
     MultipleOccurrence=Yes on two levels: Firstly, the reference occurs per co-product and secondly, the reference occurs per input and output flows which are allocated to the co-products.
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, referenceToCoProduct=None, allocationMethod='-1', fraction=None, explanations=None, referenceToInputOutput=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -42,39 +40,11 @@ class TAllocation(GeneratedsSuper):
         else:
             self.referenceToInputOutput = referenceToInputOutput
         self.referenceToInputOutput_nsprefix_ = None
+
     def factory(*args_, **kwargs_):
         return TAllocation(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_referenceToInputOutput(self):
-        return self.referenceToInputOutput
-    def set_referenceToInputOutput(self, referenceToInputOutput):
-        self.referenceToInputOutput = referenceToInputOutput
-    def add_referenceToInputOutput(self, value):
-        self.referenceToInputOutput.append(value)
-    def insert_referenceToInputOutput_at(self, index, value):
-        self.referenceToInputOutput.insert(index, value)
-    def replace_referenceToInputOutput_at(self, index, value):
-        self.referenceToInputOutput[index] = value
-    def get_referenceToCoProduct(self):
-        return self.referenceToCoProduct
-    def set_referenceToCoProduct(self, referenceToCoProduct):
-        self.referenceToCoProduct = referenceToCoProduct
-    def get_allocationMethod(self):
-        return self.allocationMethod
-    def set_allocationMethod(self, allocationMethod):
-        self.allocationMethod = allocationMethod
-    def get_fraction(self):
-        return self.fraction
-    def set_fraction(self, fraction):
-        self.fraction = fraction
-    def get_explanations(self):
-        return self.explanations
-    def set_explanations(self, explanations):
-        self.explanations = explanations
+    
     def validate_TIndexNumber(self, value):
         result = True
         # Validate type TIndexNumber, a restriction on xsd:int.
@@ -88,6 +58,7 @@ class TAllocation(GeneratedsSuper):
                 self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on TIndexNumber' % {"value": value, "lineno": lineno} )
                 result = False
         return result
+
     def validate_allocationMethodType(self, value):
         # Validate type allocationMethodType, a restriction on xsd:integer.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:

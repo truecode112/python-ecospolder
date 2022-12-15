@@ -25,8 +25,6 @@ class TDataSetInformation(GeneratedsSuper):
     localLanguageCode -- 2 letter ISO language codes are used. Default localLanguage is German. Lower case letters are used.
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, type_=None, impactAssessmentResult=None, timestamp=None, version=None, internalVersion=None, energyValues=None, languageCode='en', localLanguageCode='de', gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -55,42 +53,7 @@ class TDataSetInformation(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         return TDataSetInformation(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_type(self):
-        return self.type_
-    def set_type(self, type_):
-        self.type_ = type_
-    def get_impactAssessmentResult(self):
-        return self.impactAssessmentResult
-    def set_impactAssessmentResult(self, impactAssessmentResult):
-        self.impactAssessmentResult = impactAssessmentResult
-    def get_timestamp(self):
-        return self.timestamp
-    def set_timestamp(self, timestamp):
-        self.timestamp = timestamp
-    def get_version(self):
-        return self.version
-    def set_version(self, version):
-        self.version = version
-    def get_internalVersion(self):
-        return self.internalVersion
-    def set_internalVersion(self, internalVersion):
-        self.internalVersion = internalVersion
-    def get_energyValues(self):
-        return self.energyValues
-    def set_energyValues(self, energyValues):
-        self.energyValues = energyValues
-    def get_languageCode(self):
-        return self.languageCode
-    def set_languageCode(self, languageCode):
-        self.languageCode = languageCode
-    def get_localLanguageCode(self):
-        return self.localLanguageCode
-    def set_localLanguageCode(self, localLanguageCode):
-        self.localLanguageCode = localLanguageCode
+    
     def validate_typeType(self, value):
         # Validate type typeType, a restriction on xsd:integer.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:

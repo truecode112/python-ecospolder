@@ -15,8 +15,6 @@ class TProcessInformation(GeneratedsSuper):
     dataSetInformation -- Contains administrative information about the dataset (version number, language and localLanguage used).
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, referenceFunction=None, geography=None, technology=None, timePeriod=None, dataSetInformation=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -48,34 +46,7 @@ class TProcessInformation(GeneratedsSuper):
         else:
             return TProcessInformation(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_referenceFunction(self):
-        return self.referenceFunction
-    def set_referenceFunction(self, referenceFunction):
-        self.referenceFunction = referenceFunction
-    def get_geography(self):
-        return self.geography
-    def set_geography(self, geography):
-        self.geography = geography
-    def get_technology(self):
-        return self.technology
-    def set_technology(self, technology):
-        self.technology = technology
-    def get_timePeriod(self):
-        return self.timePeriod
-    def set_timePeriod(self, timePeriod):
-        self.timePeriod = timePeriod
-    def get_dataSetInformation(self):
-        return self.dataSetInformation
-    def set_dataSetInformation(self, dataSetInformation):
-        self.dataSetInformation = dataSetInformation
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
+
     def _hasContent(self):
         if (
             self.referenceFunction is not None or

@@ -4,6 +4,7 @@ import re as re_
 import sys
 from lxml import etree as etree_
 import os
+import base64
 
 try:
     ModulenotfoundExp_ = ModuleNotFoundError

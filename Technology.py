@@ -13,8 +13,6 @@ class TTechnology(GeneratedsSuper):
     It should be stated if data for certain elementary flows or intermediate product flows are derived from different technology.
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, text=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -34,14 +32,7 @@ class TTechnology(GeneratedsSuper):
         else:
             return TTechnology(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_text(self):
-        return self.text
-    def set_text(self, text):
-        self.text = text
+
     def validate_TString32000(self, value):
         # Validate type TString32000, a restriction on xsd:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:

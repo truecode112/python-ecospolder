@@ -37,8 +37,6 @@ class TSource(GeneratedsSuper):
     text -- Free text for additional description of the source. It may contain a brief summary of the publication and the kind of medium used (e.g. CD-ROM, hard copy)
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, number=None, sourceType='0', firstAuthor=None, additionalAuthors=None, year=None, title=None, pageNumbers=None, nameOfEditors=None, titleOfAnthology=None, placeOfPublications=None, publisher=None, journal=None, volumeNo=None, issueNo=None, text=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -86,70 +84,7 @@ class TSource(GeneratedsSuper):
         else:
             return TSource(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_number(self):
-        return self.number
-    def set_number(self, number):
-        self.number = number
-    def get_sourceType(self):
-        return self.sourceType
-    def set_sourceType(self, sourceType):
-        self.sourceType = sourceType
-    def get_firstAuthor(self):
-        return self.firstAuthor
-    def set_firstAuthor(self, firstAuthor):
-        self.firstAuthor = firstAuthor
-    def get_additionalAuthors(self):
-        return self.additionalAuthors
-    def set_additionalAuthors(self, additionalAuthors):
-        self.additionalAuthors = additionalAuthors
-    def get_year(self):
-        return self.year
-    def set_year(self, year):
-        self.year = year
-    def get_title(self):
-        return self.title
-    def set_title(self, title):
-        self.title = title
-    def get_pageNumbers(self):
-        return self.pageNumbers
-    def set_pageNumbers(self, pageNumbers):
-        self.pageNumbers = pageNumbers
-    def get_nameOfEditors(self):
-        return self.nameOfEditors
-    def set_nameOfEditors(self, nameOfEditors):
-        self.nameOfEditors = nameOfEditors
-    def get_titleOfAnthology(self):
-        return self.titleOfAnthology
-    def set_titleOfAnthology(self, titleOfAnthology):
-        self.titleOfAnthology = titleOfAnthology
-    def get_placeOfPublications(self):
-        return self.placeOfPublications
-    def set_placeOfPublications(self, placeOfPublications):
-        self.placeOfPublications = placeOfPublications
-    def get_publisher(self):
-        return self.publisher
-    def set_publisher(self, publisher):
-        self.publisher = publisher
-    def get_journal(self):
-        return self.journal
-    def set_journal(self, journal):
-        self.journal = journal
-    def get_volumeNo(self):
-        return self.volumeNo
-    def set_volumeNo(self, volumeNo):
-        self.volumeNo = volumeNo
-    def get_issueNo(self):
-        return self.issueNo
-    def set_issueNo(self, issueNo):
-        self.issueNo = issueNo
-    def get_text(self):
-        return self.text
-    def set_text(self, text):
-        self.text = text
+
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:

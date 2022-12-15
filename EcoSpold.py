@@ -11,8 +11,6 @@ class TEcoSpold(GeneratedsSuper):
     dataset -- a dataset describes LCI related information of a unit process or a terminated system comprising metaInformation (description of the process) and flowData (quantified inputs and outputs and allocation factors, if any).
     
     """
-    subclass = None
-    superclass = None
     def __init__(self, validationId=None, validationStatus=None, dataset=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -35,32 +33,7 @@ class TEcoSpold(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         return TEcoSpold(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_dataset(self):
-        return self.dataset
-    def set_dataset(self, dataset):
-        self.dataset = dataset
-    def add_dataset(self, value):
-        self.dataset.append(value)
-    def insert_dataset_at(self, index, value):
-        self.dataset.insert(index, value)
-    def replace_dataset_at(self, index, value):
-        self.dataset[index] = value
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
-    def get_validationId(self):
-        return self.validationId
-    def set_validationId(self, validationId):
-        self.validationId = validationId
-    def get_validationStatus(self):
-        return self.validationStatus
-    def set_validationStatus(self, validationStatus):
-        self.validationStatus = validationStatus
+    
     def _hasContent(self):
         if (
             self.dataset or

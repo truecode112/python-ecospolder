@@ -69,42 +69,7 @@ class TTimePeriod(GeneratedsSuper):
         else:
             return TTimePeriod(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_startYear(self):
-        return self.startYear
-    def set_startYear(self, startYear):
-        self.startYear = startYear
-    def get_startYearMonth(self):
-        return self.startYearMonth
-    def set_startYearMonth(self, startYearMonth):
-        self.startYearMonth = startYearMonth
-    def get_startDate(self):
-        return self.startDate
-    def set_startDate(self, startDate):
-        self.startDate = startDate
-    def get_endYear(self):
-        return self.endYear
-    def set_endYear(self, endYear):
-        self.endYear = endYear
-    def get_endYearMonth(self):
-        return self.endYearMonth
-    def set_endYearMonth(self, endYearMonth):
-        self.endYearMonth = endYearMonth
-    def get_endDate(self):
-        return self.endDate
-    def set_endDate(self, endDate):
-        self.endDate = endDate
-    def get_dataValidForEntirePeriod(self):
-        return self.dataValidForEntirePeriod
-    def set_dataValidForEntirePeriod(self, dataValidForEntirePeriod):
-        self.dataValidForEntirePeriod = dataValidForEntirePeriod
-    def get_text(self):
-        return self.text
-    def set_text(self, text):
-        self.text = text
+
     def validate_TString32000(self, value):
         # Validate type TString32000, a restriction on xsd:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
