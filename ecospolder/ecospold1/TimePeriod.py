@@ -1,11 +1,12 @@
-
 from EcoSpold01Base import *
+
 
 def _cast(typ, value):
     if typ is None or value is None:
         return value
     return typ(value)
-    
+
+
 class TTimePeriod(GeneratedsSuper):
     """TTimePeriod -- Contains all possible date-formats applicable to describe start and end date of the time period for which the dataset is valid.
     dataValidForEntirePeriod -- Indicates whether or not the process data (elementary and intermediate product flows reported under flow data) are valid for the entire time period stated. If not, explanations may be given under 'text'.
@@ -24,15 +25,29 @@ class TTimePeriod(GeneratedsSuper):
     endYearMonth -- End date of the time period for which the dataset is valid, entered as year and month.
     endDate -- End date of the time period for which the dataset is valid, presented as a complete date (year-month-day).
     EndDate may as well be entered as year (0000) or year-month (0000-00) only. 2000 and 2000-12 means: until 31.12.2000.
-    
+
     """
+
     subclass = None
     superclass = None
-    def __init__(self, dataValidForEntirePeriod=None, text=None, startYear=None, startYearMonth=None, startDate=None, endYear=None, endYearMonth=None, endDate=None, gds_collector_=None, **kwargs_):
+
+    def __init__(
+        self,
+        dataValidForEntirePeriod=None,
+        text=None,
+        startYear=None,
+        startYearMonth=None,
+        startDate=None,
+        endYear=None,
+        endYearMonth=None,
+        endDate=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
+        self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         self.dataValidForEntirePeriod = _cast(bool, dataValidForEntirePeriod)
         self.dataValidForEntirePeriod_nsprefix_ = None
@@ -43,7 +58,7 @@ class TTimePeriod(GeneratedsSuper):
         self.startYearMonth = startYearMonth
         self.startYearMonth_nsprefix_ = None
         if isinstance(startDate, BaseStrType_):
-            initvalue_ = datetime_.datetime.strptime(startDate, '%Y-%m-%d').date()
+            initvalue_ = datetime_.datetime.strptime(startDate, "%Y-%m-%d").date()
         else:
             initvalue_ = startDate
         self.startDate = initvalue_
@@ -53,105 +68,269 @@ class TTimePeriod(GeneratedsSuper):
         self.endYearMonth = endYearMonth
         self.endYearMonth_nsprefix_ = None
         if isinstance(endDate, BaseStrType_):
-            initvalue_ = datetime_.datetime.strptime(endDate, '%Y-%m-%d').date()
+            initvalue_ = datetime_.datetime.strptime(endDate, "%Y-%m-%d").date()
         else:
             initvalue_ = endDate
         self.endDate = initvalue_
         self.endDate_nsprefix_ = None
+
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, TTimePeriod)
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, TTimePeriod)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
         if TTimePeriod.subclass:
             return TTimePeriod.subclass(*args_, **kwargs_)
         else:
             return TTimePeriod(*args_, **kwargs_)
+
     factory = staticmethod(factory)
 
     def validate_TString32000(self, value):
         # Validate type TString32000, a restriction on xsd:string.
-        if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
             if not isinstance(value, str):
                 lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s is not of the correct base simple type (str)' % {"value": value, "lineno": lineno, })
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
                 return False
             if len(value) > 32000:
                 lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString32000' % {"value" : encode_str_2_3(value), "lineno": lineno} )
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString32000'
+                    % {"value": encode_str_2_3(value), "lineno": lineno}
+                )
                 result = False
+
     def _hasContent(self):
         if (
-            self.startYear is not None or
-            self.startYearMonth is not None or
-            self.startDate is not None or
-            self.endYear is not None or
-            self.endYearMonth is not None or
-            self.endDate is not None
+            self.startYear is not None
+            or self.startYearMonth is not None
+            or self.startDate is not None
+            or self.endYear is not None
+            or self.endYearMonth is not None
+            or self.endDate is not None
         ):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ', name_='TTimePeriod', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('TTimePeriod')
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name_="TTimePeriod",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TTimePeriod")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
-            eol_ = '\n'
+            eol_ = "\n"
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'TTimePeriod':
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "TTimePeriod":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
+            namespaceprefix_ = self.ns_prefix_ + ":"
         showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
         already_processed = set()
-        self._exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='TTimePeriod')
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="TTimePeriod"
+        )
         if self._hasContent():
-            outfile.write('>%s' % (eol_, ))
-            self._exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='TTimePeriod', pretty_print=pretty_print)
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="TTimePeriod",
+                pretty_print=pretty_print,
+            )
             showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
-            outfile.write('/>%s' % (eol_, ))
-    def _exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='TTimePeriod'):
-        if self.dataValidForEntirePeriod is not None and 'dataValidForEntirePeriod' not in already_processed:
-            already_processed.add('dataValidForEntirePeriod')
-            outfile.write(' dataValidForEntirePeriod="%s"' % self.gds_format_boolean(self.dataValidForEntirePeriod, input_name='dataValidForEntirePeriod'))
-        if self.text is not None and 'text' not in already_processed:
-            already_processed.add('text')
-            outfile.write(' text=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.text), input_name='text')), ))
-    def _exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ', name_='TTimePeriod', fromsubclass_=False, pretty_print=True):
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="TTimePeriod",
+    ):
+        if (
+            self.dataValidForEntirePeriod is not None
+            and "dataValidForEntirePeriod" not in already_processed
+        ):
+            already_processed.add("dataValidForEntirePeriod")
+            outfile.write(
+                ' dataValidForEntirePeriod="%s"'
+                % self.gds_format_boolean(
+                    self.dataValidForEntirePeriod, input_name="dataValidForEntirePeriod"
+                )
+            )
+        if self.text is not None and "text" not in already_processed:
+            already_processed.add("text")
+            outfile.write(
+                " text=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.text), input_name="text"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name_="TTimePeriod",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
         if pretty_print:
-            eol_ = '\n'
+            eol_ = "\n"
         else:
-            eol_ = ''
+            eol_ = ""
         if self.startYear is not None:
-            namespaceprefix_ = self.startYear_nsprefix_ + ':' if (UseCapturedNS_ and self.startYear_nsprefix_) else ''
+            namespaceprefix_ = (
+                self.startYear_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.startYear_nsprefix_)
+                else ""
+            )
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sstartYear>%s</%sstartYear>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.startYear), input_name='startYear')), namespaceprefix_ , eol_))
+            outfile.write(
+                "<%sstartYear>%s</%sstartYear>%s"
+                % (
+                    namespaceprefix_,
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_xml(self.startYear), input_name="startYear"
+                        )
+                    ),
+                    namespaceprefix_,
+                    eol_,
+                )
+            )
         if self.startYearMonth is not None:
-            namespaceprefix_ = self.startYearMonth_nsprefix_ + ':' if (UseCapturedNS_ and self.startYearMonth_nsprefix_) else ''
+            namespaceprefix_ = (
+                self.startYearMonth_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.startYearMonth_nsprefix_)
+                else ""
+            )
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sstartYearMonth>%s</%sstartYearMonth>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.startYearMonth), input_name='startYearMonth')), namespaceprefix_ , eol_))
+            outfile.write(
+                "<%sstartYearMonth>%s</%sstartYearMonth>%s"
+                % (
+                    namespaceprefix_,
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_xml(self.startYearMonth), input_name="startYearMonth"
+                        )
+                    ),
+                    namespaceprefix_,
+                    eol_,
+                )
+            )
         if self.startDate is not None:
-            namespaceprefix_ = self.startDate_nsprefix_ + ':' if (UseCapturedNS_ and self.startDate_nsprefix_) else ''
+            namespaceprefix_ = (
+                self.startDate_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.startDate_nsprefix_)
+                else ""
+            )
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sstartDate>%s</%sstartDate>%s' % (namespaceprefix_ , self.gds_format_date(self.startDate, input_name='startDate'), namespaceprefix_ , eol_))
+            outfile.write(
+                "<%sstartDate>%s</%sstartDate>%s"
+                % (
+                    namespaceprefix_,
+                    self.gds_format_date(self.startDate, input_name="startDate"),
+                    namespaceprefix_,
+                    eol_,
+                )
+            )
         if self.endYear is not None:
-            namespaceprefix_ = self.endYear_nsprefix_ + ':' if (UseCapturedNS_ and self.endYear_nsprefix_) else ''
+            namespaceprefix_ = (
+                self.endYear_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.endYear_nsprefix_)
+                else ""
+            )
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sendYear>%s</%sendYear>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.endYear), input_name='endYear')), namespaceprefix_ , eol_))
+            outfile.write(
+                "<%sendYear>%s</%sendYear>%s"
+                % (
+                    namespaceprefix_,
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_xml(self.endYear), input_name="endYear"
+                        )
+                    ),
+                    namespaceprefix_,
+                    eol_,
+                )
+            )
         if self.endYearMonth is not None:
-            namespaceprefix_ = self.endYearMonth_nsprefix_ + ':' if (UseCapturedNS_ and self.endYearMonth_nsprefix_) else ''
+            namespaceprefix_ = (
+                self.endYearMonth_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.endYearMonth_nsprefix_)
+                else ""
+            )
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sendYearMonth>%s</%sendYearMonth>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.endYearMonth), input_name='endYearMonth')), namespaceprefix_ , eol_))
+            outfile.write(
+                "<%sendYearMonth>%s</%sendYearMonth>%s"
+                % (
+                    namespaceprefix_,
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_xml(self.endYearMonth), input_name="endYearMonth"
+                        )
+                    ),
+                    namespaceprefix_,
+                    eol_,
+                )
+            )
         if self.endDate is not None:
-            namespaceprefix_ = self.endDate_nsprefix_ + ':' if (UseCapturedNS_ and self.endDate_nsprefix_) else ''
+            namespaceprefix_ = (
+                self.endDate_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.endDate_nsprefix_)
+                else ""
+            )
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sendDate>%s</%sendDate>%s' % (namespaceprefix_ , self.gds_format_date(self.endDate, input_name='endDate'), namespaceprefix_ , eol_))
+            outfile.write(
+                "<%sendDate>%s</%sendDate>%s"
+                % (
+                    namespaceprefix_,
+                    self.gds_format_date(self.endDate, input_name="endDate"),
+                    namespaceprefix_,
+                    eol_,
+                )
+            )
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -163,54 +342,60 @@ class TTimePeriod(GeneratedsSuper):
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
         return self
+
     def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('dataValidForEntirePeriod', node)
-        if value is not None and 'dataValidForEntirePeriod' not in already_processed:
-            already_processed.add('dataValidForEntirePeriod')
-            if value in ('true', '1'):
+        value = find_attr_value_("dataValidForEntirePeriod", node)
+        if value is not None and "dataValidForEntirePeriod" not in already_processed:
+            already_processed.add("dataValidForEntirePeriod")
+            if value in ("true", "1"):
                 self.dataValidForEntirePeriod = True
-            elif value in ('false', '0'):
+            elif value in ("false", "0"):
                 self.dataValidForEntirePeriod = False
             else:
-                raise_parse_error(node, 'Bad boolean attribute')
-        value = find_attr_value_('text', node)
-        if value is not None and 'text' not in already_processed:
-            already_processed.add('text')
+                raise_parse_error(node, "Bad boolean attribute")
+        value = find_attr_value_("text", node)
+        if value is not None and "text" not in already_processed:
+            already_processed.add("text")
             self.text = value
-            self.validate_TString32000(self.text)    # validate type TString32000
-    def _buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'startYear':
+            self.validate_TString32000(self.text)  # validate type TString32000
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "startYear":
             value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'startYear')
-            value_ = self.gds_validate_string(value_, node, 'startYear')
+            value_ = self.gds_parse_string(value_, node, "startYear")
+            value_ = self.gds_validate_string(value_, node, "startYear")
             self.startYear = value_
             self.startYear_nsprefix_ = child_.prefix
-        elif nodeName_ == 'startYearMonth':
+        elif nodeName_ == "startYearMonth":
             value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'startYearMonth')
-            value_ = self.gds_validate_string(value_, node, 'startYearMonth')
+            value_ = self.gds_parse_string(value_, node, "startYearMonth")
+            value_ = self.gds_validate_string(value_, node, "startYearMonth")
             self.startYearMonth = value_
             self.startYearMonth_nsprefix_ = child_.prefix
-        elif nodeName_ == 'startDate':
+        elif nodeName_ == "startDate":
             sval_ = child_.text
             dval_ = self.gds_parse_date(sval_)
             self.startDate = dval_
             self.startDate_nsprefix_ = child_.prefix
-        elif nodeName_ == 'endYear':
+        elif nodeName_ == "endYear":
             value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'endYear')
-            value_ = self.gds_validate_string(value_, node, 'endYear')
+            value_ = self.gds_parse_string(value_, node, "endYear")
+            value_ = self.gds_validate_string(value_, node, "endYear")
             self.endYear = value_
             self.endYear_nsprefix_ = child_.prefix
-        elif nodeName_ == 'endYearMonth':
+        elif nodeName_ == "endYearMonth":
             value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'endYearMonth')
-            value_ = self.gds_validate_string(value_, node, 'endYearMonth')
+            value_ = self.gds_parse_string(value_, node, "endYearMonth")
+            value_ = self.gds_validate_string(value_, node, "endYearMonth")
             self.endYearMonth = value_
             self.endYearMonth_nsprefix_ = child_.prefix
-        elif nodeName_ == 'endDate':
+        elif nodeName_ == "endDate":
             sval_ = child_.text
             dval_ = self.gds_parse_date(sval_)
             self.endDate = dval_
             self.endDate_nsprefix_ = child_.prefix
+
+
 # end class TTimePeriod
