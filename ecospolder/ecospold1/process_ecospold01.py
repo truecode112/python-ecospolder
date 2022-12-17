@@ -28,10 +28,7 @@ def usage():
 def get_root_tag(node):
     tag = tag_pattern.match(node.tag).groups()[-1]
     prefix_tag = TagNamePrefix + tag
-
     rootClass = ClassesMapping.get(prefix_tag)
-    if rootClass is None:
-        rootClass = globals().get(prefix_tag)
     return tag, rootClass
 
 
@@ -62,6 +59,7 @@ def parse(inFileName, silence=False, print_warnings=True):
     rootClass = EcoSpold
     rootObj = EcoSpold()
     rootObj.build(rootNode, collector=collector)
+    return
 
     CapturedNsmap_, namespacedefs = get_required_ns_prefix_defs(rootNode)
     if not SaveElementTreeNode:

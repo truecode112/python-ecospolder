@@ -572,19 +572,6 @@ class EcospoldBase:
             path_list.append(tag)
         self.get_path_list(node.getparent(), path_list)
 
-    def get_class_obj(self, node, default_class=None):
-        class_obj1 = default_class
-        if "xsi" in node.nsmap:
-            classname = node.get("{%s}type" % node.nsmap["xsi"])
-            if classname is not None:
-                names = classname.split(":")
-                if len(names) == 2:
-                    classname = names[1]
-                class_obj2 = globals().get(classname)
-                if class_obj2 is not None:
-                    class_obj1 = class_obj2
-        return class_obj1
-
     def build_any(self, node, type_name=None):
         # provide default value in case option --disable-xml is used.
         content = ""
