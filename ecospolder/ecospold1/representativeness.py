@@ -1,5 +1,6 @@
-from ..ecospold_base import *
-
+import sys
+sys.path.append('../')
+from ecospold_base import *
 
 def _cast(typ, value):
     if typ is None or value is None:
@@ -48,20 +49,6 @@ class Representativeness(EcospoldBase):
         self.extrapolations_nsprefix_ = None
         self.uncertaintyAdjustments = _cast(None, uncertaintyAdjustments)
         self.uncertaintyAdjustments_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, Representativeness
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Representativeness.subclass:
-            return Representativeness.subclass(*args_, **kwargs_)
-        else:
-            return Representativeness(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def validate_percentType(self, value):
         # Validate type percentType, a restriction on TPercent.

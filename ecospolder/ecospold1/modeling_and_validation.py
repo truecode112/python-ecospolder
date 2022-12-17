@@ -1,4 +1,6 @@
-from ..ecospold_base import *
+import sys
+sys.path.append('../')
+from ecospold_base import *
 from representativeness import Representativeness
 from source import Source
 from validation import Validation
@@ -45,20 +47,6 @@ class ModelingAndValidation(EcospoldBase):
             self.anytypeobjs_ = []
         else:
             self.anytypeobjs_ = anytypeobjs_
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, ModelingAndValidation
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if ModelingAndValidation.subclass:
-            return ModelingAndValidation.subclass(*args_, **kwargs_)
-        else:
-            return ModelingAndValidation(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def _hasContent(self):
         if (
@@ -214,17 +202,17 @@ class ModelingAndValidation(EcospoldBase):
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
         if nodeName_ == "representativeness":
-            obj_ = Representativeness.factory(parent_object_=self)
+            obj_ = Representativeness(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.representativeness = obj_
             obj_.original_tagname_ = "representativeness"
         elif nodeName_ == "source":
-            obj_ = Source.factory(parent_object_=self)
+            obj_ = Source(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.source.append(obj_)
             obj_.original_tagname_ = "source"
         elif nodeName_ == "validation":
-            obj_ = Validation.factory(parent_object_=self)
+            obj_ = Validation(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.validation = obj_
             obj_.original_tagname_ = "validation"

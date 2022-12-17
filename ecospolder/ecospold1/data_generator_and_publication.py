@@ -1,4 +1,6 @@
-from ..ecospold_base import *
+import sys
+sys.path.append('../')
+from ecospold_base import *
 
 
 def _cast(typ, value):
@@ -63,11 +65,6 @@ class DataGeneratorAndPublication(EcospoldBase):
         self.countryCode_nsprefix_ = None
         self.pageNumbers = _cast(None, pageNumbers)
         self.pageNumbers_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        return DataGeneratorAndPublication(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.

@@ -1,4 +1,6 @@
-from ..ecospold_base import *
+import sys
+sys.path.append('../')
+from ecospold_base import *
 
 
 def _cast(typ, value):
@@ -65,11 +67,6 @@ class DatasetInformation(EcospoldBase):
         self.languageCode_nsprefix_ = None
         self.localLanguageCode = _cast(None, localLanguageCode)
         self.localLanguageCode_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        return DatasetInformation(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def validate_typeType(self, value):
         # Validate type typeType, a restriction on xsd:integer.

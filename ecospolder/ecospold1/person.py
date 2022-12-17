@@ -1,6 +1,6 @@
 import sys
-
-from ..ecospold_base import *
+sys.path.append('../')
+from ecospold_base import *
 from lxml import etree as etree_
 
 
@@ -61,18 +61,6 @@ class Person(EcospoldBase):
         self.companyCode_nsprefix_ = None
         self.countryCode = _cast(None, countryCode)
         self.countryCode_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Person)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Person.subclass:
-            return Person.subclass(*args_, **kwargs_)
-        else:
-            return Person(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.

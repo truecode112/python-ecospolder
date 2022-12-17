@@ -1,5 +1,6 @@
-from ..ecospold_base import *
-
+import sys
+sys.path.append('../')
+from ecospold_base import *
 
 def _cast(typ, value):
     if typ is None or value is None:
@@ -95,18 +96,6 @@ class Source(EcospoldBase):
         self.issueNo_nsprefix_ = None
         self.text = _cast(None, text)
         self.text_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Source)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Source.subclass:
-            return Source.subclass(*args_, **kwargs_)
-        else:
-            return Source(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.

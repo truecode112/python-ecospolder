@@ -1,4 +1,7 @@
-from ..ecospold_base import *
+import sys
+sys.path.append('../')
+
+from ecospold_base import *
 
 
 def _cast(typ, value):
@@ -134,11 +137,6 @@ class Exchange(EcospoldBase):
         self.outputGroup = outputGroup
         self.validate_outputGroupType(self.outputGroup)
         self.outputGroup_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        return Exchange(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def validate_inputGroupType(self, value):
         result = True

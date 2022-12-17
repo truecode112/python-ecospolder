@@ -1,5 +1,7 @@
 from dataset import Dataset
-from ..ecospold_base import *
+import sys
+sys.path.append('../')
+from ecospold_base import *
 
 
 def _cast(typ, value):
@@ -41,11 +43,6 @@ class EcoSpold(EcospoldBase):
             self.anytypeobjs_ = []
         else:
             self.anytypeobjs_ = anytypeobjs_
-
-    def factory(*args_, **kwargs_):
-        return EcoSpold(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def _hasContent(self):
         if self.dataset or self.anytypeobjs_:
@@ -187,7 +184,7 @@ class EcoSpold(EcospoldBase):
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
         if nodeName_ == "dataset":
-            obj_ = Dataset.factory(parent_object_=self)
+            obj_ = Dataset(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.dataset.append(obj_)
             obj_.original_tagname_ = "dataset"

@@ -1,5 +1,6 @@
-from ..ecospold_base import *
-
+import sys
+sys.path.append('../')
+from ecospold_base import *
 
 def _cast(typ, value):
     if typ is None or value is None:
@@ -28,11 +29,6 @@ class Geography(EcospoldBase):
         self.location_nsprefix_ = None
         self.text = _cast(None, text)
         self.text_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        return Geography(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def validate_TRegionalCode(self, value):
         # Validate type TRegionalCode, a restriction on xsd:string.

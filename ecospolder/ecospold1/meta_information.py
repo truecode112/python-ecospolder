@@ -1,5 +1,7 @@
 from administrative_information import AdministrativeInformation
-from ..ecospold_base import *
+import sys
+sys.path.append('../')
+from ecospold_base import *
 from modeling_and_validation import ModelingAndValidation
 from process_information import ProcessInformation
 
@@ -42,11 +44,6 @@ class MetaInformation(EcospoldBase):
             self.anytypeobjs_ = []
         else:
             self.anytypeobjs_ = anytypeobjs_
-
-    def factory(*args_, **kwargs_):
-        return MetaInformation(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def _hasContent(self):
         if (
@@ -202,17 +199,17 @@ class MetaInformation(EcospoldBase):
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
         if nodeName_ == "processInformation":
-            obj_ = ProcessInformation.factory(parent_object_=self)
+            obj_ = ProcessInformation(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.processInformation = obj_
             obj_.original_tagname_ = "processInformation"
         elif nodeName_ == "modellingAndValidation":
-            obj_ = ModelingAndValidation.factory(parent_object_=self)
+            obj_ = ModelingAndValidation(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.modellingAndValidation = obj_
             obj_.original_tagname_ = "modellingAndValidation"
         elif nodeName_ == "administrativeInformation":
-            obj_ = AdministrativeInformation.factory(parent_object_=self)
+            obj_ = AdministrativeInformation(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.administrativeInformation = obj_
             obj_.original_tagname_ = "administrativeInformation"

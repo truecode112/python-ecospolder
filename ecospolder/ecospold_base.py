@@ -24,7 +24,10 @@ CDATA_pattern_ = re_.compile(r"<!\[CDATA\[.*?\]\]>", re_.DOTALL)
 GenerateDSNamespaceDefs_ = {}
 GenerateDSNamespaceTypePrefixes_ = {}
 
-BaseStrType_ = str
+if sys.version_info.major == 2:
+    BaseStrType_ = basestring
+else:
+    BaseStrType_ = str
 
 Validate_simpletypes_ = True
 SaveElementTreeNode = True

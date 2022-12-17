@@ -1,5 +1,7 @@
 from dataset_informatin import DatasetInformation
-from ..ecospold_base import *
+import sys
+sys.path.append('../')
+from ecospold_base import *
 from geography import Geography
 from reference_function import ReferenceFunction
 from technology import Technology
@@ -46,20 +48,6 @@ class ProcessInformation(EcospoldBase):
             self.anytypeobjs_ = []
         else:
             self.anytypeobjs_ = anytypeobjs_
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, ProcessInformation
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if ProcessInformation.subclass:
-            return ProcessInformation.subclass(*args_, **kwargs_)
-        else:
-            return ProcessInformation(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def _hasContent(self):
         if (
@@ -245,27 +233,27 @@ class ProcessInformation(EcospoldBase):
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
         if nodeName_ == "referenceFunction":
-            obj_ = ReferenceFunction.factory(parent_object_=self)
+            obj_ = ReferenceFunction(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.referenceFunction = obj_
             obj_.original_tagname_ = "referenceFunction"
         elif nodeName_ == "geography":
-            obj_ = Geography.factory(parent_object_=self)
+            obj_ = Geography(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.geography = obj_
             obj_.original_tagname_ = "geography"
         elif nodeName_ == "technology":
-            obj_ = Technology.factory(parent_object_=self)
+            obj_ = Technology(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.technology = obj_
             obj_.original_tagname_ = "technology"
         elif nodeName_ == "timePeriod":
-            obj_ = TimePeriod.factory(parent_object_=self)
+            obj_ = TimePeriod(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.timePeriod = obj_
             obj_.original_tagname_ = "timePeriod"
         elif nodeName_ == "dataSetInformation":
-            obj_ = DatasetInformation.factory(parent_object_=self)
+            obj_ = DatasetInformation(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.dataSetInformation = obj_
             obj_.original_tagname_ = "dataSetInformation"

@@ -1,4 +1,6 @@
 import sys
+sys.path.append('../')
+from ecospold_base import *
 
 try:
     ModulenotfoundExp_ = ModuleNotFoundError
@@ -7,7 +9,7 @@ except NameError:
 import datetime as datetime_
 
 from ecospold import EcoSpold
-from ..ecospold_base import *
+
 from lxml import etree as etree_
 
 
@@ -62,10 +64,9 @@ def parse(inFileName, silence=False, print_warnings=True):
     doc = parsexml_(inFileName, parser)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
-    if rootClass is None:
-        rootTag = "ecospold"
-        rootClass = EcoSpold
-    rootObj = rootClass.factory()
+    rootTag = "ecospold"
+    rootClass = EcoSpold
+    rootObj = EcoSpold()
     rootObj.build(rootNode, gds_collector_=gds_collector)
 
     CapturedNsmap_, namespacedefs = get_required_ns_prefix_defs(rootNode)

@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../')
 
-from ecospold_base import EcospoldBase
+from ecospold_base import *
 
 from allocation import Allocation
 from exchange import Exchange
@@ -47,11 +47,6 @@ class FlowData(EcospoldBase):
             self.anytypeobjs_ = []
         else:
             self.anytypeobjs_ = anytypeobjs_
-
-    def factory(*args_, **kwargs_):
-        return FlowData(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def _hasContent(self):
         if self.exchange or self.allocation or self.anytypeobjs_:
@@ -179,12 +174,12 @@ class FlowData(EcospoldBase):
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
         if nodeName_ == "exchange":
-            obj_ = Exchange.factory(parent_object_=self)
+            obj_ = Exchange(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.exchange.append(obj_)
             obj_.original_tagname_ = "exchange"
         elif nodeName_ == "allocation":
-            obj_ = Allocation.factory(parent_object_=self)
+            obj_ = Allocation(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.allocation.append(obj_)
             obj_.original_tagname_ = "allocation"

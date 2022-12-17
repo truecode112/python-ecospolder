@@ -1,4 +1,6 @@
-from ..ecospold_base import *
+import sys
+sys.path.append('../')
+from ecospold_base import *
 
 
 def _cast(typ, value):
@@ -26,11 +28,6 @@ class DataEntryBy(EcospoldBase):
         self.person_nsprefix_ = None
         self.qualityNetwork = _cast(int, qualityNetwork)
         self.qualityNetwork_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        return DataEntryBy(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.

@@ -56,11 +56,6 @@ class Allocation(EcospoldBase):
             self.referenceToInputOutput = referenceToInputOutput
         self.referenceToInputOutput_nsprefix_ = None
 
-    def factory(*args_, **kwargs_):
-        return Allocation(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
     def validate_TIndexNumber(self, value):
         result = True
         # Validate type TIndexNumber, a restriction on xsd:int.

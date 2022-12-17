@@ -2,7 +2,7 @@
 import sys
 sys.path.append('../')
 
-from ecospold_base import EcospoldBase
+from ecospold_base import *
 from flow_data import FlowData
 from meta_information import MetaInformation
 
@@ -66,11 +66,6 @@ class Dataset(EcospoldBase):
         else:
             self.flowData = flowData
         self.flowData_nsprefix_ = ""
-
-    def factory(*args_, **kwargs_):
-        return Dataset(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def validate_TIndexNumber(self, value):
         # Validate type es:TIndexNumber, a restriction on xsd:int.
@@ -322,11 +317,6 @@ class Dataset(EcospoldBase):
                 name_="flowData",
                 pretty_print=pretty_print,
             )
-        if not fromsubclass_:
-            for obj_ in self.anytypeobjs_:
-                showIndent(outfile, level, pretty_print)
-                outfile.write(str(obj_))
-                outfile.write("\n")
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -383,12 +373,12 @@ class Dataset(EcospoldBase):
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
         if nodeName_ == "metaInformation":
-            obj_ = MetaInformation.factory(parent_object_=self)
+            obj_ = MetaInformation(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.metaInformation = obj_
             obj_.original_tagname_ = "metaInformation"
         elif nodeName_ == "flowData":
-            obj_ = FlowData.factory(parent_object_=self)
+            obj_ = FlowData(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.flowData.append(obj_)
             obj_.original_tagname_ = "flowData"

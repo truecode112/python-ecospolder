@@ -1,6 +1,8 @@
 from data_entry_by import DataEntryBy
 from data_generator_and_publication import DataGeneratorAndPublication
-from ..ecospold_base import *
+import sys
+sys.path.append('../')
+from ecospold_base import *
 from person import Person
 
 
@@ -45,22 +47,6 @@ class AdministrativeInformation(EcospoldBase):
         else:
             self.person = person
         self.person_nsprefix_ = ""
-
-    """ Create a new AdministrativeInformation instance.
-
-        static method
-
-    Args:
-        * *args* (dict): The demand or functional unit. Needs to be a dictionary to indicate amounts, e.g. ``{7: 2.5}``.
-        * *method* (tuple, optional): LCIA Method tuple, e.g. ``("My", "great", "LCIA", "method")``. Can be omitted if only interested in calculating the life cycle inventory.
-    Returns:
-        A new AdministrativeInformation object
-    """
-
-    def factory(*args_, **kwargs_):
-        return AdministrativeInformation(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def _hasContent(self):
         if (
@@ -210,17 +196,17 @@ class AdministrativeInformation(EcospoldBase):
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
         if nodeName_ == "dataEntryBy":
-            obj_ = DataEntryBy.factory(parent_object_=self)
+            obj_ = DataEntryBy(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.dataEntryBy = obj_
             obj_.original_tagname_ = "dataEntryBy"
         elif nodeName_ == "dataGeneratorAndPublication":
-            obj_ = DataGeneratorAndPublication.factory(parent_object_=self)
+            obj_ = DataGeneratorAndPublication(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.dataGeneratorAndPublication = obj_
             obj_.original_tagname_ = "dataGeneratorAndPublication"
         elif nodeName_ == "person":
-            obj_ = Person.factory(parent_object_=self)
+            obj_ = Person(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.person.append(obj_)
             obj_.original_tagname_ = "person"

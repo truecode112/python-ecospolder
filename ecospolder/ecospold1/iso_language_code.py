@@ -1,5 +1,6 @@
-from ..ecospold_base import *
-
+import sys
+sys.path.append('../')
+from ecospold_base import Enum
 
 class ISOLanguageCode(str, Enum):
 

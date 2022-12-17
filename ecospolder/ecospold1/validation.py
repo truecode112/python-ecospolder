@@ -1,5 +1,6 @@
-from ..ecospold_base import *
-
+import sys
+sys.path.append('../')
+from ecospold_base import *
 
 def _cast(typ, value):
     if typ is None or value is None:
@@ -34,18 +35,6 @@ class Validation(EcospoldBase):
         self.proofReadingValidator_nsprefix_ = None
         self.otherDetails = _cast(None, otherDetails)
         self.otherDetails_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Validation)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Validation.subclass:
-            return Validation.subclass(*args_, **kwargs_)
-        else:
-            return Validation(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def validate_TString32000(self, value):
         # Validate type TString32000, a restriction on xsd:string.

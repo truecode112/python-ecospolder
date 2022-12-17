@@ -1,5 +1,6 @@
-from ..ecospold_base import *
-
+import sys
+sys.path.append('../')
+from ecospold_base import *
 
 def _cast(typ, value):
     if typ is None or value is None:
@@ -117,20 +118,6 @@ class ReferenceFunction(EcospoldBase):
         else:
             self.synonym = synonym
         self.synonym_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, ReferenceFunction
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if ReferenceFunction.subclass:
-            return ReferenceFunction.subclass(*args_, **kwargs_)
-        else:
-            return ReferenceFunction(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
 
     def validate_TString80(self, value):
         result = True
