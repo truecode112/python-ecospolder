@@ -24,11 +24,11 @@ class FlowData(EcospoldBase):
         self,
         exchange=None,
         allocation=None,
-        gds_collector=None,
+        collector=None,
         **kwargs
     ):
-        self.gds_collector = gds_collector
-        self.gds_elementtree_node = None
+        self.collector = collector
+        self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         if exchange is None:
@@ -130,31 +130,31 @@ class FlowData(EcospoldBase):
                 pretty_print=pretty_print,
             )
 
-    def build(self, node, gds_collector=None):
-        self.gds_collector = gds_collector
+    def build(self, node, collector=None):
+        self.collector = collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node = node
+            self.elementtree_node = node
         already_processed = set()
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
+            self._buildChildren(child, node, nodeName, collector=collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
         pass
 
     def _buildChildren(
-        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
+        self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "exchange":
             obj = Exchange(parent_object=self)
-            obj.build(child_, gds_collector=gds_collector)
+            obj.build(child_, collector=collector)
             self.exchange.append(obj)
             obj.original_tagname = "exchange"
         elif nodeName == "allocation":
             obj = Allocation(parent_object=self)
-            obj.build(child_, gds_collector=gds_collector)
+            obj.build(child_, collector=collector)
             self.allocation.append(obj)
             obj.original_tagname = "allocation"
 

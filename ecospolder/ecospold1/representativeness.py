@@ -31,11 +31,11 @@ class Representativeness(EcospoldBase):
         samplingProcedure=None,
         extrapolations=None,
         uncertaintyAdjustments=None,
-        gds_collector=None,
+        collector=None,
         **kwargs
     ):
-        self.gds_collector = gds_collector
-        self.gds_elementtree_node = None
+        self.collector = collector
+        self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.percent = _cast(float, percent)
@@ -49,11 +49,11 @@ class Representativeness(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, float):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
                     % {
                         "value": value,
@@ -62,16 +62,16 @@ class Representativeness(EcospoldBase):
                 )
                 return False
             if value > 100.0:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on percentType'
                     % {"value": value, "lineno": lineno}
                 )
                 result = False
-            if not self.gds_validate_simple_patterns(
+            if not self.validate_simple_patterns(
                 self.validate_percentType_patterns_, value
             ):
-                self.gds_collector.add_message(
+                self.collector.add_message(
                     'Value "%s" does not match xsd pattern restrictions: %s'
                     % (
                         encode_str_2_3(value),
@@ -86,11 +86,11 @@ class Representativeness(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -99,8 +99,8 @@ class Representativeness(EcospoldBase):
                 )
                 return False
             if len(value) > 80:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString80'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -111,11 +111,11 @@ class Representativeness(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -124,8 +124,8 @@ class Representativeness(EcospoldBase):
                 )
                 return False
             if len(value) > 32000:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString32000'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -205,8 +205,8 @@ class Representativeness(EcospoldBase):
             outfile.write(
                 " productionVolume=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.productionVolume),
                             input_name="productionVolume",
                         )
@@ -221,8 +221,8 @@ class Representativeness(EcospoldBase):
             outfile.write(
                 " samplingProcedure=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.samplingProcedure),
                             input_name="samplingProcedure",
                         )
@@ -237,8 +237,8 @@ class Representativeness(EcospoldBase):
             outfile.write(
                 " extrapolations=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.extrapolations),
                             input_name="extrapolations",
                         )
@@ -253,8 +253,8 @@ class Representativeness(EcospoldBase):
             outfile.write(
                 " uncertaintyAdjustments=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.uncertaintyAdjustments),
                             input_name="uncertaintyAdjustments",
                         )
@@ -274,22 +274,22 @@ class Representativeness(EcospoldBase):
     ):
         pass
 
-    def build(self, node, gds_collector=None):
-        self.gds_collector = gds_collector
+    def build(self, node, collector=None):
+        self.collector = collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node = node
+            self.elementtree_node = node
         already_processed = set()
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
+            self._buildChildren(child, node, nodeName, collector=collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("percent", node)
         if value is not None and "percent" not in already_processed:
             already_processed.add("percent")
-            value = self.gds_parse_float(value, node, "percent")
+            value = self.parse_float(value, node, "percent")
             self.percent = value
             self.validate_percentType(self.percent)  # validate type percentType
         value = find_attr_value("productionVolume", node)
@@ -320,7 +320,7 @@ class Representativeness(EcospoldBase):
             )  # validate type TString32000
 
     def _buildChildren(
-        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
+        self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass
 

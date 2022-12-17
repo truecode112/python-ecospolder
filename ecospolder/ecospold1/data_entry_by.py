@@ -17,10 +17,10 @@ class DataEntryBy(EcospoldBase):
     """
 
     def __init__(
-        self, person=None, qualityNetwork=None, gds_collector=None, **kwargs
+        self, person=None, qualityNetwork=None, collector=None, **kwargs
     ):
-        self.gds_collector = gds_collector
-        self.gds_elementtree_node = None
+        self.collector = collector
+        self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.person = _cast(int, person)
@@ -31,11 +31,11 @@ class DataEntryBy(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -44,8 +44,8 @@ class DataEntryBy(EcospoldBase):
                 )
                 return False
             if value < 1:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on TIndexNumber'
                     % {"value": value, "lineno": lineno}
                 )
@@ -114,7 +114,7 @@ class DataEntryBy(EcospoldBase):
             already_processed.add("person")
             outfile.write(
                 ' person="%s"'
-                % self.gds_format_integer(self.person, input_name="person")
+                % self.format_integer(self.person, input_name="person")
             )
         if (
             self.qualityNetwork is not None
@@ -123,7 +123,7 @@ class DataEntryBy(EcospoldBase):
             already_processed.add("qualityNetwork")
             outfile.write(
                 ' qualityNetwork="%s"'
-                % self.gds_format_integer(
+                % self.format_integer(
                     self.qualityNetwork, input_name="qualityNetwork"
                 )
             )
@@ -140,30 +140,30 @@ class DataEntryBy(EcospoldBase):
     ):
         pass
 
-    def build(self, node, gds_collector=None):
-        self.gds_collector = gds_collector
+    def build(self, node, collector=None):
+        self.collector = collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node = node
+            self.elementtree_node = node
         already_processed = set()
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
+            self._buildChildren(child, node, nodeName, collector=collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("person", node)
         if value is not None and "person" not in already_processed:
             already_processed.add("person")
-            self.person = self.gds_parse_integer(value, node, "person")
+            self.person = self.parse_integer(value, node, "person")
             self.validate_TIndexNumber(self.person)  # validate type TIndexNumber
         value = find_attr_value("qualityNetwork", node)
         if value is not None and "qualityNetwork" not in already_processed:
             already_processed.add("qualityNetwork")
-            self.qualityNetwork = self.gds_parse_integer(value, node, "qualityNetwork")
+            self.qualityNetwork = self.parse_integer(value, node, "qualityNetwork")
 
     def _buildChildren(
-        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
+        self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass
 

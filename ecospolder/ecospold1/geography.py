@@ -19,9 +19,9 @@ class Geography(EcospoldBase):
 
     """
 
-    def __init__(self, location=None, text=None, gds_collector=None, **kwargs):
-        self.gds_collector = gds_collector
-        self.gds_elementtree_node = None
+    def __init__(self, location=None, text=None, collector=None, **kwargs):
+        self.collector = collector
+        self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.location = _cast(None, location)
@@ -32,11 +32,11 @@ class Geography(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -45,8 +45,8 @@ class Geography(EcospoldBase):
                 )
                 return False
             if len(value) > 7:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TRegionalCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -57,11 +57,11 @@ class Geography(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -70,8 +70,8 @@ class Geography(EcospoldBase):
                 )
                 return False
             if len(value) > 32000:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString32000'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -136,8 +136,8 @@ class Geography(EcospoldBase):
             outfile.write(
                 " location=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.location), input_name="location"
                         )
                     ),
@@ -148,8 +148,8 @@ class Geography(EcospoldBase):
             outfile.write(
                 " text=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.text), input_name="text"
                         )
                     ),
@@ -168,15 +168,15 @@ class Geography(EcospoldBase):
     ):
         pass
 
-    def build(self, node, gds_collector=None):
-        self.gds_collector = gds_collector
+    def build(self, node, collector=None):
+        self.collector = collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node = node
+            self.elementtree_node = node
         already_processed = set()
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
+            self._buildChildren(child, node, nodeName, collector=collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
@@ -192,7 +192,7 @@ class Geography(EcospoldBase):
             self.validate_TString32000(self.text)  # validate type TString32000
 
     def _buildChildren(
-        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
+        self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass
 

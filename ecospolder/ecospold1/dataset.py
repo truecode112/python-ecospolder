@@ -32,11 +32,11 @@ class Dataset(EcospoldBase):
         validUnits=None,
         metaInformation=None,
         flowData=None,
-        gds_collector=None,
+        collector=None,
         **kwargs
     ):
-        self.gds_collector = gds_collector
-        self.gds_elementtree_node = None
+        self.collector = collector
+        self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.number = _cast(int, number)
@@ -62,11 +62,11 @@ class Dataset(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -75,8 +75,8 @@ class Dataset(EcospoldBase):
                 )
                 return False
             if value < 1:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on TIndexNumber'
                     % {"value": value, "lineno": lineno}
                 )
@@ -87,11 +87,11 @@ class Dataset(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -100,8 +100,8 @@ class Dataset(EcospoldBase):
                 )
                 return False
             if len(value) > 255:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString255'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -166,7 +166,7 @@ class Dataset(EcospoldBase):
             already_processed.add("number")
             outfile.write(
                 ' number="%s"'
-                % self.gds_format_integer(self.number, input_name="number")
+                % self.format_integer(self.number, input_name="number")
             )
         if (
             self.internalSchemaVersion is not None
@@ -176,8 +176,8 @@ class Dataset(EcospoldBase):
             outfile.write(
                 " internalSchemaVersion=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.internalSchemaVersion),
                             input_name="internalSchemaVersion",
                         )
@@ -189,8 +189,8 @@ class Dataset(EcospoldBase):
             outfile.write(
                 " generator=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.generator), input_name="generator"
                         )
                     ),
@@ -200,7 +200,7 @@ class Dataset(EcospoldBase):
             already_processed.add("timestamp")
             outfile.write(
                 ' timestamp="%s"'
-                % self.gds_format_datetime(self.timestamp, input_name="timestamp")
+                % self.format_datetime(self.timestamp, input_name="timestamp")
             )
         if (
             self.validCompanyCodes is not None
@@ -210,8 +210,8 @@ class Dataset(EcospoldBase):
             outfile.write(
                 " validCompanyCodes=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.validCompanyCodes),
                             input_name="validCompanyCodes",
                         )
@@ -226,8 +226,8 @@ class Dataset(EcospoldBase):
             outfile.write(
                 " validRegionalCodes=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.validRegionalCodes),
                             input_name="validRegionalCodes",
                         )
@@ -242,8 +242,8 @@ class Dataset(EcospoldBase):
             outfile.write(
                 " validCategories=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.validCategories),
                             input_name="validCategories",
                         )
@@ -255,8 +255,8 @@ class Dataset(EcospoldBase):
             outfile.write(
                 " validUnits=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.validUnits), input_name="validUnits"
                         )
                     ),
@@ -296,22 +296,22 @@ class Dataset(EcospoldBase):
                 pretty_print=pretty_print,
             )
 
-    def build(self, node, gds_collector=None):
-        self.gds_collector = gds_collector
+    def build(self, node, collector=None):
+        self.collector = collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node = node
+            self.elementtree_node = node
         already_processed = set()
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
+            self._buildChildren(child, node, nodeName, collector=collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("number", node)
         if value is not None and "number" not in already_processed:
             already_processed.add("number")
-            self.number = self.gds_parse_integer(value, node, "number")
+            self.number = self.parse_integer(value, node, "number")
             self.validate_TIndexNumber(self.number)  # validate type TIndexNumber
         value = find_attr_value("internalSchemaVersion", node)
         if value is not None and "internalSchemaVersion" not in already_processed:
@@ -326,7 +326,7 @@ class Dataset(EcospoldBase):
         if value is not None and "timestamp" not in already_processed:
             already_processed.add("timestamp")
             try:
-                self.timestamp = self.gds_parse_datetime(value)
+                self.timestamp = self.parse_datetime(value)
             except ValueError as exp:
                 raise ValueError("Bad date-time attribute (timestamp): %s" % exp)
         value = find_attr_value("validCompanyCodes", node)
@@ -347,16 +347,16 @@ class Dataset(EcospoldBase):
             self.validUnits = value
 
     def _buildChildren(
-        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
+        self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "metaInformation":
             obj = MetaInformation(parent_object=self)
-            obj.build(child_, gds_collector=gds_collector)
+            obj.build(child_, collector=collector)
             self.metaInformation = obj
             obj.original_tagname = "metaInformation"
         elif nodeName == "flowData":
             obj = FlowData(parent_object=self)
-            obj.build(child_, gds_collector=gds_collector)
+            obj.build(child_, collector=collector)
             self.flowData.append(obj)
             obj.original_tagname = "flowData"
 

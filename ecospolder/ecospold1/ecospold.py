@@ -21,11 +21,11 @@ class EcoSpold(EcospoldBase):
         validationId=None,
         validationStatus=None,
         dataset=None,
-        gds_collector=None,
+        collector=None,
         **kwargs
     ):
-        self.gds_collector = gds_collector
-        self.gds_elementtree_node = None
+        self.collector = collector
+        self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.validationId = _cast(int, validationId)
@@ -94,7 +94,7 @@ class EcoSpold(EcospoldBase):
             already_processed.add("validationId")
             outfile.write(
                 ' validationId="%s"'
-                % self.gds_format_integer(self.validationId, input_name="validationId")
+                % self.format_integer(self.validationId, input_name="validationId")
             )
         if (
             self.validationStatus is not None
@@ -104,8 +104,8 @@ class EcoSpold(EcospoldBase):
             outfile.write(
                 " validationStatus=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.validationStatus),
                             input_name="validationStatus",
                         )
@@ -137,33 +137,33 @@ class EcoSpold(EcospoldBase):
                 pretty_print=pretty_print,
             )
 
-    def build(self, node, gds_collector=None):
-        self.gds_collector = gds_collector
+    def build(self, node, collector=None):
+        self.collector = collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node = node
+            self.elementtree_node = node
         already_processed = set()
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
+            self._buildChildren(child, node, nodeName, collector=collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("validationId", node)
         if value is not None and "validationId" not in already_processed:
             already_processed.add("validationId")
-            self.validationId = self.gds_parse_integer(value, node, "validationId")
+            self.validationId = self.parse_integer(value, node, "validationId")
         value = find_attr_value("validationStatus", node)
         if value is not None and "validationStatus" not in already_processed:
             already_processed.add("validationStatus")
             self.validationStatus = value
 
     def _buildChildren(
-        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
+        self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "dataset":
             obj = Dataset(parent_object=self)
-            obj.build(child_, gds_collector=gds_collector)
+            obj.build(child_, collector=collector)
             self.dataset.append(obj)
             obj.original_tagname = "dataset"
 

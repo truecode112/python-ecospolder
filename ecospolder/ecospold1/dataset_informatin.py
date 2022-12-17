@@ -40,11 +40,11 @@ class DatasetInformation(EcospoldBase):
         energyValues=None,
         languageCode="en",
         localLanguageCode="de",
-        gds_collector=None,
+        collector=None,
         **kwargs
     ):
-        self.gds_collector = gds_collector
-        self.gds_elementtree_node = None
+        self.collector = collector
+        self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.type = _cast(int, type)
@@ -65,11 +65,11 @@ class DatasetInformation(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -78,15 +78,15 @@ class DatasetInformation(EcospoldBase):
                 )
                 return False
             if value < 0:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on typeType'
                     % {"value": value, "lineno": lineno}
                 )
                 result = False
             if value > 5:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on typeType'
                     % {"value": value, "lineno": lineno}
                 )
@@ -97,11 +97,11 @@ class DatasetInformation(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, float):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
                     % {
                         "value": value,
@@ -109,10 +109,10 @@ class DatasetInformation(EcospoldBase):
                     }
                 )
                 return False
-            if not self.gds_validate_simple_patterns(
+            if not self.validate_simple_patterns(
                 self.validate_versionType_patterns_, value
             ):
-                self.gds_collector.add_message(
+                self.collector.add_message(
                     'Value "%s" does not match xsd pattern restrictions: %s'
                     % (
                         encode_str_2_3(value),
@@ -127,11 +127,11 @@ class DatasetInformation(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, float):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
                     % {
                         "value": value,
@@ -139,10 +139,10 @@ class DatasetInformation(EcospoldBase):
                     }
                 )
                 return False
-            if not self.gds_validate_simple_patterns(
+            if not self.validate_simple_patterns(
                 self.validate_internalVersionType_patterns_, value
             ):
-                self.gds_collector.add_message(
+                self.collector.add_message(
                     'Value "%s" does not match xsd pattern restrictions: %s'
                     % (
                         encode_str_2_3(value),
@@ -157,11 +157,11 @@ class DatasetInformation(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -170,15 +170,15 @@ class DatasetInformation(EcospoldBase):
                 )
                 return False
             if value < 0:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on energyValuesType'
                     % {"value": value, "lineno": lineno}
                 )
                 result = False
             if value > 2:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on energyValuesType'
                     % {"value": value, "lineno": lineno}
                 )
@@ -189,11 +189,11 @@ class DatasetInformation(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -347,15 +347,15 @@ class DatasetInformation(EcospoldBase):
                 "zu",
             ]
             if value not in enumerations:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on ISOLanguageCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
             if len(value) != 2:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd length restriction on ISOLanguageCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -427,7 +427,7 @@ class DatasetInformation(EcospoldBase):
         if self.type is not None and "type" not in already_processed:
             already_processed.add("type")
             outfile.write(
-                ' type="%s"' % self.gds_format_integer(self.type, input_name="type")
+                ' type="%s"' % self.format_integer(self.type, input_name="type")
             )
         if (
             self.impactAssessmentResult is not None
@@ -436,7 +436,7 @@ class DatasetInformation(EcospoldBase):
             already_processed.add("impactAssessmentResult")
             outfile.write(
                 ' impactAssessmentResult="%s"'
-                % self.gds_format_boolean(
+                % self.format_boolean(
                     self.impactAssessmentResult, input_name="impactAssessmentResult"
                 )
             )
@@ -444,13 +444,13 @@ class DatasetInformation(EcospoldBase):
             already_processed.add("timestamp")
             outfile.write(
                 ' timestamp="%s"'
-                % self.gds_format_datetime(self.timestamp, input_name="timestamp")
+                % self.format_datetime(self.timestamp, input_name="timestamp")
             )
         if self.version is not None and "version" not in already_processed:
             already_processed.add("version")
             outfile.write(
                 ' version="%s"'
-                % self.gds_format_float(self.version, input_name="version")
+                % self.format_float(self.version, input_name="version")
             )
         if (
             self.internalVersion is not None
@@ -459,7 +459,7 @@ class DatasetInformation(EcospoldBase):
             already_processed.add("internalVersion")
             outfile.write(
                 ' internalVersion="%s"'
-                % self.gds_format_float(
+                % self.format_float(
                     self.internalVersion, input_name="internalVersion"
                 )
             )
@@ -467,15 +467,15 @@ class DatasetInformation(EcospoldBase):
             already_processed.add("energyValues")
             outfile.write(
                 ' energyValues="%s"'
-                % self.gds_format_integer(self.energyValues, input_name="energyValues")
+                % self.format_integer(self.energyValues, input_name="energyValues")
             )
         if self.languageCode != "en" and "languageCode" not in already_processed:
             already_processed.add("languageCode")
             outfile.write(
                 " languageCode=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.languageCode), input_name="languageCode"
                         )
                     ),
@@ -489,8 +489,8 @@ class DatasetInformation(EcospoldBase):
             outfile.write(
                 " localLanguageCode=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.localLanguageCode),
                             input_name="localLanguageCode",
                         )
@@ -510,22 +510,22 @@ class DatasetInformation(EcospoldBase):
     ):
         pass
 
-    def build(self, node, gds_collector=None):
-        self.gds_collector = gds_collector
+    def build(self, node, collector=None):
+        self.collector = collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node = node
+            self.elementtree_node = node
         already_processed = set()
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
+            self._buildChildren(child, node, nodeName, collector=collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("type", node)
         if value is not None and "type" not in already_processed:
             already_processed.add("type")
-            self.type = self.gds_parse_integer(value, node, "type")
+            self.type = self.parse_integer(value, node, "type")
             self.validate_typeType(self.type)  # validate type typeType
         value = find_attr_value("impactAssessmentResult", node)
         if value is not None and "impactAssessmentResult" not in already_processed:
@@ -540,19 +540,19 @@ class DatasetInformation(EcospoldBase):
         if value is not None and "timestamp" not in already_processed:
             already_processed.add("timestamp")
             try:
-                self.timestamp = self.gds_parse_datetime(value)
+                self.timestamp = self.parse_datetime(value)
             except ValueError as exp:
                 raise ValueError("Bad date-time attribute (timestamp): %s" % exp)
         value = find_attr_value("version", node)
         if value is not None and "version" not in already_processed:
             already_processed.add("version")
-            value = self.gds_parse_float(value, node, "version")
+            value = self.parse_float(value, node, "version")
             self.version = value
             self.validate_versionType(self.version)  # validate type versionType
         value = find_attr_value("internalVersion", node)
         if value is not None and "internalVersion" not in already_processed:
             already_processed.add("internalVersion")
-            value = self.gds_parse_float(value, node, "internalVersion")
+            value = self.parse_float(value, node, "internalVersion")
             self.internalVersion = value
             self.validate_internalVersionType(
                 self.internalVersion
@@ -560,7 +560,7 @@ class DatasetInformation(EcospoldBase):
         value = find_attr_value("energyValues", node)
         if value is not None and "energyValues" not in already_processed:
             already_processed.add("energyValues")
-            self.energyValues = self.gds_parse_integer(value, node, "energyValues")
+            self.energyValues = self.parse_integer(value, node, "energyValues")
             self.validate_energyValuesType(
                 self.energyValues
             )  # validate type energyValuesType
@@ -580,7 +580,7 @@ class DatasetInformation(EcospoldBase):
             )  # validate type ISOLanguageCode
 
     def _buildChildren(
-        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
+        self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass
 

@@ -42,7 +42,7 @@ except ModulenotfoundExp:
 CurrentSubclassModule = None
 
 
-class GdsCollector(object):
+class CollectorClass(object):
     def __init__(self, messages=None):
         if messages is None:
             self.messages = []
@@ -112,47 +112,47 @@ class EcospoldBase:
         output.close()
         return strval
 
-    def gds_format_string(self, input_data, input_name=""):
+    def format_string(self, input_data, input_name=""):
         return input_data
 
-    def gds_parse_string(self, input_data, node=None, input_name=""):
+    def parse_string(self, input_data, node=None, input_name=""):
         return input_data
 
-    def gds_validate_string(self, input_data, node=None, input_name=""):
+    def validate_string(self, input_data, node=None, input_name=""):
         if not input_data:
             return ""
         else:
             return input_data
 
-    def gds_format_base64(self, input_data, input_name=""):
+    def format_base64(self, input_data, input_name=""):
         return base64.b64encode(input_data).decode("ascii")
 
-    def gds_validate_base64(self, input_data, node=None, input_name=""):
+    def validate_base64(self, input_data, node=None, input_name=""):
         return input_data
 
-    def gds_format_integer(self, input_data, input_name=""):
+    def format_integer(self, input_data, input_name=""):
         return "%d" % int(input_data)
 
-    def gds_parse_integer(self, input_data, node=None, input_name=""):
+    def parse_integer(self, input_data, node=None, input_name=""):
         try:
             ival = int(input_data)
         except (TypeError, ValueError) as exp:
             raise_parse_error(node, "Requires integer value: %s" % exp)
         return ival
 
-    def gds_validate_integer(self, input_data, node=None, input_name=""):
+    def validate_integer(self, input_data, node=None, input_name=""):
         try:
             value = int(input_data)
         except (TypeError, ValueError):
             raise_parse_error(node, "Requires integer value")
         return value
 
-    def gds_format_integer_list(self, input_data, input_name=""):
+    def format_integer_list(self, input_data, input_name=""):
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
 
-    def gds_validate_integer_list(self, input_data, node=None, input_name=""):
+    def validate_integer_list(self, input_data, node=None, input_name=""):
         values = input_data.split()
         for value in values:
             try:
@@ -161,29 +161,29 @@ class EcospoldBase:
                 raise_parse_error(node, "Requires sequence of integer values")
         return values
 
-    def gds_format_float(self, input_data, input_name=""):
+    def format_float(self, input_data, input_name=""):
         return ("%.15f" % float(input_data)).rstrip("0")
 
-    def gds_parse_float(self, input_data, node=None, input_name=""):
+    def parse_float(self, input_data, node=None, input_name=""):
         try:
             fval = float(input_data)
         except (TypeError, ValueError) as exp:
             raise_parse_error(node, "Requires float or double value: %s" % exp)
         return fval
 
-    def gds_validate_float(self, input_data, node=None, input_name=""):
+    def validate_float(self, input_data, node=None, input_name=""):
         try:
             value = float(input_data)
         except (TypeError, ValueError):
             raise_parse_error(node, "Requires float value")
         return value
 
-    def gds_format_float_list(self, input_data, input_name=""):
+    def format_float_list(self, input_data, input_name=""):
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
 
-    def gds_validate_float_list(self, input_data, node=None, input_name=""):
+    def validate_float_list(self, input_data, node=None, input_name=""):
         values = input_data.split()
         for value in values:
             try:
@@ -192,7 +192,7 @@ class EcospoldBase:
                 raise_parse_error(node, "Requires sequence of float values")
         return values
 
-    def gds_format_decimal(self, input_data, input_name=""):
+    def format_decimal(self, input_data, input_name=""):
         return_value = "%s" % input_data
         if "." in return_value:
             return_value = return_value.rstrip("0")
@@ -200,26 +200,26 @@ class EcospoldBase:
                 return_value = return_value.rstrip(".")
         return return_value
 
-    def gds_parse_decimal(self, input_data, node=None, input_name=""):
+    def parse_decimal(self, input_data, node=None, input_name=""):
         try:
             decimal_value = Decimal(input_data)
         except (TypeError, ValueError):
             raise_parse_error(node, "Requires decimal value")
         return decimal_value
 
-    def gds_validate_decimal(self, input_data, node=None, input_name=""):
+    def validate_decimal(self, input_data, node=None, input_name=""):
         try:
             value = Decimal(input_data)
         except (TypeError, ValueError):
             raise_parse_error(node, "Requires decimal value")
         return value
 
-    def gds_format_decimal_list(self, input_data, input_name=""):
+    def format_decimal_list(self, input_data, input_name=""):
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
-        return " ".join([self.gds_format_decimal(item) for item in input_data])
+        return " ".join([self.format_decimal(item) for item in input_data])
 
-    def gds_validate_decimal_list(self, input_data, node=None, input_name=""):
+    def validate_decimal_list(self, input_data, node=None, input_name=""):
         values = input_data.split()
         for value in values:
             try:
@@ -228,29 +228,29 @@ class EcospoldBase:
                 raise_parse_error(node, "Requires sequence of decimal values")
         return values
 
-    def gds_format_double(self, input_data, input_name=""):
+    def format_double(self, input_data, input_name=""):
         return "%s" % input_data
 
-    def gds_parse_double(self, input_data, node=None, input_name=""):
+    def parse_double(self, input_data, node=None, input_name=""):
         try:
             fval = float(input_data)
         except (TypeError, ValueError) as exp:
             raise_parse_error(node, "Requires double or float value: %s" % exp)
         return fval
 
-    def gds_validate_double(self, input_data, node=None, input_name=""):
+    def validate_double(self, input_data, node=None, input_name=""):
         try:
             value = float(input_data)
         except (TypeError, ValueError):
             raise_parse_error(node, "Requires double or float value")
         return value
 
-    def gds_format_double_list(self, input_data, input_name=""):
+    def format_double_list(self, input_data, input_name=""):
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
 
-    def gds_validate_double_list(self, input_data, node=None, input_name=""):
+    def validate_double_list(self, input_data, node=None, input_name=""):
         values = input_data.split()
         for value in values:
             try:
@@ -259,10 +259,10 @@ class EcospoldBase:
                 raise_parse_error(node, "Requires sequence of double or float values")
         return values
 
-    def gds_format_boolean(self, input_data, input_name=""):
+    def format_boolean(self, input_data, input_name=""):
         return ("%s" % input_data).lower()
 
-    def gds_parse_boolean(self, input_data, node=None, input_name=""):
+    def parse_boolean(self, input_data, node=None, input_name=""):
         input_data = input_data.strip()
         if input_data in ("true", "1"):
             bval = True
@@ -272,7 +272,7 @@ class EcospoldBase:
             raise_parse_error(node, "Requires boolean value")
         return bval
 
-    def gds_validate_boolean(self, input_data, node=None, input_name=""):
+    def validate_boolean(self, input_data, node=None, input_name=""):
         if input_data not in (
             True,
             1,
@@ -284,15 +284,15 @@ class EcospoldBase:
             )
         return input_data
 
-    def gds_format_boolean_list(self, input_data, input_name=""):
+    def format_boolean_list(self, input_data, input_name=""):
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
 
-    def gds_validate_boolean_list(self, input_data, node=None, input_name=""):
+    def validate_boolean_list(self, input_data, node=None, input_name=""):
         values = input_data.split()
         for value in values:
-            value = self.gds_parse_boolean(value, node, input_name)
+            value = self.parse_boolean(value, node, input_name)
             if value not in (
                 True,
                 1,
@@ -305,10 +305,10 @@ class EcospoldBase:
                 )
         return values
 
-    def gds_validate_datetime(self, input_data, node=None, input_name=""):
+    def validate_datetime(self, input_data, node=None, input_name=""):
         return input_data
 
-    def gds_format_datetime(self, input_data, input_name=""):
+    def format_datetime(self, input_data, input_name=""):
         if input_data.microsecond == 0:
             _svalue = "%04d-%02d-%02dT%02d:%02d:%02d" % (
                 input_data.year,
@@ -346,7 +346,7 @@ class EcospoldBase:
         return _svalue
 
     @classmethod
-    def gds_parse_datetime(cls, input_data):
+    def parse_datetime(cls, input_data):
         tz = None
         if input_data[-1] == "Z":
             tz = EcospoldBase._FixedOffsetTZ(0, "UTC")
@@ -373,10 +373,10 @@ class EcospoldBase:
         dt = dt.replace(tzinfo=tz)
         return dt
 
-    def gds_validate_date(self, input_data, node=None, input_name=""):
+    def validate_date(self, input_data, node=None, input_name=""):
         return input_data
 
-    def gds_format_date(self, input_data, input_name=""):
+    def format_date(self, input_data, input_name=""):
         _svalue = "%04d-%02d-%02d" % (
             input_data.year,
             input_data.month,
@@ -403,7 +403,7 @@ class EcospoldBase:
         return _svalue
 
     @classmethod
-    def gds_parse_date(cls, input_data):
+    def parse_date(cls, input_data):
         tz = None
         if input_data[-1] == "Z":
             tz = EcospoldBase._FixedOffsetTZ(0, "UTC")
@@ -421,10 +421,10 @@ class EcospoldBase:
         dt = dt.replace(tzinfo=tz)
         return dt.date()
 
-    def gds_validate_time(self, input_data, node=None, input_name=""):
+    def validate_time(self, input_data, node=None, input_name=""):
         return input_data
 
-    def gds_format_time(self, input_data, input_name=""):
+    def format_time(self, input_data, input_name=""):
         if input_data.microsecond == 0:
             _svalue = "%02d:%02d:%02d" % (
                 input_data.hour,
@@ -455,7 +455,7 @@ class EcospoldBase:
                     _svalue += "{0:02d}:{1:02d}".format(hours, minutes)
         return _svalue
 
-    def gds_validate_simple_patterns(self, patterns, target):
+    def validate_simple_patterns(self, patterns, target):
         # pat is a list of lists of strings/patterns.
         # The target value must match at least one of the patterns
         # in order for the test to succeed.
@@ -474,7 +474,7 @@ class EcospoldBase:
         return found1
 
     @classmethod
-    def gds_parse_time(cls, input_data):
+    def parse_time(cls, input_data):
         tz = None
         if input_data[-1] == "Z":
             tz = EcospoldBase._FixedOffsetTZ(0, "UTC")
@@ -495,7 +495,7 @@ class EcospoldBase:
         dt = dt.replace(tzinfo=tz)
         return dt.time()
 
-    def gds_check_cardinality(
+    def check_cardinality(
         self, value, input_name, min_occurs=0, max_occurs=1, required=None
     ):
         if value is None:
@@ -506,29 +506,29 @@ class EcospoldBase:
             length = 1
         if required is not None:
             if required and length < 1:
-                self.gds_collector.add_message(
+                self.collector.add_message(
                     "Required value {}{} is missing".format(
-                        input_name, self.gds_get_node_lineno()
+                        input_name, self.get_node_lineno()
                     )
                 )
         if length < min_occurs:
-            self.gds_collector.add_message(
+            self.collector.add_message(
                 "Number of values for {}{} is below "
                 "the minimum allowed, "
                 "expected at least {}, found {}".format(
-                    input_name, self.gds_get_node_lineno(), min_occurs, length
+                    input_name, self.get_node_lineno(), min_occurs, length
                 )
             )
         elif length > max_occurs:
-            self.gds_collector.add_message(
+            self.collector.add_message(
                 "Number of values for {}{} is above "
                 "the maximum allowed, "
                 "expected at most {}, found {}".format(
-                    input_name, self.gds_get_node_lineno(), max_occurs, length
+                    input_name, self.get_node_lineno(), max_occurs, length
                 )
             )
 
-    def gds_validate_builtin_ST(
+    def validate_builtin_ST(
         self,
         validator,
         value,
@@ -540,10 +540,10 @@ class EcospoldBase:
         if value is not None:
             try:
                 validator(value, input_name=input_name)
-            except GDSParseError as parse_error:
-                self.gds_collector.add_message(str(parse_error))
+            except ParseError as parse_error:
+                self.collector.add_message(str(parse_error))
 
-    def gds_validate_defined_ST(
+    def validate_defined_ST(
         self,
         validator,
         value,
@@ -555,10 +555,10 @@ class EcospoldBase:
         if value is not None:
             try:
                 validator(value)
-            except GDSParseError as parse_error:
-                self.gds_collector.add_message(str(parse_error))
+            except ParseError as parse_error:
+                self.collector.add_message(str(parse_error))
 
-    def gds_str_lower(self, instring):
+    def str_lower(self, instring):
         return instring.lower()
 
     def get_path(self, node):
@@ -591,18 +591,18 @@ class EcospoldBase:
                     class_obj1 = class_obj2
         return class_obj1
 
-    def gds_build_any(self, node, type_name=None):
+    def build_any(self, node, type_name=None):
         # provide default value in case option --disable-xml is used.
         content = ""
         content = etre.tostring(node, encoding="unicode")
         return content
 
     @classmethod
-    def gds_reverse_node_mapping(cls, mapping):
+    def reverse_node_mapping(cls, mapping):
         return dict(((v, k) for k, v in mapping.items()))
 
     @staticmethod
-    def gds_encode(instring):
+    def encode(instring):
         if sys.version_info.major == 2:
             if ExternalEncoding:
                 encoding = ExternalEncoding
@@ -619,12 +619,12 @@ class EcospoldBase:
         elif sys.version_info.major == 2 and isinstance(instring, unicode):
             result = quote_xml(instring).encode("utf8")
         else:
-            result = EcospoldBase.gds_encode(str(instring))
+            result = EcospoldBase.encode(str(instring))
         return result
 
     def __eq__(self, other):
         def excl_select_objs(obj):
-            return obj[0] != "parent_object" and obj[0] != "gds_collector"
+            return obj[0] != "parent_object" and obj[0] != "collector"
 
         if type(self) != type(other):
             return False
@@ -640,25 +640,25 @@ class EcospoldBase:
         return not self.__eq__(other)
 
     # Django ETL transform hooks.
-    def gds_djo_etl_transform(self):
+    def djo_etl_transform(self):
         pass
 
-    def gds_djo_etl_transform_db_obj(self, dbobj):
+    def djo_etl_transform_db_obj(self, dbobj):
         pass
 
     # SQLAlchemy ETL transform hooks.
-    def gds_sqa_etl_transform(self):
+    def sqa_etl_transform(self):
         return 0, None
 
-    def gds_sqa_etl_transform_db_obj(self, dbobj):
+    def sqa_etl_transform_db_obj(self, dbobj):
         pass
 
-    def gds_get_node_lineno(self):
+    def get_node_lineno(self):
         if (
-            hasattr(self, "gds_elementtree_node")
-            and self.gds_elementtree_node is not None
+            hasattr(self, "elementtree_node")
+            and self.elementtree_node is not None
         ):
-            return " near line {}".format(self.gds_elementtree_node.sourceline)
+            return " near line {}".format(self.elementtree_node.sourceline)
         else:
             return ""
 
@@ -804,7 +804,7 @@ def encode_str_2_3(instr):
     return instr
 
 
-class GDSParseError(Exception):
+class ParseError(Exception):
     pass
 
 
@@ -815,7 +815,7 @@ def raise_parse_error(node, msg):
             node.tag,
             node.sourceline,
         )
-    raise GDSParseError(msg)
+    raise ParseError(msg)
 
 
 class MixedContainer:

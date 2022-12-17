@@ -21,11 +21,11 @@ class Validation(EcospoldBase):
         proofReadingDetails=None,
         proofReadingValidator=None,
         otherDetails=None,
-        gds_collector=None,
+        collector=None,
         **kwargs
     ):
-        self.gds_collector = gds_collector
-        self.gds_elementtree_node = None
+        self.collector = collector
+        self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.proofReadingDetails = _cast(None, proofReadingDetails)
@@ -37,11 +37,11 @@ class Validation(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -50,8 +50,8 @@ class Validation(EcospoldBase):
                 )
                 return False
             if len(value) > 32000:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString32000'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -62,11 +62,11 @@ class Validation(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -75,8 +75,8 @@ class Validation(EcospoldBase):
                 )
                 return False
             if value < 1:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on TIndexNumber'
                     % {"value": value, "lineno": lineno}
                 )
@@ -149,8 +149,8 @@ class Validation(EcospoldBase):
             outfile.write(
                 " proofReadingDetails=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.proofReadingDetails),
                             input_name="proofReadingDetails",
                         )
@@ -164,7 +164,7 @@ class Validation(EcospoldBase):
             already_processed.add("proofReadingValidator")
             outfile.write(
                 ' proofReadingValidator="%s"'
-                % self.gds_format_integer(
+                % self.format_integer(
                     self.proofReadingValidator, input_name="proofReadingValidator"
                 )
             )
@@ -173,8 +173,8 @@ class Validation(EcospoldBase):
             outfile.write(
                 " otherDetails=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.otherDetails), input_name="otherDetails"
                         )
                     ),
@@ -193,15 +193,15 @@ class Validation(EcospoldBase):
     ):
         pass
 
-    def build(self, node, gds_collector=None):
-        self.gds_collector = gds_collector
+    def build(self, node, collector=None):
+        self.collector = collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node = node
+            self.elementtree_node = node
         already_processed = set()
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
+            self._buildChildren(child, node, nodeName, collector=collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
@@ -215,7 +215,7 @@ class Validation(EcospoldBase):
         value = find_attr_value("proofReadingValidator", node)
         if value is not None and "proofReadingValidator" not in already_processed:
             already_processed.add("proofReadingValidator")
-            self.proofReadingValidator = self.gds_parse_integer(
+            self.proofReadingValidator = self.parse_integer(
                 value, node, "proofReadingValidator"
             )
             self.validate_TIndexNumber(
@@ -228,7 +228,7 @@ class Validation(EcospoldBase):
             self.validate_TString32000(self.otherDetails)  # validate type TString32000
 
     def _buildChildren(
-        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
+        self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass
 

@@ -58,11 +58,11 @@ class Source(EcospoldBase):
         volumeNo=None,
         issueNo=None,
         text=None,
-        gds_collector=None,
+        collector=None,
         **kwargs
     ):
-        self.gds_collector = gds_collector
-        self.gds_elementtree_node = None
+        self.collector = collector
+        self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.number = _cast(int, number)
@@ -86,11 +86,11 @@ class Source(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -99,8 +99,8 @@ class Source(EcospoldBase):
                 )
                 return False
             if value < 1:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on TIndexNumber'
                     % {"value": value, "lineno": lineno}
                 )
@@ -111,11 +111,11 @@ class Source(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -124,15 +124,15 @@ class Source(EcospoldBase):
                 )
                 return False
             if value < 0:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on sourceTypeType'
                     % {"value": value, "lineno": lineno}
                 )
                 result = False
             if value > 7:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on sourceTypeType'
                     % {"value": value, "lineno": lineno}
                 )
@@ -143,11 +143,11 @@ class Source(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -156,8 +156,8 @@ class Source(EcospoldBase):
                 )
                 return False
             if len(value) > 40:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString40'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -168,11 +168,11 @@ class Source(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -181,8 +181,8 @@ class Source(EcospoldBase):
                 )
                 return False
             if len(value) > 255:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString255'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -193,11 +193,11 @@ class Source(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -206,8 +206,8 @@ class Source(EcospoldBase):
                 )
                 return False
             if len(value) > 32000:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString32000'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -218,11 +218,11 @@ class Source(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -231,8 +231,8 @@ class Source(EcospoldBase):
                 )
                 return False
             if len(value) > 15:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on pageNumbersType'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -243,11 +243,11 @@ class Source(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -255,10 +255,10 @@ class Source(EcospoldBase):
                     }
                 )
                 return False
-            if not self.gds_validate_simple_patterns(
+            if not self.validate_simple_patterns(
                 self.validate_volumeNoType_patterns_, value
             ):
-                self.gds_collector.add_message(
+                self.collector.add_message(
                     'Value "%s" does not match xsd pattern restrictions: %s'
                     % (
                         encode_str_2_3(value),
@@ -326,21 +326,21 @@ class Source(EcospoldBase):
             already_processed.add("number")
             outfile.write(
                 ' number="%s"'
-                % self.gds_format_integer(self.number, input_name="number")
+                % self.format_integer(self.number, input_name="number")
             )
         if self.sourceType != 0 and "sourceType" not in already_processed:
             already_processed.add("sourceType")
             outfile.write(
                 ' sourceType="%s"'
-                % self.gds_format_integer(self.sourceType, input_name="sourceType")
+                % self.format_integer(self.sourceType, input_name="sourceType")
             )
         if self.firstAuthor is not None and "firstAuthor" not in already_processed:
             already_processed.add("firstAuthor")
             outfile.write(
                 " firstAuthor=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.firstAuthor), input_name="firstAuthor"
                         )
                     ),
@@ -354,8 +354,8 @@ class Source(EcospoldBase):
             outfile.write(
                 " additionalAuthors=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.additionalAuthors),
                             input_name="additionalAuthors",
                         )
@@ -367,8 +367,8 @@ class Source(EcospoldBase):
             outfile.write(
                 " year=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.year), input_name="year"
                         )
                     ),
@@ -379,8 +379,8 @@ class Source(EcospoldBase):
             outfile.write(
                 " title=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.title), input_name="title"
                         )
                     ),
@@ -391,8 +391,8 @@ class Source(EcospoldBase):
             outfile.write(
                 " pageNumbers=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.pageNumbers), input_name="pageNumbers"
                         )
                     ),
@@ -403,8 +403,8 @@ class Source(EcospoldBase):
             outfile.write(
                 " nameOfEditors=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.nameOfEditors), input_name="nameOfEditors"
                         )
                     ),
@@ -418,8 +418,8 @@ class Source(EcospoldBase):
             outfile.write(
                 " titleOfAnthology=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.titleOfAnthology),
                             input_name="titleOfAnthology",
                         )
@@ -434,8 +434,8 @@ class Source(EcospoldBase):
             outfile.write(
                 " placeOfPublications=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.placeOfPublications),
                             input_name="placeOfPublications",
                         )
@@ -447,8 +447,8 @@ class Source(EcospoldBase):
             outfile.write(
                 " publisher=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.publisher), input_name="publisher"
                         )
                     ),
@@ -459,8 +459,8 @@ class Source(EcospoldBase):
             outfile.write(
                 " journal=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.journal), input_name="journal"
                         )
                     ),
@@ -470,15 +470,15 @@ class Source(EcospoldBase):
             already_processed.add("volumeNo")
             outfile.write(
                 ' volumeNo="%s"'
-                % self.gds_format_integer(self.volumeNo, input_name="volumeNo")
+                % self.format_integer(self.volumeNo, input_name="volumeNo")
             )
         if self.issueNo is not None and "issueNo" not in already_processed:
             already_processed.add("issueNo")
             outfile.write(
                 " issueNo=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.issueNo), input_name="issueNo"
                         )
                     ),
@@ -489,8 +489,8 @@ class Source(EcospoldBase):
             outfile.write(
                 " text=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.text), input_name="text"
                         )
                     ),
@@ -509,27 +509,27 @@ class Source(EcospoldBase):
     ):
         pass
 
-    def build(self, node, gds_collector=None):
-        self.gds_collector = gds_collector
+    def build(self, node, collector=None):
+        self.collector = collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node = node
+            self.elementtree_node = node
         already_processed = set()
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
+            self._buildChildren(child, node, nodeName, collector=collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("number", node)
         if value is not None and "number" not in already_processed:
             already_processed.add("number")
-            self.number = self.gds_parse_integer(value, node, "number")
+            self.number = self.parse_integer(value, node, "number")
             self.validate_TIndexNumber(self.number)  # validate type TIndexNumber
         value = find_attr_value("sourceType", node)
         if value is not None and "sourceType" not in already_processed:
             already_processed.add("sourceType")
-            self.sourceType = self.gds_parse_integer(value, node, "sourceType")
+            self.sourceType = self.parse_integer(value, node, "sourceType")
             self.validate_sourceTypeType(
                 self.sourceType
             )  # validate type sourceTypeType
@@ -587,7 +587,7 @@ class Source(EcospoldBase):
         value = find_attr_value("volumeNo", node)
         if value is not None and "volumeNo" not in already_processed:
             already_processed.add("volumeNo")
-            self.volumeNo = self.gds_parse_integer(value, node, "volumeNo")
+            self.volumeNo = self.parse_integer(value, node, "volumeNo")
             self.validate_volumeNoType(self.volumeNo)  # validate type volumeNoType
         value = find_attr_value("issueNo", node)
         if value is not None and "issueNo" not in already_processed:
@@ -601,7 +601,7 @@ class Source(EcospoldBase):
             self.validate_TString32000(self.text)  # validate type TString32000
 
     def _buildChildren(
-        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
+        self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass
 

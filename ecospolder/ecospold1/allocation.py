@@ -34,11 +34,11 @@ class Allocation(EcospoldBase):
         fraction=None,
         explanations=None,
         referenceToInputOutput=None,
-        gds_collector=None,
+        collector=None,
         **kwargs
     ):
-        self.gds_collector = gds_collector
-        self.gds_elementtree_node = None
+        self.collector = collector
+        self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.referenceToCoProduct = _cast(int, referenceToCoProduct)
@@ -56,11 +56,11 @@ class Allocation(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -69,8 +69,8 @@ class Allocation(EcospoldBase):
                 )
                 return False
             if value < 1:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on TIndexNumber'
                     % {"value": value, "lineno": lineno}
                 )
@@ -82,11 +82,11 @@ class Allocation(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -95,15 +95,15 @@ class Allocation(EcospoldBase):
                 )
                 return False
             if value < -1:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on allocationMethodType'
                     % {"value": value, "lineno": lineno}
                 )
                 result = False
             if value > 2:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on allocationMethodType'
                     % {"value": value, "lineno": lineno}
                 )
@@ -114,11 +114,11 @@ class Allocation(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -127,8 +127,8 @@ class Allocation(EcospoldBase):
                 )
                 return False
             if len(value) > 32000:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString32000'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -201,7 +201,7 @@ class Allocation(EcospoldBase):
             already_processed.add("referenceToCoProduct")
             outfile.write(
                 ' referenceToCoProduct="%s"'
-                % self.gds_format_integer(
+                % self.format_integer(
                     self.referenceToCoProduct, input_name="referenceToCoProduct"
                 )
             )
@@ -209,7 +209,7 @@ class Allocation(EcospoldBase):
             already_processed.add("allocationMethod")
             outfile.write(
                 ' allocationMethod="%s"'
-                % self.gds_format_integer(
+                % self.format_integer(
                     self.allocationMethod, input_name="allocationMethod"
                 )
             )
@@ -217,15 +217,15 @@ class Allocation(EcospoldBase):
             already_processed.add("fraction")
             outfile.write(
                 ' fraction="%s"'
-                % self.gds_format_float(self.fraction, input_name="fraction")
+                % self.format_float(self.fraction, input_name="fraction")
             )
         if self.explanations is not None and "explanations" not in already_processed:
             already_processed.add("explanations")
             outfile.write(
                 " explanations=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.explanations), input_name="explanations"
                         )
                     ),
@@ -252,7 +252,7 @@ class Allocation(EcospoldBase):
                 "<%sreferenceToInputOutput>%s</%sreferenceToInputOutput>%s"
                 % (
                     namespaceprefix,
-                    self.gds_format_integer(
+                    self.format_integer(
                         referenceToInputOutput_, input_name="referenceToInputOutput"
                     ),
                     namespaceprefix,
@@ -260,22 +260,22 @@ class Allocation(EcospoldBase):
                 )
             )
 
-    def build(self, node, gds_collector=None):
-        self.gds_collector = gds_collector
+    def build(self, node, collector=None):
+        self.collector = collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node = node
+            self.elementtree_node = node
         already_processed = set()
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
+            self._buildChildren(child, node, nodeName, collector=collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("referenceToCoProduct", node)
         if value is not None and "referenceToCoProduct" not in already_processed:
             already_processed.add("referenceToCoProduct")
-            self.referenceToCoProduct = self.gds_parse_integer(
+            self.referenceToCoProduct = self.parse_integer(
                 value, node, "referenceToCoProduct"
             )
             self.validate_TIndexNumber(
@@ -284,7 +284,7 @@ class Allocation(EcospoldBase):
         value = find_attr_value("allocationMethod", node)
         if value is not None and "allocationMethod" not in already_processed:
             already_processed.add("allocationMethod")
-            self.allocationMethod = self.gds_parse_integer(
+            self.allocationMethod = self.parse_integer(
                 value, node, "allocationMethod"
             )
             self.validate_allocationMethodType(
@@ -293,7 +293,7 @@ class Allocation(EcospoldBase):
         value = find_attr_value("fraction", node)
         if value is not None and "fraction" not in already_processed:
             already_processed.add("fraction")
-            value = self.gds_parse_float(value, node, "fraction")
+            value = self.parse_float(value, node, "fraction")
             self.fraction = value
         value = find_attr_value("explanations", node)
         if value is not None and "explanations" not in already_processed:
@@ -302,12 +302,12 @@ class Allocation(EcospoldBase):
             self.validate_TString32000(self.explanations)  # validate type TString32000
 
     def _buildChildren(
-        self, child, node, nodeName, fromsubclass=False, gds_collector=None
+        self, child, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "referenceToInputOutput" and child.text:
             sval = child.text
-            ival = self.gds_parse_integer(sval, node, "referenceToInputOutput")
-            ival = self.gds_validate_integer(ival, node, "referenceToInputOutput")
+            ival = self.parse_integer(sval, node, "referenceToInputOutput")
+            ival = self.validate_integer(ival, node, "referenceToInputOutput")
             self.referenceToInputOutput.append(ival)
             # validate type TIndexNumber
             self.validate_TIndexNumber(self.referenceToInputOutput[-1])

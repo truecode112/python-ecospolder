@@ -42,11 +42,11 @@ class TimePeriod(EcospoldBase):
         endYear=None,
         endYearMonth=None,
         endDate=None,
-        gds_collector=None,
+        collector=None,
         **kwargs
     ):
-        self.gds_collector = gds_collector
-        self.gds_elementtree_node = None
+        self.collector = collector
+        self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.dataValidForEntirePeriod = _cast(bool, dataValidForEntirePeriod)
@@ -71,11 +71,11 @@ class TimePeriod(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -84,8 +84,8 @@ class TimePeriod(EcospoldBase):
                 )
                 return False
             if len(value) > 32000:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString32000'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -165,7 +165,7 @@ class TimePeriod(EcospoldBase):
             already_processed.add("dataValidForEntirePeriod")
             outfile.write(
                 ' dataValidForEntirePeriod="%s"'
-                % self.gds_format_boolean(
+                % self.format_boolean(
                     self.dataValidForEntirePeriod, input_name="dataValidForEntirePeriod"
                 )
             )
@@ -174,8 +174,8 @@ class TimePeriod(EcospoldBase):
             outfile.write(
                 " text=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.text), input_name="text"
                         )
                     ),
@@ -202,8 +202,8 @@ class TimePeriod(EcospoldBase):
                 "<%sstartYear>%s</%sstartYear>%s"
                 % (
                     namespaceprefix,
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_xml(self.startYear), input_name="startYear"
                         )
                     ),
@@ -217,8 +217,8 @@ class TimePeriod(EcospoldBase):
                 "<%sstartYearMonth>%s</%sstartYearMonth>%s"
                 % (
                     namespaceprefix,
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_xml(self.startYearMonth), input_name="startYearMonth"
                         )
                     ),
@@ -232,7 +232,7 @@ class TimePeriod(EcospoldBase):
                 "<%sstartDate>%s</%sstartDate>%s"
                 % (
                     namespaceprefix,
-                    self.gds_format_date(self.startDate, input_name="startDate"),
+                    self.format_date(self.startDate, input_name="startDate"),
                     namespaceprefix,
                     eol,
                 )
@@ -243,8 +243,8 @@ class TimePeriod(EcospoldBase):
                 "<%sendYear>%s</%sendYear>%s"
                 % (
                     namespaceprefix,
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_xml(self.endYear), input_name="endYear"
                         )
                     ),
@@ -258,8 +258,8 @@ class TimePeriod(EcospoldBase):
                 "<%sendYearMonth>%s</%sendYearMonth>%s"
                 % (
                     namespaceprefix,
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_xml(self.endYearMonth), input_name="endYearMonth"
                         )
                     ),
@@ -273,21 +273,21 @@ class TimePeriod(EcospoldBase):
                 "<%sendDate>%s</%sendDate>%s"
                 % (
                     namespaceprefix,
-                    self.gds_format_date(self.endDate, input_name="endDate"),
+                    self.format_date(self.endDate, input_name="endDate"),
                     namespaceprefix,
                     eol,
                 )
             )
 
-    def build(self, node, gds_collector=None):
-        self.gds_collector = gds_collector
+    def build(self, node, collector=None):
+        self.collector = collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node = node
+            self.elementtree_node = node
         already_processed = set()
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
+            self._buildChildren(child, node, nodeName, collector=collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
@@ -307,35 +307,35 @@ class TimePeriod(EcospoldBase):
             self.validate_TString32000(self.text)  # validate type TString32000
 
     def _buildChildren(
-        self, child, node, nodeName, fromsubclass=False, gds_collector=None
+        self, child, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "startYear":
             value = child.text
-            value = self.gds_parse_string(value, node, "startYear")
-            value = self.gds_validate_string(value, node, "startYear")
+            value = self.parse_string(value, node, "startYear")
+            value = self.validate_string(value, node, "startYear")
             self.startYear = value
         elif nodeName == "startYearMonth":
             value = child.text
-            value = self.gds_parse_string(value, node, "startYearMonth")
-            value = self.gds_validate_string(value, node, "startYearMonth")
+            value = self.parse_string(value, node, "startYearMonth")
+            value = self.validate_string(value, node, "startYearMonth")
             self.startYearMonth = value
         elif nodeName == "startDate":
             sval = child.text
-            dval = self.gds_parse_date(sval)
+            dval = self.parse_date(sval)
             self.startDate = dval
         elif nodeName == "endYear":
             value = child.text
-            value = self.gds_parse_string(value, node, "endYear")
-            value = self.gds_validate_string(value, node, "endYear")
+            value = self.parse_string(value, node, "endYear")
+            value = self.validate_string(value, node, "endYear")
             self.endYear = value
         elif nodeName == "endYearMonth":
             value = child.text
-            value = self.gds_parse_string(value, node, "endYearMonth")
-            value = self.gds_validate_string(value, node, "endYearMonth")
+            value = self.parse_string(value, node, "endYearMonth")
+            value = self.validate_string(value, node, "endYearMonth")
             self.endYearMonth = value
         elif nodeName == "endDate":
             sval = child.text
-            dval = self.gds_parse_date(sval)
+            dval = self.parse_date(sval)
             self.endDate = dval
 
 

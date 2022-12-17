@@ -73,11 +73,11 @@ class ReferenceFunction(EcospoldBase):
         statisticalClassification=None,
         formula=None,
         synonym=None,
-        gds_collector=None,
+        collector=None,
         **kwargs
     ):
-        self.gds_collector = gds_collector
-        self.gds_elementtree_node = None
+        self.collector = collector
+        self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.datasetRelatesToProduct = _cast(bool, datasetRelatesToProduct)
@@ -107,11 +107,11 @@ class ReferenceFunction(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -120,8 +120,8 @@ class ReferenceFunction(EcospoldBase):
                 )
                 return False
             if len(value) > 80:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString80'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -133,11 +133,11 @@ class ReferenceFunction(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, float):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
                     % {
                         "value": value,
@@ -152,11 +152,11 @@ class ReferenceFunction(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -165,8 +165,8 @@ class ReferenceFunction(EcospoldBase):
                 )
                 return False
             if len(value) > 20:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TUnit'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -177,11 +177,11 @@ class ReferenceFunction(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -190,15 +190,15 @@ class ReferenceFunction(EcospoldBase):
                 )
                 return False
             if len(value) > 40:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TCategoryName'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
             if len(value) < 0:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minLength restriction on TCategoryName'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -209,11 +209,11 @@ class ReferenceFunction(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -222,8 +222,8 @@ class ReferenceFunction(EcospoldBase):
                 )
                 return False
             if len(value) > 32000:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString32000'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -234,11 +234,11 @@ class ReferenceFunction(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -247,16 +247,16 @@ class ReferenceFunction(EcospoldBase):
                 )
                 return False
             if len(value) > 11:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on CASNumberType'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
-            if not self.gds_validate_simple_patterns(
+            if not self.validate_simple_patterns(
                 self.validate_CASNumberType_patterns_, value
             ):
-                self.gds_collector.add_message(
+                self.collector.add_message(
                     'Value "%s" does not match xsd pattern restrictions: %s'
                     % (
                         encode_str_2_3(value),
@@ -271,11 +271,11 @@ class ReferenceFunction(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -283,10 +283,10 @@ class ReferenceFunction(EcospoldBase):
                     }
                 )
                 return False
-            if not self.gds_validate_simple_patterns(
+            if not self.validate_simple_patterns(
                 self.validate_statisticalClassificationType_patterns_, value
             ):
-                self.gds_collector.add_message(
+                self.collector.add_message(
                     'Value "%s" does not match xsd pattern restrictions: %s'
                     % (
                         encode_str_2_3(value),
@@ -301,11 +301,11 @@ class ReferenceFunction(EcospoldBase):
         if (
             value is not None
             and Validate_simpletypes
-            and self.gds_collector is not None
+            and self.collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -314,8 +314,8 @@ class ReferenceFunction(EcospoldBase):
                 )
                 return False
             if len(value) > 40:
-                lineno = self.gds_get_node_lineno()
-                self.gds_collector.add_message(
+                lineno = self.get_node_lineno()
+                self.collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString40'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -392,7 +392,7 @@ class ReferenceFunction(EcospoldBase):
             already_processed.add("datasetRelatesToProduct")
             outfile.write(
                 ' datasetRelatesToProduct="%s"'
-                % self.gds_format_boolean(
+                % self.format_boolean(
                     self.datasetRelatesToProduct, input_name="datasetRelatesToProduct"
                 )
             )
@@ -401,8 +401,8 @@ class ReferenceFunction(EcospoldBase):
             outfile.write(
                 " name=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.name), input_name="name"
                         )
                     ),
@@ -413,8 +413,8 @@ class ReferenceFunction(EcospoldBase):
             outfile.write(
                 " localName=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.localName), input_name="localName"
                         )
                     ),
@@ -427,7 +427,7 @@ class ReferenceFunction(EcospoldBase):
             already_processed.add("infrastructureProcess")
             outfile.write(
                 ' infrastructureProcess="%s"'
-                % self.gds_format_boolean(
+                % self.format_boolean(
                     self.infrastructureProcess, input_name="infrastructureProcess"
                 )
             )
@@ -435,15 +435,15 @@ class ReferenceFunction(EcospoldBase):
             already_processed.add("amount")
             outfile.write(
                 ' amount="%s"'
-                % self.gds_format_double(self.amount, input_name="amount")
+                % self.format_double(self.amount, input_name="amount")
             )
         if self.unit is not None and "unit" not in already_processed:
             already_processed.add("unit")
             outfile.write(
                 " unit=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.unit), input_name="unit"
                         )
                     ),
@@ -454,8 +454,8 @@ class ReferenceFunction(EcospoldBase):
             outfile.write(
                 " category=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.category), input_name="category"
                         )
                     ),
@@ -466,8 +466,8 @@ class ReferenceFunction(EcospoldBase):
             outfile.write(
                 " subCategory=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.subCategory), input_name="subCategory"
                         )
                     ),
@@ -478,8 +478,8 @@ class ReferenceFunction(EcospoldBase):
             outfile.write(
                 " localCategory=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.localCategory), input_name="localCategory"
                         )
                     ),
@@ -493,8 +493,8 @@ class ReferenceFunction(EcospoldBase):
             outfile.write(
                 " localSubCategory=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.localSubCategory),
                             input_name="localSubCategory",
                         )
@@ -509,8 +509,8 @@ class ReferenceFunction(EcospoldBase):
             outfile.write(
                 " includedProcesses=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.includedProcesses),
                             input_name="includedProcesses",
                         )
@@ -525,8 +525,8 @@ class ReferenceFunction(EcospoldBase):
             outfile.write(
                 " generalComment=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.generalComment),
                             input_name="generalComment",
                         )
@@ -540,7 +540,7 @@ class ReferenceFunction(EcospoldBase):
             already_processed.add("infrastructureIncluded")
             outfile.write(
                 ' infrastructureIncluded="%s"'
-                % self.gds_format_boolean(
+                % self.format_boolean(
                     self.infrastructureIncluded, input_name="infrastructureIncluded"
                 )
             )
@@ -549,8 +549,8 @@ class ReferenceFunction(EcospoldBase):
             outfile.write(
                 " CASNumber=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.CASNumber), input_name="CASNumber"
                         )
                     ),
@@ -563,7 +563,7 @@ class ReferenceFunction(EcospoldBase):
             already_processed.add("statisticalClassification")
             outfile.write(
                 ' statisticalClassification="%s"'
-                % self.gds_format_integer(
+                % self.format_integer(
                     self.statisticalClassification,
                     input_name="statisticalClassification",
                 )
@@ -573,8 +573,8 @@ class ReferenceFunction(EcospoldBase):
             outfile.write(
                 " formula=%s"
                 % (
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_attrib(self.formula), input_name="formula"
                         )
                     ),
@@ -601,8 +601,8 @@ class ReferenceFunction(EcospoldBase):
                 "<%ssynonym>%s</%ssynonym>%s"
                 % (
                     namespaceprefix,
-                    self.gds_encode(
-                        self.gds_format_string(
+                    self.encode(
+                        self.format_string(
                             quote_xml(synonym_), input_name="synonym"
                         )
                     ),
@@ -611,15 +611,15 @@ class ReferenceFunction(EcospoldBase):
                 )
             )
 
-    def build(self, node, gds_collector=None):
-        self.gds_collector = gds_collector
+    def build(self, node, collector=None):
+        self.collector = collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node = node
+            self.elementtree_node = node
         already_processed = set()
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
+            self._buildChildren(child, node, nodeName, collector=collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
@@ -654,7 +654,7 @@ class ReferenceFunction(EcospoldBase):
         value = find_attr_value("amount", node)
         if value is not None and "amount" not in already_processed:
             already_processed.add("amount")
-            value = self.gds_parse_double(value, node, "amount")
+            value = self.parse_double(value, node, "amount")
             self.amount = value
             self.validate_TFloatNumber(self.amount)  # validate type TFloatNumber
         value = find_attr_value("unit", node)
@@ -717,7 +717,7 @@ class ReferenceFunction(EcospoldBase):
         value = find_attr_value("statisticalClassification", node)
         if value is not None and "statisticalClassification" not in already_processed:
             already_processed.add("statisticalClassification")
-            self.statisticalClassification = self.gds_parse_integer(
+            self.statisticalClassification = self.parse_integer(
                 value, node, "statisticalClassification"
             )
             self.validate_statisticalClassificationType(
@@ -730,12 +730,12 @@ class ReferenceFunction(EcospoldBase):
             self.validate_TString40(self.formula)  # validate type TString40
 
     def _buildChildren(
-        self, child, node, nodeName, fromsubclass=False, gds_collector=None
+        self, child, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "synonym":
             value = child.text
-            value = self.gds_parse_string(value, node, "synonym")
-            value = self.gds_validate_string(value, node, "synonym")
+            value = self.parse_string(value, node, "synonym")
+            value = self.validate_string(value, node, "synonym")
             self.synonym.append(value)
             # validate type TString80
             self.validate_TString80(self.synonym[-1])
