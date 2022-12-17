@@ -1,8 +1,8 @@
-from pathlib import Path
+import importlib.metadata
 from typing import Union
 
 
-def get_version() -> tuple:
+def get_version_tuple() -> tuple:
     def as_integer(x: str) -> Union[int, str]:
         try:
             return int(x)
@@ -11,8 +11,8 @@ def get_version() -> tuple:
 
     return tuple(
         as_integer(v)
-        for v in open(Path(__file__).parent / "VERSION").read().strip().split(".")
+        for v in importlib.metadata.version("ecospolder").strip().split(".")
     )
 
 
-__version__ = get_version()
+__version__ = get_version_tuple()

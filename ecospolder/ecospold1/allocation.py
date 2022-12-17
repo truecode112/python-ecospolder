@@ -3,6 +3,11 @@ sys.path.append('../')
 
 from ecospold_base import *
 
+def _cast(typ, value):
+    if typ is None or value is None:
+        return value
+    return typ(value)
+
 class Allocation(EcospoldBase):
     """Allocation -- Contains all information about allocation procedure, allocation parameters and allocation factors applied on a multi-output process.
     referenceToCoProduct -- Indicates the co-product output for which a particular allocation factor is valid. Additional information is required about the exchange on which the allocation factor is applied (see 'referenceToInputOutput').
