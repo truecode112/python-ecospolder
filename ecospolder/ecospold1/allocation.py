@@ -1,7 +1,4 @@
-import sys
-sys.path.append('../')
-
-from ecospold_base import EcospoldBase
+from ..ecospold_base import EcospoldBase
 
 
 def _cast(typ, value):

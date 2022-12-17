@@ -1,7 +1,4 @@
-import sys
-sys.path.append('../')
-
-from ecospold_base import EcospoldBase
+from ..ecospold_base import EcospoldBase
 
 from allocation import Allocation
 from exchange import Exchange

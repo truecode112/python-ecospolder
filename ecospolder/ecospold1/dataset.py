@@ -1,8 +1,4 @@
-
-import sys
-sys.path.append('../')
-
-from ecospold_base import EcospoldBase
+from ..ecospold_base import EcospoldBase
 from flow_data import FlowData
 from meta_information import MetaInformation
 
