@@ -3,12 +3,6 @@ sys.path.append('../')
 from ecospold_base import *
 
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class DataEntryBy(EcospoldBase):
     """DataEntryBy -- Contains information about the person that entered data in the database or transformed data into the format of the ecoinvent (or any other) quality network.
     person -- ID number for the person that prepared the dataset and enters the dataset into the database. It must correspond to an ID number of a person listed in the respective dataset.
@@ -23,8 +17,8 @@ class DataEntryBy(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.person = _cast(int, person)
-        self.qualityNetwork = _cast(int, qualityNetwork)
+        self.person = cast_value_with_type(int, person)
+        self.qualityNetwork = cast_value_with_type(int, qualityNetwork)
 
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.
@@ -51,7 +45,7 @@ class DataEntryBy(EcospoldBase):
                 )
                 result = False
 
-    def _hasContent(self):
+    def hasContent(self):
         if ():
             return True
         else:
@@ -66,9 +60,6 @@ class DataEntryBy(EcospoldBase):
         name="DataEntryBy",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("DataEntryBy")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -85,12 +76,12 @@ class DataEntryBy(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile, level, already_processed, namespaceprefix, name="DataEntryBy"
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -102,7 +93,7 @@ class DataEntryBy(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self,
         outfile,
         level,
@@ -128,7 +119,7 @@ class DataEntryBy(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -145,13 +136,13 @@ class DataEntryBy(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("person", node)
         if value is not None and "person" not in already_processed:
             already_processed.add("person")
@@ -162,7 +153,7 @@ class DataEntryBy(EcospoldBase):
             already_processed.add("qualityNetwork")
             self.qualityNetwork = self.parse_integer(value, node, "qualityNetwork")
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass

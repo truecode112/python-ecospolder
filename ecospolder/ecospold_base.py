@@ -5,25 +5,22 @@ from decimal import Decimal
 import os
 import re
 import sys
-
+from io import StringIO
 from lxml import etree as etre
+from typing import List
+import time
 
 try:
     ModulenotfoundExp = ModuleNotFoundError
 except NameError:
     ModulenotfoundExp = ImportError
 
-ExternalEncoding = ""
 # Set this to false in order to deactivate during export, the use of
 # name space prefixes captured from the input document.
 UseCapturedNS = True
 CapturedNsmap = {}
 tag_pattern = re.compile(r"({.*})?(.*)")
-String_cleanup_pat = re.compile(r"[\n\r\s]+")
-Namespace_extract_pat = re.compile(r"{(.*)}(.*)")
 CDATA_pattern = re.compile(r"<!\[CDATA\[.*?\]\]>", re.DOTALL)
-GenerateDSNamespaceDefs = {}
-GenerateDSNamespaceTypePrefixes = {}
 
 if sys.version_info.major == 2:
     BaseStrType = basestring
@@ -41,15 +38,16 @@ except ModulenotfoundExp:
 
 CurrentSubclassModule = None
 
+def cast_value_with_type(typ, value):
+    if typ is None or value is None:
+        return value
+    return typ(value)
 
 class CollectorClass(object):
     def __init__(self, messages=None):
-        if messages is None:
-            self.messages = []
-        else:
-            self.messages = messages
+        self.messages = [] if messages is None else messages
 
-    def add_message(self, msg):
+    def add_message(self, msg: str):
         self.messages.append(msg)
 
     def get_messages(self):
@@ -95,10 +93,6 @@ class EcospoldBase:
         for n in settings:
             if hasattr(self, n):
                 settings[n] = getattr(self, n)
-        if sys.version_info.major == 2:
-            from StringIO import StringIO
-        else:
-            from io import StringIO
         output = StringIO()
         self.export(
             output,
@@ -112,13 +106,13 @@ class EcospoldBase:
         output.close()
         return strval
 
-    def format_string(self, input_data, input_name=""):
+    def format_string(self, input_data : str, input_name=""):
         return input_data
 
-    def parse_string(self, input_data, node=None, input_name=""):
+    def parse_string(self, input_data : str, node=None, input_name=""):
         return input_data
 
-    def validate_string(self, input_data, node=None, input_name=""):
+    def validate_string(self, input_data : str, node=None, input_name=""):
         if not input_data:
             return ""
         else:
@@ -133,26 +127,26 @@ class EcospoldBase:
     def format_integer(self, input_data, input_name=""):
         return "%d" % int(input_data)
 
-    def parse_integer(self, input_data, node=None, input_name=""):
+    def parse_integer(self, input_data : int, node=None, input_name=""):
         try:
             ival = int(input_data)
         except (TypeError, ValueError) as exp:
             raise_parse_error(node, "Requires integer value: %s" % exp)
         return ival
 
-    def validate_integer(self, input_data, node=None, input_name=""):
+    def validate_integer(self, input_data : int, node=None, input_name=""):
         try:
             value = int(input_data)
         except (TypeError, ValueError):
             raise_parse_error(node, "Requires integer value")
         return value
 
-    def format_integer_list(self, input_data, input_name=""):
+    def format_integer_list(self, input_data : List[int], input_name=""):
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
 
-    def validate_integer_list(self, input_data, node=None, input_name=""):
+    def validate_integer_list(self, input_data : List[int], node=None, input_name=""):
         values = input_data.split()
         for value in values:
             try:
@@ -161,29 +155,29 @@ class EcospoldBase:
                 raise_parse_error(node, "Requires sequence of integer values")
         return values
 
-    def format_float(self, input_data, input_name=""):
+    def format_float(self, input_data : float, input_name=""):
         return ("%.15f" % float(input_data)).rstrip("0")
 
-    def parse_float(self, input_data, node=None, input_name=""):
+    def parse_float(self, input_data : float, node=None, input_name=""):
         try:
             fval = float(input_data)
         except (TypeError, ValueError) as exp:
             raise_parse_error(node, "Requires float or double value: %s" % exp)
         return fval
 
-    def validate_float(self, input_data, node=None, input_name=""):
+    def validate_float(self, input_data : float, node=None, input_name=""):
         try:
             value = float(input_data)
         except (TypeError, ValueError):
             raise_parse_error(node, "Requires float value")
         return value
 
-    def format_float_list(self, input_data, input_name=""):
+    def format_float_list(self, input_data : List[float], input_name=""):
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
 
-    def validate_float_list(self, input_data, node=None, input_name=""):
+    def validate_float_list(self, input_data : List[float], node=None, input_name=""):
         values = input_data.split()
         for value in values:
             try:
@@ -192,7 +186,7 @@ class EcospoldBase:
                 raise_parse_error(node, "Requires sequence of float values")
         return values
 
-    def format_decimal(self, input_data, input_name=""):
+    def format_decimal(self, input_data : Decimal, input_name=""):
         return_value = "%s" % input_data
         if "." in return_value:
             return_value = return_value.rstrip("0")
@@ -200,26 +194,26 @@ class EcospoldBase:
                 return_value = return_value.rstrip(".")
         return return_value
 
-    def parse_decimal(self, input_data, node=None, input_name=""):
+    def parse_decimal(self, input_data : Decimal, node=None, input_name=""):
         try:
             decimal_value = Decimal(input_data)
         except (TypeError, ValueError):
             raise_parse_error(node, "Requires decimal value")
         return decimal_value
 
-    def validate_decimal(self, input_data, node=None, input_name=""):
+    def validate_decimal(self, input_data : Decimal, node=None, input_name=""):
         try:
             value = Decimal(input_data)
         except (TypeError, ValueError):
             raise_parse_error(node, "Requires decimal value")
         return value
 
-    def format_decimal_list(self, input_data, input_name=""):
+    def format_decimal_list(self, input_data : List[Decimal], input_name=""):
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return " ".join([self.format_decimal(item) for item in input_data])
 
-    def validate_decimal_list(self, input_data, node=None, input_name=""):
+    def validate_decimal_list(self, input_data : Decimal, node=None, input_name=""):
         values = input_data.split()
         for value in values:
             try:
@@ -228,29 +222,29 @@ class EcospoldBase:
                 raise_parse_error(node, "Requires sequence of decimal values")
         return values
 
-    def format_double(self, input_data, input_name=""):
+    def format_double(self, input_data : float, input_name=""):
         return "%s" % input_data
 
-    def parse_double(self, input_data, node=None, input_name=""):
+    def parse_double(self, input_data : float, node=None, input_name=""):
         try:
             fval = float(input_data)
         except (TypeError, ValueError) as exp:
             raise_parse_error(node, "Requires double or float value: %s" % exp)
         return fval
 
-    def validate_double(self, input_data, node=None, input_name=""):
+    def validate_double(self, input_data : float, node=None, input_name=""):
         try:
             value = float(input_data)
         except (TypeError, ValueError):
             raise_parse_error(node, "Requires double or float value")
         return value
 
-    def format_double_list(self, input_data, input_name=""):
+    def format_double_list(self, input_data : List[float], input_name=""):
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
 
-    def validate_double_list(self, input_data, node=None, input_name=""):
+    def validate_double_list(self, input_data : List[float], node=None, input_name=""):
         values = input_data.split()
         for value in values:
             try:
@@ -262,7 +256,7 @@ class EcospoldBase:
     def format_boolean(self, input_data, input_name=""):
         return ("%s" % input_data).lower()
 
-    def parse_boolean(self, input_data, node=None, input_name=""):
+    def parse_boolean(self, input_data : str, node=None, input_name=""):
         input_data = input_data.strip()
         if input_data in ("true", "1"):
             bval = True
@@ -272,7 +266,7 @@ class EcospoldBase:
             raise_parse_error(node, "Requires boolean value")
         return bval
 
-    def validate_boolean(self, input_data, node=None, input_name=""):
+    def validate_boolean(self, input_data : bool, node=None, input_name=""):
         if input_data not in (
             True,
             1,
@@ -284,12 +278,12 @@ class EcospoldBase:
             )
         return input_data
 
-    def format_boolean_list(self, input_data, input_name=""):
+    def format_boolean_list(self, input_data : List[str], input_name=""):
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
 
-    def validate_boolean_list(self, input_data, node=None, input_name=""):
+    def validate_boolean_list(self, input_data : List[bool], node=None, input_name=""):
         values = input_data.split()
         for value in values:
             value = self.parse_boolean(value, node, input_name)
@@ -305,10 +299,10 @@ class EcospoldBase:
                 )
         return values
 
-    def validate_datetime(self, input_data, node=None, input_name=""):
+    def validate_datetime(self, input_data : date_t, node=None, input_name=""):
         return input_data
 
-    def format_datetime(self, input_data, input_name=""):
+    def format_datetime(self, input_data : date_t, input_name=""):
         if input_data.microsecond == 0:
             _svalue = "%04d-%02d-%02dT%02d:%02d:%02d" % (
                 input_data.year,
@@ -346,7 +340,7 @@ class EcospoldBase:
         return _svalue
 
     @classmethod
-    def parse_datetime(cls, input_data):
+    def parse_datetime(cls, input_data : str):
         tz = None
         if input_data[-1] == "Z":
             tz = EcospoldBase._FixedOffsetTZ(0, "UTC")
@@ -373,10 +367,10 @@ class EcospoldBase:
         dt = dt.replace(tzinfo=tz)
         return dt
 
-    def validate_date(self, input_data, node=None, input_name=""):
+    def validate_date(self, input_data : date_t, node=None, input_name=""):
         return input_data
 
-    def format_date(self, input_data, input_name=""):
+    def format_date(self, input_data : date_t, input_name=""):
         _svalue = "%04d-%02d-%02d" % (
             input_data.year,
             input_data.month,
@@ -403,7 +397,7 @@ class EcospoldBase:
         return _svalue
 
     @classmethod
-    def parse_date(cls, input_data):
+    def parse_date(cls, input_data : str):
         tz = None
         if input_data[-1] == "Z":
             tz = EcospoldBase._FixedOffsetTZ(0, "UTC")
@@ -604,10 +598,7 @@ class EcospoldBase:
     @staticmethod
     def encode(instring):
         if sys.version_info.major == 2:
-            if ExternalEncoding:
-                encoding = ExternalEncoding
-            else:
-                encoding = "utf-8"
+            encoding = "utf-8"
             return instring.encode(encoding)
         else:
             return instring

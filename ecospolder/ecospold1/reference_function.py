@@ -2,12 +2,6 @@ import sys
 sys.path.append('../')
 from ecospold_base import *
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class ReferenceFunction(EcospoldBase):
     """ReferenceFunction -- Contains the identifying information of a dataset including name (english and german), unit, classification (category, subCategory), etc..
     datasetRelatesToProduct -- Indicates whether the dataset relates to a process/service or not.
@@ -80,22 +74,22 @@ class ReferenceFunction(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.datasetRelatesToProduct = _cast(bool, datasetRelatesToProduct)
-        self.name = _cast(None, name)
-        self.localName = _cast(None, localName)
-        self.infrastructureProcess = _cast(bool, infrastructureProcess)
-        self.amount = _cast(float, amount)
-        self.unit = _cast(None, unit)
-        self.category = _cast(None, category)
-        self.subCategory = _cast(None, subCategory)
-        self.localCategory = _cast(None, localCategory)
-        self.localSubCategory = _cast(None, localSubCategory)
-        self.includedProcesses = _cast(None, includedProcesses)
-        self.generalComment = _cast(None, generalComment)
-        self.infrastructureIncluded = _cast(bool, infrastructureIncluded)
-        self.CASNumber = _cast(None, CASNumber)
-        self.statisticalClassification = _cast(int, statisticalClassification)
-        self.formula = _cast(None, formula)
+        self.datasetRelatesToProduct = cast_value_with_type(bool, datasetRelatesToProduct)
+        self.name = cast_value_with_type(None, name)
+        self.localName = cast_value_with_type(None, localName)
+        self.infrastructureProcess = cast_value_with_type(bool, infrastructureProcess)
+        self.amount = cast_value_with_type(float, amount)
+        self.unit = cast_value_with_type(None, unit)
+        self.category = cast_value_with_type(None, category)
+        self.subCategory = cast_value_with_type(None, subCategory)
+        self.localCategory = cast_value_with_type(None, localCategory)
+        self.localSubCategory = cast_value_with_type(None, localSubCategory)
+        self.includedProcesses = cast_value_with_type(None, includedProcesses)
+        self.generalComment = cast_value_with_type(None, generalComment)
+        self.infrastructureIncluded = cast_value_with_type(bool, infrastructureIncluded)
+        self.CASNumber = cast_value_with_type(None, CASNumber)
+        self.statisticalClassification = cast_value_with_type(int, statisticalClassification)
+        self.formula = cast_value_with_type(None, formula)
         if synonym is None:
             self.synonym = []
         else:
@@ -321,7 +315,7 @@ class ReferenceFunction(EcospoldBase):
                 )
                 result = False
 
-    def _hasContent(self):
+    def hasContent(self):
         if self.synonym:
             return True
         else:
@@ -336,9 +330,6 @@ class ReferenceFunction(EcospoldBase):
         name="ReferenceFunction",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("ReferenceFunction")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -355,16 +346,16 @@ class ReferenceFunction(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile,
             level,
             already_processed,
             namespaceprefix,
             name="ReferenceFunction",
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -377,7 +368,7 @@ class ReferenceFunction(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self,
         outfile,
         level,
@@ -581,7 +572,7 @@ class ReferenceFunction(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -616,13 +607,13 @@ class ReferenceFunction(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("datasetRelatesToProduct", node)
         if value is not None and "datasetRelatesToProduct" not in already_processed:
             already_processed.add("datasetRelatesToProduct")
@@ -729,13 +720,13 @@ class ReferenceFunction(EcospoldBase):
             self.formula = value
             self.validate_TString40(self.formula)  # validate type TString40
 
-    def _buildChildren(
+    def buildChildren(
         self, child, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "synonym":
             value = child.text
-            value = self.parse_string(value, node, "synonym")
-            value = self.validate_string(value, node, "synonym")
+            value = self.parse_string(value)
+            value = self.validate_string(value)
             self.synonym.append(value)
             # validate type TString80
             self.validate_TString80(self.synonym[-1])

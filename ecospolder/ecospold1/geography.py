@@ -2,12 +2,6 @@ import sys
 sys.path.append('../')
 from ecospold_base import *
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class Geography(EcospoldBase):
     """Geography -- Contains information about the geographic validity of the process. The region described with regional code and free text is the market area of the product / service at issue and not necessarily the place of production.
     location -- 7 letter regional code (capital letters). List of 2 letter ISO country codes extended by codes for regions, continents, market areas, and organisations and companies. The location code indicates the supply area of a product/service and the area of validity of impact assessment methods and impact categories, respectively. It does NOT necessarily coincide with the area/site of production or provenience. If supply and production area differ, production area is indicated in the name of the unit process.
@@ -24,8 +18,8 @@ class Geography(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.location = _cast(None, location)
-        self.text = _cast(None, text)
+        self.location = cast_value_with_type(None, location)
+        self.text = cast_value_with_type(None, text)
 
     def validate_TRegionalCode(self, value):
         # Validate type TRegionalCode, a restriction on xsd:string.
@@ -77,7 +71,7 @@ class Geography(EcospoldBase):
                 )
                 result = False
 
-    def _hasContent(self):
+    def hasContent(self):
         if ():
             return True
         else:
@@ -92,9 +86,6 @@ class Geography(EcospoldBase):
         name="Geography",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("Geography")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -111,12 +102,12 @@ class Geography(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile, level, already_processed, namespaceprefix, name="Geography"
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -128,7 +119,7 @@ class Geography(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self, outfile, level, already_processed, namespaceprefix="", name="Geography"
     ):
         if self.location is not None and "location" not in already_processed:
@@ -156,7 +147,7 @@ class Geography(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -173,13 +164,13 @@ class Geography(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("location", node)
         if value is not None and "location" not in already_processed:
             already_processed.add("location")
@@ -191,7 +182,7 @@ class Geography(EcospoldBase):
             self.text = value
             self.validate_TString32000(self.text)  # validate type TString32000
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass

@@ -4,12 +4,6 @@ sys.path.append('../')
 from ecospold_base import *
 
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class Exchange(EcospoldBase):
     """Exchange -- Comprises all inputs and outputs (both elementary flows and intermediate product flows) recorded in a unit process and its related information.
     number -- ID number used as an identifier of a particular exchange in a dataset.
@@ -88,27 +82,27 @@ class Exchange(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.number = _cast(int, number)
-        self.category = _cast(None, category)
-        self.subCategory = _cast(None, subCategory)
-        self.localCategory = _cast(None, localCategory)
-        self.localSubCategory = _cast(None, localSubCategory)
-        self.CASNumber = _cast(None, CASNumber)
-        self.name = _cast(None, name)
-        self.location = _cast(None, location)
-        self.unit = _cast(None, unit)
-        self.meanValue = _cast(float, meanValue)
-        self.uncertaintyType = _cast(int, uncertaintyType)
-        self.standardDeviation95 = _cast(float, standardDeviation95)
-        self.formula = _cast(None, formula)
-        self.referenceToSource = _cast(int, referenceToSource)
-        self.pageNumbers = _cast(None, pageNumbers)
-        self.generalComment = _cast(None, generalComment)
-        self.localName = _cast(None, localName)
-        self.infrastructureProcess = _cast(bool, infrastructureProcess)
-        self.minValue = _cast(float, minValue)
-        self.maxValue = _cast(float, maxValue)
-        self.mostLikelyValue = _cast(float, mostLikelyValue)
+        self.number = cast_value_with_type(int, number)
+        self.category = cast_value_with_type(None, category)
+        self.subCategory = cast_value_with_type(None, subCategory)
+        self.localCategory = cast_value_with_type(None, localCategory)
+        self.localSubCategory = cast_value_with_type(None, localSubCategory)
+        self.CASNumber = cast_value_with_type(None, CASNumber)
+        self.name = cast_value_with_type(None, name)
+        self.location = cast_value_with_type(None, location)
+        self.unit = cast_value_with_type(None, unit)
+        self.meanValue = cast_value_with_type(float, meanValue)
+        self.uncertaintyType = cast_value_with_type(int, uncertaintyType)
+        self.standardDeviation95 = cast_value_with_type(float, standardDeviation95)
+        self.formula = cast_value_with_type(None, formula)
+        self.referenceToSource = cast_value_with_type(int, referenceToSource)
+        self.pageNumbers = cast_value_with_type(None, pageNumbers)
+        self.generalComment = cast_value_with_type(None, generalComment)
+        self.localName = cast_value_with_type(None, localName)
+        self.infrastructureProcess = cast_value_with_type(bool, infrastructureProcess)
+        self.minValue = cast_value_with_type(float, minValue)
+        self.maxValue = cast_value_with_type(float, maxValue)
+        self.mostLikelyValue = cast_value_with_type(float, mostLikelyValue)
         self.inputGroup = inputGroup
         self.validate_inputGroupType(self.inputGroup)
         self.outputGroup = outputGroup
@@ -477,7 +471,7 @@ class Exchange(EcospoldBase):
                 )
                 result = False
 
-    def _hasContent(self):
+    def hasContent(self):
         if self.inputGroup is not None or self.outputGroup is not None:
             return True
         else:
@@ -492,9 +486,6 @@ class Exchange(EcospoldBase):
         name="Exchange",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("Exchange")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -511,12 +502,12 @@ class Exchange(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile, level, already_processed, namespaceprefix, name="Exchange"
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -529,7 +520,7 @@ class Exchange(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self, outfile, level, already_processed, namespaceprefix="", name="Exchange"
     ):
         if self.number is not None and "number" not in already_processed:
@@ -764,7 +755,7 @@ class Exchange(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -806,13 +797,13 @@ class Exchange(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("number", node)
         if value is not None and "number" not in already_processed:
             already_processed.add("number")
@@ -946,7 +937,7 @@ class Exchange(EcospoldBase):
                 self.mostLikelyValue
             )  # validate type TFloatNumber
 
-    def _buildChildren(
+    def buildChildren(
         self, child, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "inputGroup" and child.text:

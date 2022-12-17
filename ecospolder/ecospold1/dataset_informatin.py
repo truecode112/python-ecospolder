@@ -3,12 +3,6 @@ sys.path.append('../')
 from ecospold_base import *
 
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class DatasetInformation(EcospoldBase):
     """DatasetInformation -- Contains the administrative information about the dataset at issue: type of dataset (unit process, elementary flow, impact category, multi-output process) timestamp, version and internalVersion number as well as language and localLanguage code.
     type -- Indicates the kind of data that is represented by this dataset.
@@ -47,18 +41,18 @@ class DatasetInformation(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.type = _cast(int, type)
-        self.impactAssessmentResult = _cast(bool, impactAssessmentResult)
+        self.type = cast_value_with_type(int, type)
+        self.impactAssessmentResult = cast_value_with_type(bool, impactAssessmentResult)
         if isinstance(timestamp, BaseStrType):
             initvalue = date_t.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S")
         else:
             initvalue = timestamp
         self.timestamp = initvalue
-        self.version = _cast(float, version)
-        self.internalVersion = _cast(float, internalVersion)
-        self.energyValues = _cast(int, energyValues)
-        self.languageCode = _cast(None, languageCode)
-        self.localLanguageCode = _cast(None, localLanguageCode)
+        self.version = cast_value_with_type(float, version)
+        self.internalVersion = cast_value_with_type(float, internalVersion)
+        self.energyValues = cast_value_with_type(int, energyValues)
+        self.languageCode = cast_value_with_type(None, languageCode)
+        self.localLanguageCode = cast_value_with_type(None, localLanguageCode)
 
     def validate_typeType(self, value):
         # Validate type typeType, a restriction on xsd:integer.
@@ -361,7 +355,7 @@ class DatasetInformation(EcospoldBase):
                 )
                 result = False
 
-    def _hasContent(self):
+    def hasContent(self):
         if ():
             return True
         else:
@@ -376,9 +370,6 @@ class DatasetInformation(EcospoldBase):
         name="DatasetInformation",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("DatasetInformation")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -395,16 +386,16 @@ class DatasetInformation(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile,
             level,
             already_processed,
             namespaceprefix,
             name="DatasetInformation",
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -416,7 +407,7 @@ class DatasetInformation(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self,
         outfile,
         level,
@@ -498,7 +489,7 @@ class DatasetInformation(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -515,13 +506,13 @@ class DatasetInformation(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("type", node)
         if value is not None and "type" not in already_processed:
             already_processed.add("type")
@@ -579,7 +570,7 @@ class DatasetInformation(EcospoldBase):
                 self.localLanguageCode
             )  # validate type ISOLanguageCode
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass

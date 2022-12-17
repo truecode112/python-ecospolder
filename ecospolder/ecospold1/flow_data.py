@@ -7,12 +7,6 @@ from allocation import Allocation
 from exchange import Exchange
 
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class FlowData(EcospoldBase):
     """FlowData -- Contains information about inputs and outputs (to and from nature as well as to and from technosphere) and information about allocation (flows to be allocated, co-products to be allocated to, allocation factors).
     exchange -- comprises all inputs and outputs (both elementary flows and intermediate product flows) registered in a unit process.
@@ -40,7 +34,7 @@ class FlowData(EcospoldBase):
         else:
             self.allocation = allocation
 
-    def _hasContent(self):
+    def hasContent(self):
         if self.exchange or self.allocation:
             return True
         else:
@@ -55,9 +49,6 @@ class FlowData(EcospoldBase):
         name="FlowData",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("FlowData")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -74,12 +65,12 @@ class FlowData(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile, level, already_processed, namespaceprefix, name="FlowData"
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -92,12 +83,12 @@ class FlowData(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self, outfile, level, already_processed, namespaceprefix="", name="FlowData"
     ):
         pass
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -135,16 +126,16 @@ class FlowData(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         pass
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "exchange":

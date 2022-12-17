@@ -2,12 +2,6 @@ import sys
 sys.path.append('../')
 from ecospold_base import *
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class Technology(EcospoldBase):
     """Technology -- Contains a description of the technology for which flow data have been collected. Free text can be used. Pictures, graphs and tables are not allowed. The text should cover information necessary to identify the properties and particularities of the technology(ies) underlying the process data.
     text -- Describes the technological properties of the unit process. If the process comprises several subprocesses, the corresponding technologies should be reported as well. Professional nomenclature should be used for the description.
@@ -22,7 +16,7 @@ class Technology(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.text = _cast(None, text)
+        self.text = cast_value_with_type(None, text)
 
     def validate_TString32000(self, value):
         # Validate type TString32000, a restriction on xsd:string.
@@ -49,7 +43,7 @@ class Technology(EcospoldBase):
                 )
                 result = False
 
-    def _hasContent(self):
+    def hasContent(self):
         if ():
             return True
         else:
@@ -64,9 +58,6 @@ class Technology(EcospoldBase):
         name="Technology",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("Technology")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -83,12 +74,12 @@ class Technology(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile, level, already_processed, namespaceprefix, name="Technology"
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -100,7 +91,7 @@ class Technology(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self,
         outfile,
         level,
@@ -121,7 +112,7 @@ class Technology(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -138,20 +129,20 @@ class Technology(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("text", node)
         if value is not None and "text" not in already_processed:
             already_processed.add("text")
             self.text = value
             self.validate_TString32000(self.text)  # validate type TString32000
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass

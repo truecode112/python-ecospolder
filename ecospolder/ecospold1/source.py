@@ -2,12 +2,6 @@ import sys
 sys.path.append('../')
 from ecospold_base import *
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class Source(EcospoldBase):
     """Source -- Contains information about author(s), title, kind of publication, place of publication, name of editors (if any), etc..
     number -- ID number to identify the source within one dataset.
@@ -65,21 +59,21 @@ class Source(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.number = _cast(int, number)
-        self.sourceType = _cast(int, sourceType)
-        self.firstAuthor = _cast(None, firstAuthor)
-        self.additionalAuthors = _cast(None, additionalAuthors)
-        self.year = _cast(None, year)
-        self.title = _cast(None, title)
-        self.pageNumbers = _cast(None, pageNumbers)
-        self.nameOfEditors = _cast(None, nameOfEditors)
-        self.titleOfAnthology = _cast(None, titleOfAnthology)
-        self.placeOfPublications = _cast(None, placeOfPublications)
-        self.publisher = _cast(None, publisher)
-        self.journal = _cast(None, journal)
-        self.volumeNo = _cast(int, volumeNo)
-        self.issueNo = _cast(None, issueNo)
-        self.text = _cast(None, text)
+        self.number = cast_value_with_type(int, number)
+        self.sourceType = cast_value_with_type(int, sourceType)
+        self.firstAuthor = cast_value_with_type(None, firstAuthor)
+        self.additionalAuthors = cast_value_with_type(None, additionalAuthors)
+        self.year = cast_value_with_type(None, year)
+        self.title = cast_value_with_type(None, title)
+        self.pageNumbers = cast_value_with_type(None, pageNumbers)
+        self.nameOfEditors = cast_value_with_type(None, nameOfEditors)
+        self.titleOfAnthology = cast_value_with_type(None, titleOfAnthology)
+        self.placeOfPublications = cast_value_with_type(None, placeOfPublications)
+        self.publisher = cast_value_with_type(None, publisher)
+        self.journal = cast_value_with_type(None, journal)
+        self.volumeNo = cast_value_with_type(int, volumeNo)
+        self.issueNo = cast_value_with_type(None, issueNo)
+        self.text = cast_value_with_type(None, text)
 
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.
@@ -268,7 +262,7 @@ class Source(EcospoldBase):
 
     validate_volumeNoType_patterns_ = [["^(\\d{1,3})$"]]
 
-    def _hasContent(self):
+    def hasContent(self):
         if ():
             return True
         else:
@@ -283,9 +277,6 @@ class Source(EcospoldBase):
         name="Source",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("Source")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -302,12 +293,12 @@ class Source(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile, level, already_processed, namespaceprefix, name="Source"
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -319,7 +310,7 @@ class Source(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self, outfile, level, already_processed, namespaceprefix="", name="Source"
     ):
         if self.number is not None and "number" not in already_processed:
@@ -497,7 +488,7 @@ class Source(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -514,13 +505,13 @@ class Source(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("number", node)
         if value is not None and "number" not in already_processed:
             already_processed.add("number")
@@ -600,7 +591,7 @@ class Source(EcospoldBase):
             self.text = value
             self.validate_TString32000(self.text)  # validate type TString32000
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass

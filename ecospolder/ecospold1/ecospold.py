@@ -4,12 +4,6 @@ sys.path.append('../')
 from ecospold_base import *
 
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class EcoSpold(EcospoldBase):
     """EcoSpold -- the data (exchange) format of the ECOINVENT quality network.
     dataset -- a dataset describes LCI related information of a unit process or a terminated system comprising metaInformation (description of the process) and flowData (quantified inputs and outputs and allocation factors, if any).
@@ -28,14 +22,14 @@ class EcoSpold(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.validationId = _cast(int, validationId)
-        self.validationStatus = _cast(None, validationStatus)
+        self.validationId = cast_value_with_type(int, validationId)
+        self.validationStatus = cast_value_with_type(None, validationStatus)
         if dataset is None:
             self.dataset = []
         else:
             self.dataset = dataset
 
-    def _hasContent(self):
+    def hasContent(self):
         if self.dataset:
             return True
         else:
@@ -50,9 +44,6 @@ class EcoSpold(EcospoldBase):
         name="EcoSpold",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("EcoSpold")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -69,12 +60,12 @@ class EcoSpold(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile, level, already_processed, namespaceprefix, name="EcoSpold"
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -87,7 +78,7 @@ class EcoSpold(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self, outfile, level, already_processed, namespaceprefix="", name="EcoSpold"
     ):
         if self.validationId is not None and "validationId" not in already_processed:
@@ -113,7 +104,7 @@ class EcoSpold(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -142,13 +133,13 @@ class EcoSpold(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("validationId", node)
         if value is not None and "validationId" not in already_processed:
             already_processed.add("validationId")
@@ -158,7 +149,7 @@ class EcoSpold(EcospoldBase):
             already_processed.add("validationStatus")
             self.validationStatus = value
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "dataset":

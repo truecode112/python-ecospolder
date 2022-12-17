@@ -12,13 +12,6 @@ from ecospold import EcoSpold
 
 from lxml import etree as etre
 
-
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 ClassesMapping = {}
 
 

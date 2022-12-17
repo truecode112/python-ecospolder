@@ -2,12 +2,6 @@ import sys
 sys.path.append('../')
 from ecospold_base import *
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class Validation(EcospoldBase):
     """Validation -- Contains information about who carried out the critical review and about the main results and conclusions of the review and the recommendations made.
     proofReadingDetails -- Contains the comment of the reviewer of the dataset. For the ecoinvent quality network the review text should cover the following items: 1. completeness and transparency of the documentation, 2. conformity with the ecoinvent quality guidelines, 3. plausibility of the data (unit process elementary and intermediate product flows), 4. completeness regarding elementary and intermediate product flows, 5. mathematical correctness. The review is limited to sample audits (not covering each and every figure).
@@ -28,9 +22,9 @@ class Validation(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.proofReadingDetails = _cast(None, proofReadingDetails)
-        self.proofReadingValidator = _cast(int, proofReadingValidator)
-        self.otherDetails = _cast(None, otherDetails)
+        self.proofReadingDetails = cast_value_with_type(None, proofReadingDetails)
+        self.proofReadingValidator = cast_value_with_type(int, proofReadingValidator)
+        self.otherDetails = cast_value_with_type(None, otherDetails)
 
     def validate_TString32000(self, value):
         # Validate type TString32000, a restriction on xsd:string.
@@ -82,7 +76,7 @@ class Validation(EcospoldBase):
                 )
                 result = False
 
-    def _hasContent(self):
+    def hasContent(self):
         if ():
             return True
         else:
@@ -97,9 +91,6 @@ class Validation(EcospoldBase):
         name="Validation",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("Validation")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -116,12 +107,12 @@ class Validation(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile, level, already_processed, namespaceprefix, name="Validation"
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -133,7 +124,7 @@ class Validation(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self,
         outfile,
         level,
@@ -181,7 +172,7 @@ class Validation(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -198,13 +189,13 @@ class Validation(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("proofReadingDetails", node)
         if value is not None and "proofReadingDetails" not in already_processed:
             already_processed.add("proofReadingDetails")
@@ -227,7 +218,7 @@ class Validation(EcospoldBase):
             self.otherDetails = value
             self.validate_TString32000(self.otherDetails)  # validate type TString32000
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass

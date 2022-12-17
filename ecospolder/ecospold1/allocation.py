@@ -3,13 +3,6 @@ sys.path.append('../')
 
 from ecospold_base import *
 
-
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class Allocation(EcospoldBase):
     """Allocation -- Contains all information about allocation procedure, allocation parameters and allocation factors applied on a multi-output process.
     referenceToCoProduct -- Indicates the co-product output for which a particular allocation factor is valid. Additional information is required about the exchange on which the allocation factor is applied (see 'referenceToInputOutput').
@@ -41,10 +34,10 @@ class Allocation(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.referenceToCoProduct = _cast(int, referenceToCoProduct)
-        self.allocationMethod = _cast(int, allocationMethod)
-        self.fraction = _cast(float, fraction)
-        self.explanations = _cast(None, explanations)
+        self.referenceToCoProduct = cast_value_with_type(int, referenceToCoProduct)
+        self.allocationMethod = cast_value_with_type(int, allocationMethod)
+        self.fraction = cast_value_with_type(float, fraction)
+        self.explanations = cast_value_with_type(None, explanations)
         if referenceToInputOutput is None:
             self.referenceToInputOutput = []
         else:
@@ -55,7 +48,6 @@ class Allocation(EcospoldBase):
         # Validate type TIndexNumber, a restriction on xsd:int.
         if (
             value is not None
-            and Validate_simpletypes
             and self.collector is not None
         ):
             if not isinstance(value, int):
@@ -81,7 +73,6 @@ class Allocation(EcospoldBase):
         # Validate type allocationMethodType, a restriction on xsd:integer.
         if (
             value is not None
-            and Validate_simpletypes
             and self.collector is not None
         ):
             if not isinstance(value, int):
@@ -113,7 +104,6 @@ class Allocation(EcospoldBase):
         # Validate type TString32000, a restriction on xsd:string.
         if (
             value is not None
-            and Validate_simpletypes
             and self.collector is not None
         ):
             if not isinstance(value, str):
@@ -134,7 +124,7 @@ class Allocation(EcospoldBase):
                 )
                 result = False
 
-    def _hasContent(self):
+    def hasContent(self):
         if self.referenceToInputOutput:
             return True
         else:
@@ -149,14 +139,11 @@ class Allocation(EcospoldBase):
         name="Allocation",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("Allocation")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
             eol = ""
-        if self.original_tagname is not None and name_ == "Allocation":
+        if self.original_tagname is not None and name == "Allocation":
             name = self.original_tagname
         showIndent(outfile, level, pretty_print)
         outfile.write(
@@ -168,12 +155,12 @@ class Allocation(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile, level, already_processed, namespaceprefix, name="Allocation"
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -186,7 +173,7 @@ class Allocation(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self,
         outfile,
         level,
@@ -232,7 +219,7 @@ class Allocation(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -265,13 +252,13 @@ class Allocation(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("referenceToCoProduct", node)
         if value is not None and "referenceToCoProduct" not in already_processed:
             already_processed.add("referenceToCoProduct")
@@ -301,7 +288,7 @@ class Allocation(EcospoldBase):
             self.explanations = value
             self.validate_TString32000(self.explanations)  # validate type TString32000
 
-    def _buildChildren(
+    def buildChildren(
         self, child, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "referenceToInputOutput" and child.text:

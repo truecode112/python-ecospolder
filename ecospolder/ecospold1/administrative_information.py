@@ -6,12 +6,6 @@ from ecospold_base import *
 from person import Person
 
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class AdministrativeInformation(EcospoldBase):
 
     """AdministrativeInformation -- Contains information about the person that compiled and entered the dataset in the database and about kind of publication and the accessibility of the dataset.
@@ -44,7 +38,7 @@ class AdministrativeInformation(EcospoldBase):
         else:
             self.person = person
 
-    def _hasContent(self):
+    def hasContent(self):
         if (
             self.dataEntryBy is not None
             or self.dataGeneratorAndPublication is not None
@@ -63,9 +57,6 @@ class AdministrativeInformation(EcospoldBase):
         name="AdministrativeInformation",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("AdministrativeInformation")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -82,16 +73,16 @@ class AdministrativeInformation(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile,
             level,
             already_processed,
             namespaceprefix,
             name="AdministrativeInformation",
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -104,7 +95,7 @@ class AdministrativeInformation(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self,
         outfile,
         level,
@@ -114,7 +105,7 @@ class AdministrativeInformation(EcospoldBase):
     ):
         pass
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -161,16 +152,16 @@ class AdministrativeInformation(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         pass
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "dataEntryBy":

@@ -7,12 +7,6 @@ from flow_data import FlowData
 from meta_information import MetaInformation
 
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class Dataset(EcospoldBase):
     """Dataset -- contains information about one individual unit process (or terminated system). Information is divided into metaInformation and flowData.
     metaInformation -- meta information contains information about the process (its name, (functional) unit, classification, technology, geography, time, etc.), about modelling assumptions and validation details and about dataset administration (version number, kind of dataset, language).
@@ -39,18 +33,18 @@ class Dataset(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.number = _cast(int, number)
-        self.internalSchemaVersion = _cast(None, internalSchemaVersion)
-        self.generator = _cast(None, generator)
+        self.number = cast_value_with_type(int, number)
+        self.internalSchemaVersion = cast_value_with_type(None, internalSchemaVersion)
+        self.generator = cast_value_with_type(None, generator)
         if isinstance(timestamp, BaseStrType):
             initvalue = date_t.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S")
         else:
             initvalue = timestamp
         self.timestamp = initvalue
-        self.validCompanyCodes = _cast(None, validCompanyCodes)
-        self.validRegionalCodes = _cast(None, validRegionalCodes)
-        self.validCategories = _cast(None, validCategories)
-        self.validUnits = _cast(None, validUnits)
+        self.validCompanyCodes = cast_value_with_type(None, validCompanyCodes)
+        self.validRegionalCodes = cast_value_with_type(None, validRegionalCodes)
+        self.validCategories = cast_value_with_type(None, validCategories)
+        self.validUnits = cast_value_with_type(None, validUnits)
         self.metaInformation = metaInformation
         if flowData is None:
             self.flowData = []
@@ -107,7 +101,7 @@ class Dataset(EcospoldBase):
                 )
                 result = False
 
-    def _hasContent(self):
+    def hasContent(self):
         if self.metaInformation is not None or self.flowData:
             return True
         else:
@@ -122,9 +116,6 @@ class Dataset(EcospoldBase):
         name="Dataset",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("Dataset")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -141,12 +132,12 @@ class Dataset(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile, level, already_processed, namespaceprefix, name="Dataset"
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -159,7 +150,7 @@ class Dataset(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self, outfile, level, already_processed, namespaceprefix="", name="Dataset"
     ):
         if self.number is not None and "number" not in already_processed:
@@ -263,7 +254,7 @@ class Dataset(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -301,13 +292,13 @@ class Dataset(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("number", node)
         if value is not None and "number" not in already_processed:
             already_processed.add("number")
@@ -346,7 +337,7 @@ class Dataset(EcospoldBase):
             already_processed.add("validUnits")
             self.validUnits = value
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "metaInformation":

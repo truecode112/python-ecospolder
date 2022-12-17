@@ -2,12 +2,6 @@ import sys
 sys.path.append('../')
 from ecospold_base import *
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class Representativeness(EcospoldBase):
     """Representativeness -- Contains information about the fraction of the relevant market supplied by the product/service described in the dataset. Information about market share, production volume (in the ecoinvent quality network: also consumption volume in the market area) and information about how data have been sampled.
     percent -- Indicates the share in market supply in the geographical area indicated of the product/service at issue.
@@ -38,11 +32,11 @@ class Representativeness(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.percent = _cast(float, percent)
-        self.productionVolume = _cast(None, productionVolume)
-        self.samplingProcedure = _cast(None, samplingProcedure)
-        self.extrapolations = _cast(None, extrapolations)
-        self.uncertaintyAdjustments = _cast(None, uncertaintyAdjustments)
+        self.percent = cast_value_with_type(float, percent)
+        self.productionVolume = cast_value_with_type(None, productionVolume)
+        self.samplingProcedure = cast_value_with_type(None, samplingProcedure)
+        self.extrapolations = cast_value_with_type(None, extrapolations)
+        self.uncertaintyAdjustments = cast_value_with_type(None, uncertaintyAdjustments)
 
     def validate_percentType(self, value):
         # Validate type percentType, a restriction on TPercent.
@@ -131,7 +125,7 @@ class Representativeness(EcospoldBase):
                 )
                 result = False
 
-    def _hasContent(self):
+    def hasContent(self):
         if ():
             return True
         else:
@@ -146,9 +140,6 @@ class Representativeness(EcospoldBase):
         name="Representativeness",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("Representativeness")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -165,16 +156,16 @@ class Representativeness(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile,
             level,
             already_processed,
             namespaceprefix,
             name="Representativeness",
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -186,7 +177,7 @@ class Representativeness(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self,
         outfile,
         level,
@@ -262,7 +253,7 @@ class Representativeness(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -279,13 +270,13 @@ class Representativeness(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("percent", node)
         if value is not None and "percent" not in already_processed:
             already_processed.add("percent")
@@ -319,7 +310,7 @@ class Representativeness(EcospoldBase):
                 self.uncertaintyAdjustments
             )  # validate type TString32000
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass

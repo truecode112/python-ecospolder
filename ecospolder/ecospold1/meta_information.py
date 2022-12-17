@@ -6,12 +6,6 @@ from modeling_and_validation import ModelingAndValidation
 from process_information import ProcessInformation
 
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class MetaInformation(EcospoldBase):
     """MetaInformation -- Contains information about the process (its name, (functional) unit, classification, technology, geography, time, etc.), about modelling assumptions and validation details and about dataset administration (version number, kind of dataset, language).
     processInformation -- Contains content-related metainformation for the unit process.
@@ -36,7 +30,7 @@ class MetaInformation(EcospoldBase):
         self.modellingAndValidation = modellingAndValidation
         self.administrativeInformation = administrativeInformation
 
-    def _hasContent(self):
+    def hasContent(self):
         if (
             self.processInformation is not None
             or self.modellingAndValidation is not None
@@ -55,9 +49,6 @@ class MetaInformation(EcospoldBase):
         name="MetaInformation",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("MetaInformation")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -74,16 +65,16 @@ class MetaInformation(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile,
             level,
             already_processed,
             namespaceprefix,
             name="MetaInformation",
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -96,7 +87,7 @@ class MetaInformation(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self,
         outfile,
         level,
@@ -106,7 +97,7 @@ class MetaInformation(EcospoldBase):
     ):
         pass
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -153,16 +144,16 @@ class MetaInformation(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         pass
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "processInformation":

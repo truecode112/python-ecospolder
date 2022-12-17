@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 /ecospolder/ecospold1/00001.XML
 /ecospolder/ecospold1/00001.XML
+/ecospolder/ecospold1/*.XML

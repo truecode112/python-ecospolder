@@ -1,12 +1,7 @@
 import sys
 sys.path.append('../')
 from ecospold_base import *
-
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
+import datetime
 
 class TimePeriod(EcospoldBase):
     """TimePeriod -- Contains all possible date-formats applicable to describe start and end date of the time period for which the dataset is valid.
@@ -49,8 +44,8 @@ class TimePeriod(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.dataValidForEntirePeriod = _cast(bool, dataValidForEntirePeriod)
-        self.text = _cast(None, text)
+        self.dataValidForEntirePeriod = cast_value_with_type(bool, dataValidForEntirePeriod)
+        self.text = cast_value_with_type(None, text)
         self.startYear = startYear
         self.startYearMonth = startYearMonth
         if isinstance(startDate, BaseStrType):
@@ -91,7 +86,7 @@ class TimePeriod(EcospoldBase):
                 )
                 result = False
 
-    def _hasContent(self):
+    def hasContent(self):
         if (
             self.startYear is not None
             or self.startYearMonth is not None
@@ -113,9 +108,6 @@ class TimePeriod(EcospoldBase):
         name="TimePeriod",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("TimePeriod")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -132,12 +124,12 @@ class TimePeriod(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile, level, already_processed, namespaceprefix, name="TimePeriod"
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -150,7 +142,7 @@ class TimePeriod(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self,
         outfile,
         level,
@@ -182,7 +174,7 @@ class TimePeriod(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -284,13 +276,13 @@ class TimePeriod(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("dataValidForEntirePeriod", node)
         if value is not None and "dataValidForEntirePeriod" not in already_processed:
             already_processed.add("dataValidForEntirePeriod")
@@ -306,7 +298,7 @@ class TimePeriod(EcospoldBase):
             self.text = value
             self.validate_TString32000(self.text)  # validate type TString32000
 
-    def _buildChildren(
+    def buildChildren(
         self, child, node, nodeName, fromsubclass=False, collector=None
     ):
         if nodeName == "startYear":

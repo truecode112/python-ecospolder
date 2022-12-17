@@ -4,12 +4,6 @@ from ecospold_base import *
 from lxml import etree as etre
 
 
-def _cast(typ, value):
-    if typ is None or value is None:
-        return value
-    return typ(value)
-
-
 class Person(EcospoldBase):
     """Person -- Used for the identification of members of the organisation / institute co-operating within a quality network (e.g., ecoinvent) referred to in the areas Validation, dataEntryBy and dataGeneratorAndPublication.
     number -- ID number is attributed to each person of an organisation/institute co-operating in a quality network such as ecoinvent. It is used to identify persons cited within one dataset.
@@ -44,14 +38,14 @@ class Person(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        self.number = _cast(int, number)
-        self.name = _cast(None, name)
-        self.address = _cast(None, address)
-        self.telephone = _cast(None, telephone)
-        self.telefax = _cast(None, telefax)
-        self.email = _cast(None, email)
-        self.companyCode = _cast(None, companyCode)
-        self.countryCode = _cast(None, countryCode)
+        self.number = cast_value_with_type(int, number)
+        self.name = cast_value_with_type(None, name)
+        self.address = cast_value_with_type(None, address)
+        self.telephone = cast_value_with_type(None, telephone)
+        self.telefax = cast_value_with_type(None, telefax)
+        self.email = cast_value_with_type(None, email)
+        self.companyCode = cast_value_with_type(None, companyCode)
+        self.countryCode = cast_value_with_type(None, countryCode)
 
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.
@@ -451,7 +445,7 @@ class Person(EcospoldBase):
                 )
                 result = False
 
-    def _hasContent(self):
+    def hasContent(self):
         if ():
             return True
         else:
@@ -466,9 +460,6 @@ class Person(EcospoldBase):
         name="Person",
         pretty_print=True,
     ):
-        imported_ns_def = GenerateDSNamespaceDefs.get("Person")
-        if imported_ns_def is not None:
-            namespacedef = imported_ns_def
         if pretty_print:
             eol = "\n"
         else:
@@ -485,12 +476,12 @@ class Person(EcospoldBase):
             )
         )
         already_processed = set()
-        self._exportAttributes(
+        self.exportAttributes(
             outfile, level, already_processed, namespaceprefix, name="Person"
         )
-        if self._hasContent():
+        if self.hasContent():
             outfile.write(">%s" % (eol,))
-            self._exportChildren(
+            self.exportChildren(
                 outfile,
                 level + 1,
                 namespaceprefix,
@@ -502,7 +493,7 @@ class Person(EcospoldBase):
         else:
             outfile.write("/>%s" % (eol,))
 
-    def _exportAttributes(
+    def exportAttributes(
         self, outfile, level, already_processed, namespaceprefix="", name="Person"
     ):
         if self.number is not None and "number" not in already_processed:
@@ -596,7 +587,7 @@ class Person(EcospoldBase):
                 )
             )
 
-    def _exportChildren(
+    def exportChildren(
         self,
         outfile,
         level,
@@ -613,13 +604,13 @@ class Person(EcospoldBase):
         if SaveElementTreeNode:
             self.elementtree_node = node
         already_processed = set()
-        self._buildAttributes(node, node.attrib, already_processed)
+        self.buildAttributes(node, node.attrib, already_processed)
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName, collector=collector)
+            self.buildChildren(child, node, nodeName, collector=collector)
         return self
 
-    def _buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value("number", node)
         if value is not None and "number" not in already_processed:
             already_processed.add("number")
@@ -663,7 +654,7 @@ class Person(EcospoldBase):
                 self.countryCode
             )  # validate type ISOCountryCode
 
-    def _buildChildren(
+    def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
     ):
         pass
