@@ -1,4 +1,4 @@
-from EcoSpold01Base import *
+from ..ecospold_base import *
 
 
 def _cast(typ, value):
@@ -7,8 +7,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TValidation(GeneratedsSuper):
-    """TValidation -- Contains information about who carried out the critical review and about the main results and conclusions of the review and the recommendations made.
+class Validation(EcospoldBase):
+    """Validation -- Contains information about who carried out the critical review and about the main results and conclusions of the review and the recommendations made.
     proofReadingDetails -- Contains the comment of the reviewer of the dataset. For the ecoinvent quality network the review text should cover the following items: 1. completeness and transparency of the documentation, 2. conformity with the ecoinvent quality guidelines, 3. plausibility of the data (unit process elementary and intermediate product flows), 4. completeness regarding elementary and intermediate product flows, 5. mathematical correctness. The review is limited to sample audits (not covering each and every figure).
     proofReadingValidator -- Indicates the person who carried out the review. ID number must correspond to an ID number of a person listed in the respective dataset.
     otherDetails -- Contains further information from the review process, especially comments received from third parties once the dataset has been published.
@@ -37,13 +37,13 @@ class TValidation(GeneratedsSuper):
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, TValidation)
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Validation)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if TValidation.subclass:
-            return TValidation.subclass(*args_, **kwargs_)
+        if Validation.subclass:
+            return Validation.subclass(*args_, **kwargs_)
         else:
-            return TValidation(*args_, **kwargs_)
+            return Validation(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -109,17 +109,17 @@ class TValidation(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TValidation",
+        name_="Validation",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TValidation")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Validation")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TValidation":
+        if self.original_tagname_ is not None and name_ == "Validation":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -134,7 +134,7 @@ class TValidation(GeneratedsSuper):
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="TValidation"
+            outfile, level, already_processed, namespaceprefix_, name_="Validation"
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -143,7 +143,7 @@ class TValidation(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TValidation",
+                name_="Validation",
                 pretty_print=pretty_print,
             )
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
@@ -156,7 +156,7 @@ class TValidation(GeneratedsSuper):
         level,
         already_processed,
         namespaceprefix_="",
-        name_="TValidation",
+        name_="Validation",
     ):
         if (
             self.proofReadingDetails is not None
@@ -204,7 +204,7 @@ class TValidation(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TValidation",
+        name_="Validation",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -251,4 +251,4 @@ class TValidation(GeneratedsSuper):
         pass
 
 
-# end class TValidation
+# end class Validation

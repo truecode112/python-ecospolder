@@ -24,10 +24,7 @@ CDATA_pattern_ = re_.compile(r"<!\[CDATA\[.*?\]\]>", re_.DOTALL)
 GenerateDSNamespaceDefs_ = {}
 GenerateDSNamespaceTypePrefixes_ = {}
 
-if sys.version_info.major == 2:
-    BaseStrType_ = basestring
-else:
-    BaseStrType_ = str
+BaseStrType_ = str
 
 Validate_simpletypes_ = True
 SaveElementTreeNode = True
@@ -66,7 +63,7 @@ class GdsCollector_(object):
             outstream.write("Warning: {}\n".format(msg))
 
 
-class GeneratedsSuper:
+class EcospoldBase:
     tzoff_pattern = re_.compile(r"(\+|-)((0\d|1[0-3]):[0-5]\d|14:00)$")
 
     class _FixedOffsetTZ(datetime_.tzinfo):
@@ -348,16 +345,16 @@ class GeneratedsSuper:
     def gds_parse_datetime(cls, input_data):
         tz = None
         if input_data[-1] == "Z":
-            tz = GeneratedsSuper._FixedOffsetTZ(0, "UTC")
+            tz = EcospoldBase._FixedOffsetTZ(0, "UTC")
             input_data = input_data[:-1]
         else:
-            results = GeneratedsSuper.tzoff_pattern.search(input_data)
+            results = EcospoldBase.tzoff_pattern.search(input_data)
             if results is not None:
                 tzoff_parts = results.group(2).split(":")
                 tzoff = int(tzoff_parts[0]) * 60 + int(tzoff_parts[1])
                 if results.group(1) == "-":
                     tzoff *= -1
-                tz = GeneratedsSuper._FixedOffsetTZ(tzoff, results.group(0))
+                tz = EcospoldBase._FixedOffsetTZ(tzoff, results.group(0))
                 input_data = input_data[:-6]
         time_parts = input_data.split(".")
         if len(time_parts) > 1:
@@ -405,16 +402,16 @@ class GeneratedsSuper:
     def gds_parse_date(cls, input_data):
         tz = None
         if input_data[-1] == "Z":
-            tz = GeneratedsSuper._FixedOffsetTZ(0, "UTC")
+            tz = EcospoldBase._FixedOffsetTZ(0, "UTC")
             input_data = input_data[:-1]
         else:
-            results = GeneratedsSuper.tzoff_pattern.search(input_data)
+            results = EcospoldBase.tzoff_pattern.search(input_data)
             if results is not None:
                 tzoff_parts = results.group(2).split(":")
                 tzoff = int(tzoff_parts[0]) * 60 + int(tzoff_parts[1])
                 if results.group(1) == "-":
                     tzoff *= -1
-                tz = GeneratedsSuper._FixedOffsetTZ(tzoff, results.group(0))
+                tz = EcospoldBase._FixedOffsetTZ(tzoff, results.group(0))
                 input_data = input_data[:-6]
         dt = datetime_.datetime.strptime(input_data, "%Y-%m-%d")
         dt = dt.replace(tzinfo=tz)
@@ -476,16 +473,16 @@ class GeneratedsSuper:
     def gds_parse_time(cls, input_data):
         tz = None
         if input_data[-1] == "Z":
-            tz = GeneratedsSuper._FixedOffsetTZ(0, "UTC")
+            tz = EcospoldBase._FixedOffsetTZ(0, "UTC")
             input_data = input_data[:-1]
         else:
-            results = GeneratedsSuper.tzoff_pattern.search(input_data)
+            results = EcospoldBase.tzoff_pattern.search(input_data)
             if results is not None:
                 tzoff_parts = results.group(2).split(":")
                 tzoff = int(tzoff_parts[0]) * 60 + int(tzoff_parts[1])
                 if results.group(1) == "-":
                     tzoff *= -1
-                tz = GeneratedsSuper._FixedOffsetTZ(tzoff, results.group(0))
+                tz = EcospoldBase._FixedOffsetTZ(tzoff, results.group(0))
                 input_data = input_data[:-6]
         if len(input_data.split(".")) > 1:
             dt = datetime_.datetime.strptime(input_data, "%H:%M:%S.%f")
@@ -572,7 +569,7 @@ class GeneratedsSuper:
     def get_path_list_(self, node, path_list):
         if node is None:
             return
-        tag = GeneratedsSuper.Tag_strip_pattern_.sub("", node.tag)
+        tag = EcospoldBase.Tag_strip_pattern_.sub("", node.tag)
         if tag:
             path_list.append(tag)
         self.get_path_list_(node.getparent(), path_list)
@@ -618,7 +615,7 @@ class GeneratedsSuper:
         elif sys.version_info.major == 2 and isinstance(instring, unicode):
             result = quote_xml(instring).encode("utf8")
         else:
-            result = GeneratedsSuper.gds_encode(str(instring))
+            result = EcospoldBase.gds_encode(str(instring))
         return result
 
     def __eq__(self, other):

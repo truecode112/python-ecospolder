@@ -1,7 +1,7 @@
-from AdministrativeInformation import TAdministrativeInformation
-from EcoSpold01Base import *
-from ModelingAndValidation import TModellingAndValidation
-from ProcessInformation import TProcessInformation
+from administrative_information import AdministrativeInformation
+from ..ecospold_base import *
+from modeling_and_validation import ModelingAndValidation
+from process_information import ProcessInformation
 
 
 def _cast(typ, value):
@@ -10,8 +10,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TMetaInformation(GeneratedsSuper):
-    """TMetaInformation -- Contains information about the process (its name, (functional) unit, classification, technology, geography, time, etc.), about modelling assumptions and validation details and about dataset administration (version number, kind of dataset, language).
+class MetaInformation(EcospoldBase):
+    """MetaInformation -- Contains information about the process (its name, (functional) unit, classification, technology, geography, time, etc.), about modelling assumptions and validation details and about dataset administration (version number, kind of dataset, language).
     processInformation -- Contains content-related metainformation for the unit process.
     modellingAndValidation -- Contains metainformation about how unit processes are modelled and about the review/validation of the dataset.
     administrativeInformation -- Contains the administrative information about the dataset at issue: type of dataset (unit process, elementary flow, impact category, multi-output process) timestamp, version and internalVersion number as well as language and localLanguage code.
@@ -44,7 +44,7 @@ class TMetaInformation(GeneratedsSuper):
             self.anytypeobjs_ = anytypeobjs_
 
     def factory(*args_, **kwargs_):
-        return TMetaInformation(*args_, **kwargs_)
+        return MetaInformation(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -65,17 +65,17 @@ class TMetaInformation(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TMetaInformation",
+        name_="MetaInformation",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TMetaInformation")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("MetaInformation")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TMetaInformation":
+        if self.original_tagname_ is not None and name_ == "MetaInformation":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -94,7 +94,7 @@ class TMetaInformation(GeneratedsSuper):
             level,
             already_processed,
             namespaceprefix_,
-            name_="TMetaInformation",
+            name_="MetaInformation",
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -103,7 +103,7 @@ class TMetaInformation(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TMetaInformation",
+                name_="MetaInformation",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
@@ -117,7 +117,7 @@ class TMetaInformation(GeneratedsSuper):
         level,
         already_processed,
         namespaceprefix_="",
-        name_="TMetaInformation",
+        name_="MetaInformation",
     ):
         pass
 
@@ -127,7 +127,7 @@ class TMetaInformation(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TMetaInformation",
+        name_="MetaInformation",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -202,23 +202,23 @@ class TMetaInformation(GeneratedsSuper):
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
         if nodeName_ == "processInformation":
-            obj_ = TProcessInformation.factory(parent_object_=self)
+            obj_ = ProcessInformation.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.processInformation = obj_
             obj_.original_tagname_ = "processInformation"
         elif nodeName_ == "modellingAndValidation":
-            obj_ = TModellingAndValidation.factory(parent_object_=self)
+            obj_ = ModelingAndValidation.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.modellingAndValidation = obj_
             obj_.original_tagname_ = "modellingAndValidation"
         elif nodeName_ == "administrativeInformation":
-            obj_ = TAdministrativeInformation.factory(parent_object_=self)
+            obj_ = AdministrativeInformation.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.administrativeInformation = obj_
             obj_.original_tagname_ = "administrativeInformation"
         else:
-            content_ = self.gds_build_any(child_, "TMetaInformation")
+            content_ = self.gds_build_any(child_, "MetaInformation")
             self.anytypeobjs_.append(content_)
 
 
-# end class TMetaInformation
+# end class MetaInformation

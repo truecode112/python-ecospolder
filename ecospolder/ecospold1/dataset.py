@@ -1,6 +1,10 @@
-from EcoSpold01Base import *
-from FlowData import TFlowData
-from MetaInformation import TMetaInformation
+
+import sys
+sys.path.append('../')
+
+from ecospold_base import EcospoldBase
+from flow_data import FlowData
+from meta_information import MetaInformation
 
 
 def _cast(typ, value):
@@ -9,8 +13,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TDataset(GeneratedsSuper):
-    """TDataset -- contains information about one individual unit process (or terminated system). Information is divided into metaInformation and flowData.
+class Dataset(EcospoldBase):
+    """Dataset -- contains information about one individual unit process (or terminated system). Information is divided into metaInformation and flowData.
     metaInformation -- meta information contains information about the process (its name, (functional) unit, classification, technology, geography, time, etc.), about modelling assumptions and validation details and about dataset administration (version number, kind of dataset, language).
     flowData -- contains information about inputs and outputs (to and from nature as well as to and from technosphere) and information about allocation (flows to be allocated, co-products to be allocated to, allocation factors).
 
@@ -28,7 +32,6 @@ class TDataset(GeneratedsSuper):
         validUnits=None,
         metaInformation=None,
         flowData=None,
-        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -63,13 +66,9 @@ class TDataset(GeneratedsSuper):
         else:
             self.flowData = flowData
         self.flowData_nsprefix_ = ""
-        if anytypeobjs_ is None:
-            self.anytypeobjs_ = []
-        else:
-            self.anytypeobjs_ = anytypeobjs_
 
     def factory(*args_, **kwargs_):
-        return TDataset(*args_, **kwargs_)
+        return Dataset(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -124,7 +123,7 @@ class TDataset(GeneratedsSuper):
                 result = False
 
     def _hasContent(self):
-        if self.metaInformation is not None or self.flowData or self.anytypeobjs_:
+        if self.metaInformation is not None or self.flowData:
             return True
         else:
             return False
@@ -135,17 +134,17 @@ class TDataset(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TDataset",
+        name_="Dataset",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TDataset")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Dataset")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TDataset":
+        if self.original_tagname_ is not None and name_ == "Dataset":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -160,7 +159,7 @@ class TDataset(GeneratedsSuper):
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="TDataset"
+            outfile, level, already_processed, namespaceprefix_, name_="Dataset"
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -169,7 +168,7 @@ class TDataset(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TDataset",
+                name_="Dataset",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
@@ -178,7 +177,7 @@ class TDataset(GeneratedsSuper):
             outfile.write("/>%s" % (eol_,))
 
     def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="TDataset"
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Dataset"
     ):
         if self.number is not None and "number" not in already_processed:
             already_processed.add("number")
@@ -287,7 +286,7 @@ class TDataset(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TDataset",
+        name_="Dataset",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -384,18 +383,18 @@ class TDataset(GeneratedsSuper):
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
         if nodeName_ == "metaInformation":
-            obj_ = TMetaInformation.factory(parent_object_=self)
+            obj_ = MetaInformation.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.metaInformation = obj_
             obj_.original_tagname_ = "metaInformation"
         elif nodeName_ == "flowData":
-            obj_ = TFlowData.factory(parent_object_=self)
+            obj_ = FlowData.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.flowData.append(obj_)
             obj_.original_tagname_ = "flowData"
         else:
-            content_ = self.gds_build_any(child_, "TDataset")
+            content_ = self.gds_build_any(child_, "Dataset")
             self.anytypeobjs_.append(content_)
 
 
-# end class TDataset
+# end class Dataset

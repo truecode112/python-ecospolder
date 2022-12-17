@@ -1,4 +1,4 @@
-from EcoSpold01Base import *
+from ..ecospold_base import *
 
 
 def _cast(typ, value):
@@ -7,8 +7,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TSource(GeneratedsSuper):
-    """TSource -- Contains information about author(s), title, kind of publication, place of publication, name of editors (if any), etc..
+class Source(EcospoldBase):
+    """Source -- Contains information about author(s), title, kind of publication, place of publication, name of editors (if any), etc..
     number -- ID number to identify the source within one dataset.
     sourceType -- Indicates the kind of source.
     The codes are: 0=Undefined (default). 1=Article. 2=Chapters in anthology. 3=Seperate publication. 4=Measurement on site. 5=Oral communication. 6=Personal written communication. 7=Questionnaries.
@@ -98,13 +98,13 @@ class TSource(GeneratedsSuper):
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, TSource)
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Source)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if TSource.subclass:
-            return TSource.subclass(*args_, **kwargs_)
+        if Source.subclass:
+            return Source.subclass(*args_, **kwargs_)
         else:
-            return TSource(*args_, **kwargs_)
+            return Source(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -307,17 +307,17 @@ class TSource(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TSource",
+        name_="Source",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TSource")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Source")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TSource":
+        if self.original_tagname_ is not None and name_ == "Source":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -332,7 +332,7 @@ class TSource(GeneratedsSuper):
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="TSource"
+            outfile, level, already_processed, namespaceprefix_, name_="Source"
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -341,7 +341,7 @@ class TSource(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TSource",
+                name_="Source",
                 pretty_print=pretty_print,
             )
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
@@ -349,7 +349,7 @@ class TSource(GeneratedsSuper):
             outfile.write("/>%s" % (eol_,))
 
     def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="TSource"
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Source"
     ):
         if self.number is not None and "number" not in already_processed:
             already_processed.add("number")
@@ -532,7 +532,7 @@ class TSource(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TSource",
+        name_="Source",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -636,4 +636,4 @@ class TSource(GeneratedsSuper):
         pass
 
 
-# end class TSource
+# end class Source

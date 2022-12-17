@@ -1,9 +1,9 @@
-from EcoSpold01Base import *
+from ..ecospold_base import *
 
 
-class TISOCountryCode(str, Enum):
+class ISOCountryCode(str, Enum):
 
-    """TISOCountryCode -- 2 letter ISO 3166 country code (capital letters)."""
+    """ISOCountryCode -- 2 letter ISO 3166 country code (capital letters)."""
 
     AF = "AF"
     AL = "AL"

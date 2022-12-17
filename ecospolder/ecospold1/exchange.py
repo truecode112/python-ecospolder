@@ -1,4 +1,4 @@
-from EcoSpold01Base import *
+from ..ecospold_base import *
 
 
 def _cast(typ, value):
@@ -7,8 +7,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TExchange(GeneratedsSuper):
-    """TExchange -- Comprises all inputs and outputs (both elementary flows and intermediate product flows) recorded in a unit process and its related information.
+class Exchange(EcospoldBase):
+    """Exchange -- Comprises all inputs and outputs (both elementary flows and intermediate product flows) recorded in a unit process and its related information.
     number -- ID number used as an identifier of a particular exchange in a dataset.
     category -- Describes the category one particular exchange belongs to (in English language). Category and subCategory are required for elementary flows because they have a discriminative function.
     subCategory -- Describes the subCategory one particular exchange belongs to (in English language). Category and subCategory are required for elementary flows because they have a discriminative function.
@@ -136,7 +136,7 @@ class TExchange(GeneratedsSuper):
         self.outputGroup_nsprefix_ = None
 
     def factory(*args_, **kwargs_):
-        return TExchange(*args_, **kwargs_)
+        return Exchange(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -515,17 +515,17 @@ class TExchange(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TExchange",
+        name_="Exchange",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TExchange")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Exchange")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TExchange":
+        if self.original_tagname_ is not None and name_ == "Exchange":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -540,7 +540,7 @@ class TExchange(GeneratedsSuper):
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="TExchange"
+            outfile, level, already_processed, namespaceprefix_, name_="Exchange"
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -549,7 +549,7 @@ class TExchange(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TExchange",
+                name_="Exchange",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
@@ -558,7 +558,7 @@ class TExchange(GeneratedsSuper):
             outfile.write("/>%s" % (eol_,))
 
     def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="TExchange"
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Exchange"
     ):
         if self.number is not None and "number" not in already_processed:
             already_processed.add("number")
@@ -798,7 +798,7 @@ class TExchange(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TExchange",
+        name_="Exchange",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -1006,4 +1006,4 @@ class TExchange(GeneratedsSuper):
             self.validate_outputGroupType(self.outputGroup)
 
 
-# end class TExchange
+# end class Exchange
