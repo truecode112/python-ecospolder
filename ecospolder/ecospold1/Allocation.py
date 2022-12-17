@@ -1,4 +1,7 @@
-from EcoSpold01Base import *
+import sys
+sys.path.append('../')
+
+from ecospold_base import EcospoldBase
 
 
 def _cast(typ, value):
@@ -7,8 +10,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TAllocation(GeneratedsSuper):
-    """TAllocation -- Contains all information about allocation procedure, allocation parameters and allocation factors applied on a multi-output process.
+class Allocation(EcospoldBase):
+    """Allocation -- Contains all information about allocation procedure, allocation parameters and allocation factors applied on a multi-output process.
     referenceToCoProduct -- Indicates the co-product output for which a particular allocation factor is valid. Additional information is required about the exchange on which the allocation factor is applied (see 'referenceToInputOutput').
     MultipleOccurences=Yes is only valid, if referenceFunction describes a multioutput process.
     allocationMethod -- Indicates the kind of allocation parameter chosen.
@@ -54,7 +57,7 @@ class TAllocation(GeneratedsSuper):
         self.referenceToInputOutput_nsprefix_ = None
 
     def factory(*args_, **kwargs_):
-        return TAllocation(*args_, **kwargs_)
+        return Allocation(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -154,17 +157,17 @@ class TAllocation(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TAllocation",
+        name_="Allocation",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TAllocation")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Allocation")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TAllocation":
+        if self.original_tagname_ is not None and name_ == "Allocation":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -179,7 +182,7 @@ class TAllocation(GeneratedsSuper):
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="TAllocation"
+            outfile, level, already_processed, namespaceprefix_, name_="Allocation"
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -188,7 +191,7 @@ class TAllocation(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TAllocation",
+                name_="Allocation",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
@@ -202,7 +205,7 @@ class TAllocation(GeneratedsSuper):
         level,
         already_processed,
         namespaceprefix_="",
-        name_="TAllocation",
+        name_="Allocation",
     ):
         if (
             self.referenceToCoProduct is not None
@@ -248,7 +251,7 @@ class TAllocation(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TAllocation",
+        name_="Allocation",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -330,4 +333,4 @@ class TAllocation(GeneratedsSuper):
             self.validate_TIndexNumber(self.referenceToInputOutput[-1])
 
 
-# end class TAllocation
+# end class Allocation

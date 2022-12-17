@@ -1,6 +1,6 @@
 import sys
 
-from EcoSpold01Base import *
+from ..ecospold_base import *
 from lxml import etree as etree_
 
 
@@ -10,8 +10,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TPerson(GeneratedsSuper):
-    """TPerson -- Used for the identification of members of the organisation / institute co-operating within a quality network (e.g., ecoinvent) referred to in the areas Validation, dataEntryBy and dataGeneratorAndPublication.
+class Person(EcospoldBase):
+    """Person -- Used for the identification of members of the organisation / institute co-operating within a quality network (e.g., ecoinvent) referred to in the areas Validation, dataEntryBy and dataGeneratorAndPublication.
     number -- ID number is attributed to each person of an organisation/institute co-operating in a quality network such as ecoinvent. It is used to identify persons cited within one dataset.
     name -- Name and surname of the person working in an organisation/institute which is a member of the quality network.
     Identifies the person together with 'address' (#5803).
@@ -64,13 +64,13 @@ class TPerson(GeneratedsSuper):
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, TPerson)
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Person)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if TPerson.subclass:
-            return TPerson.subclass(*args_, **kwargs_)
+        if Person.subclass:
+            return Person.subclass(*args_, **kwargs_)
         else:
-            return TPerson(*args_, **kwargs_)
+            return Person(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -199,8 +199,8 @@ class TPerson(GeneratedsSuper):
                 )
                 result = False
 
-    def validate_TISOCountryCode(self, value):
-        # Validate type TISOCountryCode, a restriction on xsd:string.
+    def validate_ISOCountryCode(self, value):
+        # Validate type ISOCountryCode, a restriction on xsd:string.
         if (
             value is not None
             and Validate_simpletypes_
@@ -460,14 +460,14 @@ class TPerson(GeneratedsSuper):
             if value not in enumerations:
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on TISOCountryCode'
+                    'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on ISOCountryCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
             if len(value) != 2:
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd length restriction on TISOCountryCode'
+                    'Value "%(value)s"%(lineno)s does not match xsd length restriction on ISOCountryCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
@@ -484,17 +484,17 @@ class TPerson(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_="",
-        name_="TPerson",
+        name_="Person",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TPerson")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Person")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TPerson":
+        if self.original_tagname_ is not None and name_ == "Person":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -509,7 +509,7 @@ class TPerson(GeneratedsSuper):
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="TPerson"
+            outfile, level, already_processed, namespaceprefix_, name_="Person"
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -518,7 +518,7 @@ class TPerson(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TPerson",
+                name_="Person",
                 pretty_print=pretty_print,
             )
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
@@ -526,7 +526,7 @@ class TPerson(GeneratedsSuper):
             outfile.write("/>%s" % (eol_,))
 
     def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="TPerson"
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Person"
     ):
         if self.number is not None and "number" not in already_processed:
             already_processed.add("number")
@@ -625,7 +625,7 @@ class TPerson(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_="",
-        name_="TPerson",
+        name_="Person",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -683,9 +683,9 @@ class TPerson(GeneratedsSuper):
         if value is not None and "countryCode" not in already_processed:
             already_processed.add("countryCode")
             self.countryCode = value
-            self.validate_TISOCountryCode(
+            self.validate_ISOCountryCode(
                 self.countryCode
-            )  # validate type TISOCountryCode
+            )  # validate type ISOCountryCode
 
     def _buildChildren(
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
@@ -693,4 +693,4 @@ class TPerson(GeneratedsSuper):
         pass
 
 
-# end class TPerson
+# end class Person

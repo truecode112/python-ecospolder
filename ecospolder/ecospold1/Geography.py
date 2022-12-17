@@ -1,4 +1,4 @@
-from EcoSpold01Base import *
+from ..ecospold_base import *
 
 
 def _cast(typ, value):
@@ -7,8 +7,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TGeography(GeneratedsSuper):
-    """TGeography -- Contains information about the geographic validity of the process. The region described with regional code and free text is the market area of the product / service at issue and not necessarily the place of production.
+class Geography(EcospoldBase):
+    """Geography -- Contains information about the geographic validity of the process. The region described with regional code and free text is the market area of the product / service at issue and not necessarily the place of production.
     location -- 7 letter regional code (capital letters). List of 2 letter ISO country codes extended by codes for regions, continents, market areas, and organisations and companies. The location code indicates the supply area of a product/service and the area of validity of impact assessment methods and impact categories, respectively. It does NOT necessarily coincide with the area/site of production or provenience. If supply and production area differ, production area is indicated in the name of the unit process.
     text -- Free text for further explanation. Text comprises additional aspects of the location, namely whether:
     - certain areas are exempted from the location indicated,
@@ -30,7 +30,7 @@ class TGeography(GeneratedsSuper):
         self.text_nsprefix_ = None
 
     def factory(*args_, **kwargs_):
-        return TGeography(*args_, **kwargs_)
+        return Geography(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -96,17 +96,17 @@ class TGeography(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TGeography",
+        name_="Geography",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TGeography")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Geography")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TGeography":
+        if self.original_tagname_ is not None and name_ == "Geography":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -121,7 +121,7 @@ class TGeography(GeneratedsSuper):
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="TGeography"
+            outfile, level, already_processed, namespaceprefix_, name_="Geography"
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -130,7 +130,7 @@ class TGeography(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TGeography",
+                name_="Geography",
                 pretty_print=pretty_print,
             )
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
@@ -138,7 +138,7 @@ class TGeography(GeneratedsSuper):
             outfile.write("/>%s" % (eol_,))
 
     def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="TGeography"
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Geography"
     ):
         if self.location is not None and "location" not in already_processed:
             already_processed.add("location")
@@ -171,7 +171,7 @@ class TGeography(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TGeography",
+        name_="Geography",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -207,4 +207,4 @@ class TGeography(GeneratedsSuper):
         pass
 
 
-# end class TGeography
+# end class Geography

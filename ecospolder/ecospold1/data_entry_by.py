@@ -1,4 +1,4 @@
-from EcoSpold01Base import *
+from ..ecospold_base import *
 
 
 def _cast(typ, value):
@@ -7,8 +7,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TDataEntryBy(GeneratedsSuper):
-    """TDataEntryBy -- Contains information about the person that entered data in the database or transformed data into the format of the ecoinvent (or any other) quality network.
+class DataEntryBy(EcospoldBase):
+    """DataEntryBy -- Contains information about the person that entered data in the database or transformed data into the format of the ecoinvent (or any other) quality network.
     person -- ID number for the person that prepared the dataset and enters the dataset into the database. It must correspond to an ID number of a person listed in the respective dataset.
     qualityNetwork -- Indicates a project team that works on the database. The information is used, e.g., for restricting the accessibility of dataset information to one particular quality network. The code used is: 1=ecoinvent
 
@@ -28,7 +28,7 @@ class TDataEntryBy(GeneratedsSuper):
         self.qualityNetwork_nsprefix_ = None
 
     def factory(*args_, **kwargs_):
-        return TDataEntryBy(*args_, **kwargs_)
+        return DataEntryBy(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -69,17 +69,17 @@ class TDataEntryBy(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TDataEntryBy",
+        name_="DataEntryBy",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TDataEntryBy")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("DataEntryBy")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TDataEntryBy":
+        if self.original_tagname_ is not None and name_ == "DataEntryBy":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -94,7 +94,7 @@ class TDataEntryBy(GeneratedsSuper):
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="TDataEntryBy"
+            outfile, level, already_processed, namespaceprefix_, name_="DataEntryBy"
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -103,7 +103,7 @@ class TDataEntryBy(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TDataEntryBy",
+                name_="DataEntryBy",
                 pretty_print=pretty_print,
             )
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
@@ -116,7 +116,7 @@ class TDataEntryBy(GeneratedsSuper):
         level,
         already_processed,
         namespaceprefix_="",
-        name_="TDataEntryBy",
+        name_="DataEntryBy",
     ):
         if self.person is not None and "person" not in already_processed:
             already_processed.add("person")
@@ -142,7 +142,7 @@ class TDataEntryBy(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TDataEntryBy",
+        name_="DataEntryBy",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -177,4 +177,4 @@ class TDataEntryBy(GeneratedsSuper):
         pass
 
 
-# end class TDataEntryBy
+# end class DataEntryBy

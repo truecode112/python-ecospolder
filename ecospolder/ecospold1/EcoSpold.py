@@ -1,5 +1,5 @@
-from DataSet import TDataset
-from EcoSpold01Base import *
+from dataset import Dataset
+from ..ecospold_base import *
 
 
 def _cast(typ, value):
@@ -8,8 +8,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TEcoSpold(GeneratedsSuper):
-    """TEcoSpold -- the data (exchange) format of the ECOINVENT quality network.
+class EcoSpold(EcospoldBase):
+    """EcoSpold -- the data (exchange) format of the ECOINVENT quality network.
     dataset -- a dataset describes LCI related information of a unit process or a terminated system comprising metaInformation (description of the process) and flowData (quantified inputs and outputs and allocation factors, if any).
 
     """
@@ -43,7 +43,7 @@ class TEcoSpold(GeneratedsSuper):
             self.anytypeobjs_ = anytypeobjs_
 
     def factory(*args_, **kwargs_):
-        return TEcoSpold(*args_, **kwargs_)
+        return EcoSpold(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -59,17 +59,17 @@ class TEcoSpold(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TEcoSpold",
+        name_="EcoSpold",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TEcoSpold")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("EcoSpold")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TEcoSpold":
+        if self.original_tagname_ is not None and name_ == "EcoSpold":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -84,7 +84,7 @@ class TEcoSpold(GeneratedsSuper):
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="TEcoSpold"
+            outfile, level, already_processed, namespaceprefix_, name_="EcoSpold"
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -93,7 +93,7 @@ class TEcoSpold(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TEcoSpold",
+                name_="EcoSpold",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
@@ -102,7 +102,7 @@ class TEcoSpold(GeneratedsSuper):
             outfile.write("/>%s" % (eol_,))
 
     def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="TEcoSpold"
+        self, outfile, level, already_processed, namespaceprefix_="", name_="EcoSpold"
     ):
         if self.validationId is not None and "validationId" not in already_processed:
             already_processed.add("validationId")
@@ -133,7 +133,7 @@ class TEcoSpold(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TEcoSpold",
+        name_="EcoSpold",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -187,13 +187,13 @@ class TEcoSpold(GeneratedsSuper):
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
         if nodeName_ == "dataset":
-            obj_ = TDataset.factory(parent_object_=self)
+            obj_ = Dataset.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.dataset.append(obj_)
             obj_.original_tagname_ = "dataset"
         else:
-            content_ = self.gds_build_any(child_, "TEcoSpold")
+            content_ = self.gds_build_any(child_, "EcoSpold")
             self.anytypeobjs_.append(content_)
 
 
-# end class TEcoSpold
+# end class EcoSpold

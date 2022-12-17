@@ -1,7 +1,7 @@
-from DataEntryBy import TDataEntryBy
-from DataGeneratorAndPublication import TDataGeneratorAndPublication
-from EcoSpold01Base import *
-from Person import TPerson
+from data_entry_by import DataEntryBy
+from data_generator_and_publication import DataGeneratorAndPublication
+from ..ecospold_base import *
+from person import Person
 
 
 def _cast(typ, value):
@@ -10,9 +10,9 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TAdministrativeInformation(GeneratedsSuper):
+class AdministrativeInformation(EcospoldBase):
 
-    """TAdministrativeInformation -- Contains information about the person that compiled and entered the dataset in the database and about kind of publication and the accessibility of the dataset.
+    """AdministrativeInformation -- Contains information about the person that compiled and entered the dataset in the database and about kind of publication and the accessibility of the dataset.
     dataEntryBy -- Contains information about the person and the quality network the person belongs to.
     dataGeneratorAndPublication -- Contains information about the generator of the dataset in the database, whether the dataset has been published (and how) and about copyright and the accessibility of the dataset (public or restricted to ETH domain, ECOINVENT, or a particular institute of ECOINVENT.
     person -- Contains a list of persons with their addresses.
@@ -20,7 +20,7 @@ class TAdministrativeInformation(GeneratedsSuper):
     """
 
     ##############################################
-    ### TAdministrativeInformation Constructor ###
+    ### AdministrativeInformation Constructor ###
     ##############################################
 
     def __init__(
@@ -28,7 +28,6 @@ class TAdministrativeInformation(GeneratedsSuper):
         dataEntryBy=None,
         dataGeneratorAndPublication=None,
         person=None,
-        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -46,12 +45,8 @@ class TAdministrativeInformation(GeneratedsSuper):
         else:
             self.person = person
         self.person_nsprefix_ = ""
-        if anytypeobjs_ is None:
-            self.anytypeobjs_ = []
-        else:
-            self.anytypeobjs_ = anytypeobjs_
 
-    """ Create a new TAdministrativeInformation instance.
+    """ Create a new AdministrativeInformation instance.
 
         static method
 
@@ -59,11 +54,11 @@ class TAdministrativeInformation(GeneratedsSuper):
         * *args* (dict): The demand or functional unit. Needs to be a dictionary to indicate amounts, e.g. ``{7: 2.5}``.
         * *method* (tuple, optional): LCIA Method tuple, e.g. ``("My", "great", "LCIA", "method")``. Can be omitted if only interested in calculating the life cycle inventory.
     Returns:
-        A new TAdministrativeInformation object
+        A new AdministrativeInformation object
     """
 
     def factory(*args_, **kwargs_):
-        return TAdministrativeInformation(*args_, **kwargs_)
+        return AdministrativeInformation(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -72,7 +67,6 @@ class TAdministrativeInformation(GeneratedsSuper):
             self.dataEntryBy is not None
             or self.dataGeneratorAndPublication is not None
             or self.person
-            or self.anytypeobjs_
         ):
             return True
         else:
@@ -84,17 +78,17 @@ class TAdministrativeInformation(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TAdministrativeInformation",
+        name_="AdministrativeInformation",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TAdministrativeInformation")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("AdministrativeInformation")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TAdministrativeInformation":
+        if self.original_tagname_ is not None and name_ == "AdministrativeInformation":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -113,7 +107,7 @@ class TAdministrativeInformation(GeneratedsSuper):
             level,
             already_processed,
             namespaceprefix_,
-            name_="TAdministrativeInformation",
+            name_="AdministrativeInformation",
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -122,7 +116,7 @@ class TAdministrativeInformation(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TAdministrativeInformation",
+                name_="AdministrativeInformation",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
@@ -136,7 +130,7 @@ class TAdministrativeInformation(GeneratedsSuper):
         level,
         already_processed,
         namespaceprefix_="",
-        name_="TAdministrativeInformation",
+        name_="AdministrativeInformation",
     ):
         pass
 
@@ -146,7 +140,7 @@ class TAdministrativeInformation(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TAdministrativeInformation",
+        name_="AdministrativeInformation",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -196,11 +190,6 @@ class TAdministrativeInformation(GeneratedsSuper):
                 name_="person",
                 pretty_print=pretty_print,
             )
-        if not fromsubclass_:
-            for obj_ in self.anytypeobjs_:
-                showIndent(outfile, level, pretty_print)
-                outfile.write(str(obj_))
-                outfile.write("\n")
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -221,23 +210,21 @@ class TAdministrativeInformation(GeneratedsSuper):
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
         if nodeName_ == "dataEntryBy":
-            obj_ = TDataEntryBy.factory(parent_object_=self)
+            obj_ = DataEntryBy.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.dataEntryBy = obj_
             obj_.original_tagname_ = "dataEntryBy"
         elif nodeName_ == "dataGeneratorAndPublication":
-            obj_ = TDataGeneratorAndPublication.factory(parent_object_=self)
+            obj_ = DataGeneratorAndPublication.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.dataGeneratorAndPublication = obj_
             obj_.original_tagname_ = "dataGeneratorAndPublication"
         elif nodeName_ == "person":
-            obj_ = TPerson.factory(parent_object_=self)
+            obj_ = Person.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.person.append(obj_)
             obj_.original_tagname_ = "person"
-        else:
-            content_ = self.gds_build_any(child_, "TAdministrativeInformation")
-            self.anytypeobjs_.append(content_)
 
 
-# end class TAdministrativeInformation
+
+# end class AdministrativeInformation

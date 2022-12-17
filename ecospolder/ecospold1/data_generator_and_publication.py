@@ -1,4 +1,4 @@
-from EcoSpold01Base import *
+from ..ecospold_base import *
 
 
 def _cast(typ, value):
@@ -7,8 +7,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TDataGeneratorAndPublication(GeneratedsSuper):
-    """TDataGeneratorAndPublication -- Contains information about who compiled for and entered data into the database. Furthermore contains information about kind of publication underlying the dataset and the accessibility of the dataset.
+class DataGeneratorAndPublication(EcospoldBase):
+    """DataGeneratorAndPublication -- Contains information about who compiled for and entered data into the database. Furthermore contains information about kind of publication underlying the dataset and the accessibility of the dataset.
     person -- ID number for the person that generated the dataset. It must correspond to an ID number of a person listed in the respective dataset.
     dataPublishedIn -- Indicates whether the dataset has been published (not, partly, entirely).
     The codes are: 0=Data as such not published (default). 1=The data of some unit processes or subsystems are published. 2=Data has been published entirely in 'referenceToPublishedSource'.
@@ -65,7 +65,7 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
         self.pageNumbers_nsprefix_ = None
 
     def factory(*args_, **kwargs_):
-        return TDataGeneratorAndPublication(*args_, **kwargs_)
+        return DataGeneratorAndPublication(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -183,8 +183,8 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
                 )
                 result = False
 
-    def validate_TISOCountryCode(self, value):
-        # Validate type TISOCountryCode, a restriction on xsd:string.
+    def validate_ISOCountryCode(self, value):
+        # Validate type ISOCountryCode, a restriction on xsd:string.
         if (
             value is not None
             and Validate_simpletypes_
@@ -444,14 +444,14 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
             if value not in enumerations:
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on TISOCountryCode'
+                    'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on ISOCountryCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
             if len(value) != 2:
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd length restriction on TISOCountryCode'
+                    'Value "%(value)s"%(lineno)s does not match xsd length restriction on ISOCountryCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
@@ -493,10 +493,10 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TDataGeneratorAndPublication",
+        name_="DataGeneratorAndPublication",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TDataGeneratorAndPublication")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("DataGeneratorAndPublication")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
@@ -505,7 +505,7 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
             eol_ = ""
         if (
             self.original_tagname_ is not None
-            and name_ == "TDataGeneratorAndPublication"
+            and name_ == "DataGeneratorAndPublication"
         ):
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
@@ -525,7 +525,7 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
             level,
             already_processed,
             namespaceprefix_,
-            name_="TDataGeneratorAndPublication",
+            name_="DataGeneratorAndPublication",
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -534,7 +534,7 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TDataGeneratorAndPublication",
+                name_="DataGeneratorAndPublication",
                 pretty_print=pretty_print,
             )
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
@@ -547,7 +547,7 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
         level,
         already_processed,
         namespaceprefix_="",
-        name_="TDataGeneratorAndPublication",
+        name_="DataGeneratorAndPublication",
     ):
         if self.person is not None and "person" not in already_processed:
             already_processed.add("person")
@@ -635,7 +635,7 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TDataGeneratorAndPublication",
+        name_="DataGeneratorAndPublication",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -704,9 +704,9 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
         if value is not None and "countryCode" not in already_processed:
             already_processed.add("countryCode")
             self.countryCode = value
-            self.validate_TISOCountryCode(
+            self.validate_ISOCountryCode(
                 self.countryCode
-            )  # validate type TISOCountryCode
+            )  # validate type ISOCountryCode
         value = find_attr_value_("pageNumbers", node)
         if value is not None and "pageNumbers" not in already_processed:
             already_processed.add("pageNumbers")
@@ -719,4 +719,4 @@ class TDataGeneratorAndPublication(GeneratedsSuper):
         pass
 
 
-# end class TDataGeneratorAndPublication
+# end class DataGeneratorAndPublication

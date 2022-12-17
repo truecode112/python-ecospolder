@@ -1,4 +1,4 @@
-from EcoSpold01Base import *
+from ..ecospold_base import *
 
 
 def _cast(typ, value):
@@ -7,8 +7,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TTimePeriod(GeneratedsSuper):
-    """TTimePeriod -- Contains all possible date-formats applicable to describe start and end date of the time period for which the dataset is valid.
+class TimePeriod(EcospoldBase):
+    """TimePeriod -- Contains all possible date-formats applicable to describe start and end date of the time period for which the dataset is valid.
     dataValidForEntirePeriod -- Indicates whether or not the process data (elementary and intermediate product flows reported under flow data) are valid for the entire time period stated. If not, explanations may be given under 'text'.
     text -- Additional explanations concerning the temporal validity of the flow data reported. It may comprise information about:
     - how strong the temporal correlation is for the unit process at issue (e.g., are four year old data still adequate for the process operated today?),
@@ -76,13 +76,13 @@ class TTimePeriod(GeneratedsSuper):
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, TTimePeriod)
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, TimePeriod)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if TTimePeriod.subclass:
-            return TTimePeriod.subclass(*args_, **kwargs_)
+        if TimePeriod.subclass:
+            return TimePeriod.subclass(*args_, **kwargs_)
         else:
-            return TTimePeriod(*args_, **kwargs_)
+            return TimePeriod(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -130,17 +130,17 @@ class TTimePeriod(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TTimePeriod",
+        name_="TimePeriod",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TTimePeriod")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TimePeriod")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TTimePeriod":
+        if self.original_tagname_ is not None and name_ == "TimePeriod":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -155,7 +155,7 @@ class TTimePeriod(GeneratedsSuper):
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="TTimePeriod"
+            outfile, level, already_processed, namespaceprefix_, name_="TimePeriod"
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -164,7 +164,7 @@ class TTimePeriod(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TTimePeriod",
+                name_="TimePeriod",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
@@ -178,7 +178,7 @@ class TTimePeriod(GeneratedsSuper):
         level,
         already_processed,
         namespaceprefix_="",
-        name_="TTimePeriod",
+        name_="TimePeriod",
     ):
         if (
             self.dataValidForEntirePeriod is not None
@@ -210,7 +210,7 @@ class TTimePeriod(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TTimePeriod",
+        name_="TimePeriod",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -398,4 +398,4 @@ class TTimePeriod(GeneratedsSuper):
             self.endDate_nsprefix_ = child_.prefix
 
 
-# end class TTimePeriod
+# end class TimePeriod

@@ -1,9 +1,9 @@
-from EcoSpold01Base import *
+from ..ecospold_base import *
 
 
-class TISOLanguageCode(str, Enum):
+class ISOLanguageCode(str, Enum):
 
-    """TISOLanguageCode -- 2 letter ISO 639 language code (lower case letters)."""
+    """ISOLanguageCode -- 2 letter ISO 639 language code (lower case letters)."""
 
     AB = "ab"
     AA = "aa"

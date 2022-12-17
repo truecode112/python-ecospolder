@@ -1,4 +1,4 @@
-from EcoSpold01Base import *
+from ..ecospold_base import *
 
 
 def _cast(typ, value):
@@ -7,8 +7,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TDataSetInformation(GeneratedsSuper):
-    """TDataSetInformation -- Contains the administrative information about the dataset at issue: type of dataset (unit process, elementary flow, impact category, multi-output process) timestamp, version and internalVersion number as well as language and localLanguage code.
+class DatasetInformation(EcospoldBase):
+    """DatasetInformation -- Contains the administrative information about the dataset at issue: type of dataset (unit process, elementary flow, impact category, multi-output process) timestamp, version and internalVersion number as well as language and localLanguage code.
     type -- Indicates the kind of data that is represented by this dataset.
     The code is: 0=System non-terminated. 1=Unit process. 2=System terminated. 3=Elementary flow. 4=Impact category.5=Multioutput process.
     'Unit process' contains the description of processes and their direct (in situ) elementary flows (emissions and resource consumption) and intermediate product flows (demand for energy carriers, waste treatment and transport services, working materials, etc.), so-called unit process raw data. Data that arrives at the ecoinvent database in the form of life cycle inventory results are nevertheless classified as unit process.
@@ -67,7 +67,7 @@ class TDataSetInformation(GeneratedsSuper):
         self.localLanguageCode_nsprefix_ = None
 
     def factory(*args_, **kwargs_):
-        return TDataSetInformation(*args_, **kwargs_)
+        return DatasetInformation(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -195,8 +195,8 @@ class TDataSetInformation(GeneratedsSuper):
                 )
                 result = False
 
-    def validate_TISOLanguageCode(self, value):
-        # Validate type TISOLanguageCode, a restriction on xsd:string.
+    def validate_ISOLanguageCode(self, value):
+        # Validate type ISOLanguageCode, a restriction on xsd:string.
         if (
             value is not None
             and Validate_simpletypes_
@@ -360,14 +360,14 @@ class TDataSetInformation(GeneratedsSuper):
             if value not in enumerations:
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on TISOLanguageCode'
+                    'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on ISOLanguageCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
             if len(value) != 2:
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd length restriction on TISOLanguageCode'
+                    'Value "%(value)s"%(lineno)s does not match xsd length restriction on ISOLanguageCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
@@ -384,17 +384,17 @@ class TDataSetInformation(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TDataSetInformation",
+        name_="DatasetInformation",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TDataSetInformation")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("DatasetInformation")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TDataSetInformation":
+        if self.original_tagname_ is not None and name_ == "DatasetInformation":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -413,7 +413,7 @@ class TDataSetInformation(GeneratedsSuper):
             level,
             already_processed,
             namespaceprefix_,
-            name_="TDataSetInformation",
+            name_="DatasetInformation",
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -422,7 +422,7 @@ class TDataSetInformation(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TDataSetInformation",
+                name_="DatasetInformation",
                 pretty_print=pretty_print,
             )
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
@@ -435,7 +435,7 @@ class TDataSetInformation(GeneratedsSuper):
         level,
         already_processed,
         namespaceprefix_="",
-        name_="TDataSetInformation",
+        name_="DatasetInformation",
     ):
         if self.type_ is not None and "type_" not in already_processed:
             already_processed.add("type_")
@@ -517,7 +517,7 @@ class TDataSetInformation(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TDataSetInformation",
+        name_="DatasetInformation",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -582,16 +582,16 @@ class TDataSetInformation(GeneratedsSuper):
         if value is not None and "languageCode" not in already_processed:
             already_processed.add("languageCode")
             self.languageCode = value
-            self.validate_TISOLanguageCode(
+            self.validate_ISOLanguageCode(
                 self.languageCode
-            )  # validate type TISOLanguageCode
+            )  # validate type ISOLanguageCode
         value = find_attr_value_("localLanguageCode", node)
         if value is not None and "localLanguageCode" not in already_processed:
             already_processed.add("localLanguageCode")
             self.localLanguageCode = value
-            self.validate_TISOLanguageCode(
+            self.validate_ISOLanguageCode(
                 self.localLanguageCode
-            )  # validate type TISOLanguageCode
+            )  # validate type ISOLanguageCode
 
     def _buildChildren(
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
@@ -599,4 +599,4 @@ class TDataSetInformation(GeneratedsSuper):
         pass
 
 
-# end class TDataSetInformation
+# end class DatasetInformation

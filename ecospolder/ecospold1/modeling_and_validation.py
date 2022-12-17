@@ -1,6 +1,7 @@
-from Allocation import TAllocation
-from EcoSpold01Base import *
-from Exchange import TExchange
+from ..ecospold_base import *
+from representativeness import Representativeness
+from source import Source
+from validation import Validation
 
 
 def _cast(typ, value):
@@ -9,17 +10,19 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TFlowData(GeneratedsSuper):
-    """TFlowData -- Contains information about inputs and outputs (to and from nature as well as to and from technosphere) and information about allocation (flows to be allocated, co-products to be allocated to, allocation factors).
-    exchange -- comprises all inputs and outputs (both elementary flows and intermediate product flows) registered in a unit process.
-    allocation -- comprises all referenceToInputOutput.
+class ModelingAndValidation(EcospoldBase):
+    """ModelingAndValidation -- Contains metaInformation about how unit processes are modelled and about the review/validation of the dataset.
+    representativeness -- Contains information about the representativeness of the unit process data (meta information and flow data).
+    source -- Lists and describes the sources where the dataset is documented (final report in the ECOINVENT quality network series).
+    validation -- Contains information about the reviewers' comments on the dataset content.
 
     """
 
     def __init__(
         self,
-        exchange=None,
-        allocation=None,
+        representativeness=None,
+        source=None,
+        validation=None,
         anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_
@@ -29,28 +32,41 @@ class TFlowData(GeneratedsSuper):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        if exchange is None:
-            self.exchange = []
+        self.representativeness = representativeness
+        self.representativeness_nsprefix_ = ""
+        if source is None:
+            self.source = []
         else:
-            self.exchange = exchange
-        self.exchange_nsprefix_ = None
-        if allocation is None:
-            self.allocation = []
-        else:
-            self.allocation = allocation
-        self.allocation_nsprefix_ = None
+            self.source = source
+        self.source_nsprefix_ = ""
+        self.validation = validation
+        self.validation_nsprefix_ = ""
         if anytypeobjs_ is None:
             self.anytypeobjs_ = []
         else:
             self.anytypeobjs_ = anytypeobjs_
 
     def factory(*args_, **kwargs_):
-        return TFlowData(*args_, **kwargs_)
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, ModelingAndValidation
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if ModelingAndValidation.subclass:
+            return ModelingAndValidation.subclass(*args_, **kwargs_)
+        else:
+            return ModelingAndValidation(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
     def _hasContent(self):
-        if self.exchange or self.allocation or self.anytypeobjs_:
+        if (
+            self.representativeness is not None
+            or self.source
+            or self.validation is not None
+            or self.anytypeobjs_
+        ):
             return True
         else:
             return False
@@ -61,17 +77,17 @@ class TFlowData(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TFlowData",
+        name_="ModelingAndValidation",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TFlowData")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ModelingAndValidation")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TFlowData":
+        if self.original_tagname_ is not None and name_ == "ModelingAndValidation":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -86,7 +102,11 @@ class TFlowData(GeneratedsSuper):
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="TFlowData"
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="ModelingAndValidation",
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -95,7 +115,7 @@ class TFlowData(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TFlowData",
+                name_="ModelingAndValidation",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
@@ -104,7 +124,12 @@ class TFlowData(GeneratedsSuper):
             outfile.write("/>%s" % (eol_,))
 
     def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="TFlowData"
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="ModelingAndValidation",
     ):
         pass
 
@@ -114,7 +139,7 @@ class TFlowData(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TFlowData",
+        name_="ModelingAndValidation",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -122,32 +147,46 @@ class TFlowData(GeneratedsSuper):
             eol_ = "\n"
         else:
             eol_ = ""
-        for exchange_ in self.exchange:
+        if self.representativeness is not None:
             namespaceprefix_ = (
-                self.exchange_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.exchange_nsprefix_)
+                self.representativeness_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.representativeness_nsprefix_)
                 else ""
             )
-            exchange_.export(
+            self.representativeness.export(
                 outfile,
                 level,
                 namespaceprefix_,
                 namespacedef_="",
-                name_="exchange",
+                name_="representativeness",
                 pretty_print=pretty_print,
             )
-        for allocation_ in self.allocation:
+        for source_ in self.source:
             namespaceprefix_ = (
-                self.allocation_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.allocation_nsprefix_)
+                self.source_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.source_nsprefix_)
                 else ""
             )
-            allocation_.export(
+            source_.export(
                 outfile,
                 level,
                 namespaceprefix_,
                 namespacedef_="",
-                name_="allocation",
+                name_="source",
+                pretty_print=pretty_print,
+            )
+        if self.validation is not None:
+            namespaceprefix_ = (
+                self.validation_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.validation_nsprefix_)
+                else ""
+            )
+            self.validation.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="validation",
                 pretty_print=pretty_print,
             )
         if not fromsubclass_:
@@ -174,19 +213,24 @@ class TFlowData(GeneratedsSuper):
     def _buildChildren(
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
-        if nodeName_ == "exchange":
-            obj_ = TExchange.factory(parent_object_=self)
+        if nodeName_ == "representativeness":
+            obj_ = Representativeness.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.exchange.append(obj_)
-            obj_.original_tagname_ = "exchange"
-        elif nodeName_ == "allocation":
-            obj_ = TAllocation.factory(parent_object_=self)
+            self.representativeness = obj_
+            obj_.original_tagname_ = "representativeness"
+        elif nodeName_ == "source":
+            obj_ = Source.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.allocation.append(obj_)
-            obj_.original_tagname_ = "allocation"
+            self.source.append(obj_)
+            obj_.original_tagname_ = "source"
+        elif nodeName_ == "validation":
+            obj_ = Validation.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.validation = obj_
+            obj_.original_tagname_ = "validation"
         else:
-            content_ = self.gds_build_any(child_, "TFlowData")
+            content_ = self.gds_build_any(child_, "ModelingAndValidation")
             self.anytypeobjs_.append(content_)
 
 
-# end class TFlowData
+# end class ModelingAndValidation

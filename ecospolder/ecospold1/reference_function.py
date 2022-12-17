@@ -1,4 +1,4 @@
-from EcoSpold01Base import *
+from ..ecospold_base import *
 
 
 def _cast(typ, value):
@@ -7,8 +7,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TReferenceFunction(GeneratedsSuper):
-    """TReferenceFunction -- Contains the identifying information of a dataset including name (english and german), unit, classification (category, subCategory), etc..
+class ReferenceFunction(EcospoldBase):
+    """ReferenceFunction -- Contains the identifying information of a dataset including name (english and german), unit, classification (category, subCategory), etc..
     datasetRelatesToProduct -- Indicates whether the dataset relates to a process/service or not.
     In the ecoinvent quality network the value required is 'yes' for unit processes and multioutput processes and 'no' for elementary flows and impact categories.
     name -- Name of the unit process, elementary flow or impact category.
@@ -121,14 +121,14 @@ class TReferenceFunction(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, TReferenceFunction
+                CurrentSubclassModule_, ReferenceFunction
             )
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if TReferenceFunction.subclass:
-            return TReferenceFunction.subclass(*args_, **kwargs_)
+        if ReferenceFunction.subclass:
+            return ReferenceFunction.subclass(*args_, **kwargs_)
         else:
-            return TReferenceFunction(*args_, **kwargs_)
+            return ReferenceFunction(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -364,17 +364,17 @@ class TReferenceFunction(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TReferenceFunction",
+        name_="ReferenceFunction",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TReferenceFunction")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ReferenceFunction")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TReferenceFunction":
+        if self.original_tagname_ is not None and name_ == "ReferenceFunction":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -393,7 +393,7 @@ class TReferenceFunction(GeneratedsSuper):
             level,
             already_processed,
             namespaceprefix_,
-            name_="TReferenceFunction",
+            name_="ReferenceFunction",
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -402,7 +402,7 @@ class TReferenceFunction(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TReferenceFunction",
+                name_="ReferenceFunction",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
@@ -416,7 +416,7 @@ class TReferenceFunction(GeneratedsSuper):
         level,
         already_processed,
         namespaceprefix_="",
-        name_="TReferenceFunction",
+        name_="ReferenceFunction",
     ):
         if (
             self.datasetRelatesToProduct is not None
@@ -620,7 +620,7 @@ class TReferenceFunction(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="TReferenceFunction",
+        name_="ReferenceFunction",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -781,4 +781,4 @@ class TReferenceFunction(GeneratedsSuper):
             self.validate_TString80(self.synonym[-1])
 
 
-# end class TReferenceFunction
+# end class ReferenceFunction

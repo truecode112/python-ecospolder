@@ -1,4 +1,4 @@
-from EcoSpold01Base import *
+from ..ecospold_base import *
 
 
 def _cast(typ, value):
@@ -7,8 +7,8 @@ def _cast(typ, value):
     return typ(value)
 
 
-class TRepresentativeness(GeneratedsSuper):
-    """TRepresentativeness -- Contains information about the fraction of the relevant market supplied by the product/service described in the dataset. Information about market share, production volume (in the ecoinvent quality network: also consumption volume in the market area) and information about how data have been sampled.
+class Representativeness(EcospoldBase):
+    """Representativeness -- Contains information about the fraction of the relevant market supplied by the product/service described in the dataset. Information about market share, production volume (in the ecoinvent quality network: also consumption volume in the market area) and information about how data have been sampled.
     percent -- Indicates the share in market supply in the geographical area indicated of the product/service at issue.
     If data representative for a process operated in one country is used for another country's process, the entry should be '0'. The representativity for the original country is reported under 'extrapolations'.
     productionVolume -- Indicates the market area consumption volume (NOT necessarily identical with the production volume) in the geographical area indicated of the product/service at issue.
@@ -52,14 +52,14 @@ class TRepresentativeness(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, TRepresentativeness
+                CurrentSubclassModule_, Representativeness
             )
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if TRepresentativeness.subclass:
-            return TRepresentativeness.subclass(*args_, **kwargs_)
+        if Representativeness.subclass:
+            return Representativeness.subclass(*args_, **kwargs_)
         else:
-            return TRepresentativeness(*args_, **kwargs_)
+            return Representativeness(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -162,17 +162,17 @@ class TRepresentativeness(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TRepresentativeness",
+        name_="Representativeness",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("TRepresentativeness")
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Representativeness")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if self.original_tagname_ is not None and name_ == "TRepresentativeness":
+        if self.original_tagname_ is not None and name_ == "Representativeness":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -191,7 +191,7 @@ class TRepresentativeness(GeneratedsSuper):
             level,
             already_processed,
             namespaceprefix_,
-            name_="TRepresentativeness",
+            name_="Representativeness",
         )
         if self._hasContent():
             outfile.write(">%s" % (eol_,))
@@ -200,7 +200,7 @@ class TRepresentativeness(GeneratedsSuper):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="TRepresentativeness",
+                name_="Representativeness",
                 pretty_print=pretty_print,
             )
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
@@ -213,7 +213,7 @@ class TRepresentativeness(GeneratedsSuper):
         level,
         already_processed,
         namespaceprefix_="",
-        name_="TRepresentativeness",
+        name_="Representativeness",
     ):
         if self.percent is not None and "percent" not in already_processed:
             already_processed.add("percent")
@@ -289,7 +289,7 @@ class TRepresentativeness(GeneratedsSuper):
         level,
         namespaceprefix_="",
         namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="TRepresentativeness",
+        name_="Representativeness",
         fromsubclass_=False,
         pretty_print=True,
     ):
@@ -347,4 +347,4 @@ class TRepresentativeness(GeneratedsSuper):
         pass
 
 
-# end class TRepresentativeness
+# end class Representativeness

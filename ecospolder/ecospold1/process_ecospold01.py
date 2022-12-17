@@ -6,8 +6,8 @@ except NameError:
     ModulenotfoundExp_ = ImportError
 import datetime as datetime_
 
-from EcoSpold import TEcoSpold
-from EcoSpold01Base import *
+from ecospold import EcoSpold
+from ..ecospold_base import *
 from lxml import etree as etree_
 
 
@@ -64,7 +64,7 @@ def parse(inFileName, silence=False, print_warnings=True):
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
         rootTag = "ecospold"
-        rootClass = TEcoSpold
+        rootClass = EcoSpold
     rootObj = rootClass.factory()
     rootObj.build(rootNode, gds_collector_=gds_collector)
 
