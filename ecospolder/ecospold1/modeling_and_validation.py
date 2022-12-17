@@ -25,23 +25,19 @@ class ModelingAndValidation(EcospoldBase):
         representativeness=None,
         source=None,
         validation=None,
-        gds_collector_=None,
-        **kwargs_
+        gds_collector=None,
+        **kwargs
     ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
+        self.gds_collector = gds_collector
+        self.gds_elementtree_node = None
+        self.original_tagname = None
+        self.parent_object = kwargs.get("parent_object")
         self.representativeness = representativeness
-        self.representativeness_nsprefix_ = ""
         if source is None:
             self.source = []
         else:
             self.source = source
-        self.source_nsprefix_ = ""
         self.validation = validation
-        self.validation_nsprefix_ = ""
 
     def _hasContent(self):
         if (
@@ -57,29 +53,27 @@ class ModelingAndValidation(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="ModelingAndValidation",
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name="ModelingAndValidation",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ModelingAndValidation")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
+        imported_ns_def = GenerateDSNamespaceDefs.get("ModelingAndValidation")
+        if imported_ns_def is not None:
+            namespacedef = imported_ns_def
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "ModelingAndValidation":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
+            eol = ""
+        if self.original_tagname is not None and name == "ModelingAndValidation":
+            name = self.original_tagname
         showIndent(outfile, level, pretty_print)
         outfile.write(
             "<%s%s%s"
             % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
+                namespaceprefix,
+                name,
+                namespacedef and " " + namespacedef or "",
             )
         )
         already_processed = set()
@@ -87,31 +81,31 @@ class ModelingAndValidation(EcospoldBase):
             outfile,
             level,
             already_processed,
-            namespaceprefix_,
-            name_="ModelingAndValidation",
+            namespaceprefix,
+            name="ModelingAndValidation",
         )
         if self._hasContent():
-            outfile.write(">%s" % (eol_,))
+            outfile.write(">%s" % (eol,))
             self._exportChildren(
                 outfile,
                 level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="ModelingAndValidation",
+                namespaceprefix,
+                namespacedef,
+                name="ModelingAndValidation",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+            outfile.write("</%s%s>%s" % (namespaceprefix, name, eol))
         else:
-            outfile.write("/>%s" % (eol_,))
+            outfile.write("/>%s" % (eol,))
 
     def _exportAttributes(
         self,
         outfile,
         level,
         already_processed,
-        namespaceprefix_="",
-        name_="ModelingAndValidation",
+        namespaceprefix="",
+        name="ModelingAndValidation",
     ):
         pass
 
@@ -119,92 +113,76 @@ class ModelingAndValidation(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="ModelingAndValidation",
-        fromsubclass_=False,
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name="ModelingAndValidation",
+        fromsubclass=False,
         pretty_print=True,
     ):
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
+            eol = ""
         if self.representativeness is not None:
-            namespaceprefix_ = (
-                self.representativeness_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.representativeness_nsprefix_)
-                else ""
-            )
             self.representativeness.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="representativeness",
+                namespaceprefix,
+                namespacedef="",
+                name="representativeness",
                 pretty_print=pretty_print,
             )
-        for source_ in self.source:
-            namespaceprefix_ = (
-                self.source_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.source_nsprefix_)
-                else ""
-            )
-            source_.export(
+        for source_item in self.source:
+            source_item.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="source",
+                namespaceprefix,
+                namespacedef="",
+                name="source",
                 pretty_print=pretty_print,
             )
         if self.validation is not None:
-            namespaceprefix_ = (
-                self.validation_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.validation_nsprefix_)
-                else ""
-            )
             self.validation.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="validation",
+                namespaceprefix,
+                namespacedef="",
+                name="validation",
                 pretty_print=pretty_print,
             )
 
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
+    def build(self, node, gds_collector=None):
+        self.gds_collector = gds_collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
+            self.gds_elementtree_node = node
         already_processed = set()
-        self.ns_prefix_ = node.prefix
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+            nodeName = tag_pattern.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
         pass
 
     def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
     ):
-        if nodeName_ == "representativeness":
-            obj_ = Representativeness(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.representativeness = obj_
-            obj_.original_tagname_ = "representativeness"
-        elif nodeName_ == "source":
-            obj_ = Source(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.source.append(obj_)
-            obj_.original_tagname_ = "source"
-        elif nodeName_ == "validation":
-            obj_ = Validation(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.validation = obj_
-            obj_.original_tagname_ = "validation"
+        if nodeName == "representativeness":
+            obj = Representativeness(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.representativeness = obj
+            obj.original_tagname = "representativeness"
+        elif nodeName == "source":
+            obj = Source(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.source.append(obj)
+            obj.original_tagname = "source"
+        elif nodeName == "validation":
+            obj = Validation(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.validation = obj
+            obj.original_tagname = "validation"
 
 
 # end class ModelingAndValidation

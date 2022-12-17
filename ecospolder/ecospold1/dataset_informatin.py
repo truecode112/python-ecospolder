@@ -32,7 +32,7 @@ class DatasetInformation(EcospoldBase):
 
     def __init__(
         self,
-        type_=None,
+        type=None,
         impactAssessmentResult=None,
         timestamp=None,
         version=None,
@@ -40,44 +40,36 @@ class DatasetInformation(EcospoldBase):
         energyValues=None,
         languageCode="en",
         localLanguageCode="de",
-        gds_collector_=None,
-        **kwargs_
+        gds_collector=None,
+        **kwargs
     ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = ""
-        self.type_ = _cast(int, type_)
-        self.type__nsprefix_ = None
+        self.gds_collector = gds_collector
+        self.gds_elementtree_node = None
+        self.original_tagname = None
+        self.parent_object = kwargs.get("parent_object")
+        self.type = _cast(int, type)
         self.impactAssessmentResult = _cast(bool, impactAssessmentResult)
-        self.impactAssessmentResult_nsprefix_ = None
-        if isinstance(timestamp, BaseStrType_):
-            initvalue_ = datetime_.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S")
+        if isinstance(timestamp, BaseStrType):
+            initvalue = date_t.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S")
         else:
-            initvalue_ = timestamp
-        self.timestamp = initvalue_
+            initvalue = timestamp
+        self.timestamp = initvalue
         self.version = _cast(float, version)
-        self.version_nsprefix_ = None
         self.internalVersion = _cast(float, internalVersion)
-        self.internalVersion_nsprefix_ = None
         self.energyValues = _cast(int, energyValues)
-        self.energyValues_nsprefix_ = None
         self.languageCode = _cast(None, languageCode)
-        self.languageCode_nsprefix_ = None
         self.localLanguageCode = _cast(None, localLanguageCode)
-        self.localLanguageCode_nsprefix_ = None
 
     def validate_typeType(self, value):
         # Validate type typeType, a restriction on xsd:integer.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -86,15 +78,15 @@ class DatasetInformation(EcospoldBase):
                 )
                 return False
             if value < 0:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on typeType'
                     % {"value": value, "lineno": lineno}
                 )
                 result = False
             if value > 5:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on typeType'
                     % {"value": value, "lineno": lineno}
                 )
@@ -104,12 +96,12 @@ class DatasetInformation(EcospoldBase):
         # Validate type versionType, a restriction on xsd:float.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, float):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
                     % {
                         "value": value,
@@ -120,7 +112,7 @@ class DatasetInformation(EcospoldBase):
             if not self.gds_validate_simple_patterns(
                 self.validate_versionType_patterns_, value
             ):
-                self.gds_collector_.add_message(
+                self.gds_collector.add_message(
                     'Value "%s" does not match xsd pattern restrictions: %s'
                     % (
                         encode_str_2_3(value),
@@ -134,12 +126,12 @@ class DatasetInformation(EcospoldBase):
         # Validate type internalVersionType, a restriction on xsd:float.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, float):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
                     % {
                         "value": value,
@@ -150,7 +142,7 @@ class DatasetInformation(EcospoldBase):
             if not self.gds_validate_simple_patterns(
                 self.validate_internalVersionType_patterns_, value
             ):
-                self.gds_collector_.add_message(
+                self.gds_collector.add_message(
                     'Value "%s" does not match xsd pattern restrictions: %s'
                     % (
                         encode_str_2_3(value),
@@ -164,12 +156,12 @@ class DatasetInformation(EcospoldBase):
         # Validate type energyValuesType, a restriction on xsd:integer.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -178,15 +170,15 @@ class DatasetInformation(EcospoldBase):
                 )
                 return False
             if value < 0:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on energyValuesType'
                     % {"value": value, "lineno": lineno}
                 )
                 result = False
             if value > 2:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on energyValuesType'
                     % {"value": value, "lineno": lineno}
                 )
@@ -196,12 +188,12 @@ class DatasetInformation(EcospoldBase):
         # Validate type ISOLanguageCode, a restriction on xsd:string.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -355,15 +347,15 @@ class DatasetInformation(EcospoldBase):
                 "zu",
             ]
             if value not in enumerations:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on ISOLanguageCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
             if len(value) != 2:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd length restriction on ISOLanguageCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -379,29 +371,27 @@ class DatasetInformation(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="DatasetInformation",
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
+        name="DatasetInformation",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("DatasetInformation")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
+        imported_ns_def = GenerateDSNamespaceDefs.get("DatasetInformation")
+        if imported_ns_def is not None:
+            namespacedef = imported_ns_def
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "DatasetInformation":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
+            eol = ""
+        if self.original_tagname is not None and name == "DatasetInformation":
+            name = self.original_tagname
         showIndent(outfile, level, pretty_print)
         outfile.write(
             "<%s%s%s"
             % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
+                namespaceprefix,
+                name,
+                namespacedef and " " + namespacedef or "",
             )
         )
         already_processed = set()
@@ -409,35 +399,35 @@ class DatasetInformation(EcospoldBase):
             outfile,
             level,
             already_processed,
-            namespaceprefix_,
-            name_="DatasetInformation",
+            namespaceprefix,
+            name="DatasetInformation",
         )
         if self._hasContent():
-            outfile.write(">%s" % (eol_,))
+            outfile.write(">%s" % (eol,))
             self._exportChildren(
                 outfile,
                 level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="DatasetInformation",
+                namespaceprefix,
+                namespacedef,
+                name="DatasetInformation",
                 pretty_print=pretty_print,
             )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+            outfile.write("</%s%s>%s" % (namespaceprefix, name, eol))
         else:
-            outfile.write("/>%s" % (eol_,))
+            outfile.write("/>%s" % (eol,))
 
     def _exportAttributes(
         self,
         outfile,
         level,
         already_processed,
-        namespaceprefix_="",
-        name_="DatasetInformation",
+        namespaceprefix="",
+        name="DatasetInformation",
     ):
-        if self.type_ is not None and "type_" not in already_processed:
-            already_processed.add("type_")
+        if self.type is not None and "type" not in already_processed:
+            already_processed.add("type")
             outfile.write(
-                ' type="%s"' % self.gds_format_integer(self.type_, input_name="type")
+                ' type="%s"' % self.gds_format_integer(self.type, input_name="type")
             )
         if (
             self.impactAssessmentResult is not None
@@ -512,33 +502,32 @@ class DatasetInformation(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="DatasetInformation",
-        fromsubclass_=False,
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
+        name="DatasetInformation",
+        fromsubclass=False,
         pretty_print=True,
     ):
         pass
 
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
+    def build(self, node, gds_collector=None):
+        self.gds_collector = gds_collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
+            self.gds_elementtree_node = node
         already_processed = set()
-        self.ns_prefix_ = node.prefix
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+            nodeName = tag_pattern.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("type", node)
+        value = find_attr_value("type", node)
         if value is not None and "type" not in already_processed:
             already_processed.add("type")
-            self.type_ = self.gds_parse_integer(value, node, "type")
-            self.validate_typeType(self.type_)  # validate type typeType
-        value = find_attr_value_("impactAssessmentResult", node)
+            self.type = self.gds_parse_integer(value, node, "type")
+            self.validate_typeType(self.type)  # validate type typeType
+        value = find_attr_value("impactAssessmentResult", node)
         if value is not None and "impactAssessmentResult" not in already_processed:
             already_processed.add("impactAssessmentResult")
             if value in ("true", "1"):
@@ -547,20 +536,20 @@ class DatasetInformation(EcospoldBase):
                 self.impactAssessmentResult = False
             else:
                 raise_parse_error(node, "Bad boolean attribute")
-        value = find_attr_value_("timestamp", node)
+        value = find_attr_value("timestamp", node)
         if value is not None and "timestamp" not in already_processed:
             already_processed.add("timestamp")
             try:
                 self.timestamp = self.gds_parse_datetime(value)
             except ValueError as exp:
                 raise ValueError("Bad date-time attribute (timestamp): %s" % exp)
-        value = find_attr_value_("version", node)
+        value = find_attr_value("version", node)
         if value is not None and "version" not in already_processed:
             already_processed.add("version")
             value = self.gds_parse_float(value, node, "version")
             self.version = value
             self.validate_versionType(self.version)  # validate type versionType
-        value = find_attr_value_("internalVersion", node)
+        value = find_attr_value("internalVersion", node)
         if value is not None and "internalVersion" not in already_processed:
             already_processed.add("internalVersion")
             value = self.gds_parse_float(value, node, "internalVersion")
@@ -568,21 +557,21 @@ class DatasetInformation(EcospoldBase):
             self.validate_internalVersionType(
                 self.internalVersion
             )  # validate type internalVersionType
-        value = find_attr_value_("energyValues", node)
+        value = find_attr_value("energyValues", node)
         if value is not None and "energyValues" not in already_processed:
             already_processed.add("energyValues")
             self.energyValues = self.gds_parse_integer(value, node, "energyValues")
             self.validate_energyValuesType(
                 self.energyValues
             )  # validate type energyValuesType
-        value = find_attr_value_("languageCode", node)
+        value = find_attr_value("languageCode", node)
         if value is not None and "languageCode" not in already_processed:
             already_processed.add("languageCode")
             self.languageCode = value
             self.validate_ISOLanguageCode(
                 self.languageCode
             )  # validate type ISOLanguageCode
-        value = find_attr_value_("localLanguageCode", node)
+        value = find_attr_value("localLanguageCode", node)
         if value is not None and "localLanguageCode" not in already_processed:
             already_processed.add("localLanguageCode")
             self.localLanguageCode = value
@@ -591,7 +580,7 @@ class DatasetInformation(EcospoldBase):
             )  # validate type ISOLanguageCode
 
     def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
     ):
         pass
 

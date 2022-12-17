@@ -21,31 +21,27 @@ class Validation(EcospoldBase):
         proofReadingDetails=None,
         proofReadingValidator=None,
         otherDetails=None,
-        gds_collector_=None,
-        **kwargs_
+        gds_collector=None,
+        **kwargs
     ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = ""
+        self.gds_collector = gds_collector
+        self.gds_elementtree_node = None
+        self.original_tagname = None
+        self.parent_object = kwargs.get("parent_object")
         self.proofReadingDetails = _cast(None, proofReadingDetails)
-        self.proofReadingDetails_nsprefix_ = None
         self.proofReadingValidator = _cast(int, proofReadingValidator)
-        self.proofReadingValidator_nsprefix_ = None
         self.otherDetails = _cast(None, otherDetails)
-        self.otherDetails_nsprefix_ = None
 
     def validate_TString32000(self, value):
         # Validate type TString32000, a restriction on xsd:string.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -54,8 +50,8 @@ class Validation(EcospoldBase):
                 )
                 return False
             if len(value) > 32000:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString32000'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -65,12 +61,12 @@ class Validation(EcospoldBase):
         # Validate type TIndexNumber, a restriction on xsd:int.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -79,8 +75,8 @@ class Validation(EcospoldBase):
                 )
                 return False
             if value < 1:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on TIndexNumber'
                     % {"value": value, "lineno": lineno}
                 )
@@ -96,56 +92,54 @@ class Validation(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="Validation",
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
+        name="Validation",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Validation")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
+        imported_ns_def = GenerateDSNamespaceDefs.get("Validation")
+        if imported_ns_def is not None:
+            namespacedef = imported_ns_def
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Validation":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
+            eol = ""
+        if self.original_tagname is not None and name == "Validation":
+            name = self.original_tagname
         showIndent(outfile, level, pretty_print)
         outfile.write(
             "<%s%s%s"
             % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
+                namespaceprefix,
+                name,
+                namespacedef and " " + namespacedef or "",
             )
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Validation"
+            outfile, level, already_processed, namespaceprefix, name="Validation"
         )
         if self._hasContent():
-            outfile.write(">%s" % (eol_,))
+            outfile.write(">%s" % (eol,))
             self._exportChildren(
                 outfile,
                 level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Validation",
+                namespaceprefix,
+                namespacedef,
+                name="Validation",
                 pretty_print=pretty_print,
             )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+            outfile.write("</%s%s>%s" % (namespaceprefix, name, eol))
         else:
-            outfile.write("/>%s" % (eol_,))
+            outfile.write("/>%s" % (eol,))
 
     def _exportAttributes(
         self,
         outfile,
         level,
         already_processed,
-        namespaceprefix_="",
-        name_="Validation",
+        namespaceprefix="",
+        name="Validation",
     ):
         if (
             self.proofReadingDetails is not None
@@ -191,35 +185,34 @@ class Validation(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="Validation",
-        fromsubclass_=False,
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
+        name="Validation",
+        fromsubclass=False,
         pretty_print=True,
     ):
         pass
 
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
+    def build(self, node, gds_collector=None):
+        self.gds_collector = gds_collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
+            self.gds_elementtree_node = node
         already_processed = set()
-        self.ns_prefix_ = node.prefix
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+            nodeName = tag_pattern.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("proofReadingDetails", node)
+        value = find_attr_value("proofReadingDetails", node)
         if value is not None and "proofReadingDetails" not in already_processed:
             already_processed.add("proofReadingDetails")
             self.proofReadingDetails = value
             self.validate_TString32000(
                 self.proofReadingDetails
             )  # validate type TString32000
-        value = find_attr_value_("proofReadingValidator", node)
+        value = find_attr_value("proofReadingValidator", node)
         if value is not None and "proofReadingValidator" not in already_processed:
             already_processed.add("proofReadingValidator")
             self.proofReadingValidator = self.gds_parse_integer(
@@ -228,14 +221,14 @@ class Validation(EcospoldBase):
             self.validate_TIndexNumber(
                 self.proofReadingValidator
             )  # validate type TIndexNumber
-        value = find_attr_value_("otherDetails", node)
+        value = find_attr_value("otherDetails", node)
         if value is not None and "otherDetails" not in already_processed:
             already_processed.add("otherDetails")
             self.otherDetails = value
             self.validate_TString32000(self.otherDetails)  # validate type TString32000
 
     def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
     ):
         pass
 

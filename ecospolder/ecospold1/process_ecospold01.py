@@ -10,7 +10,7 @@ import datetime as datetime_
 
 from ecospold import EcoSpold
 
-from lxml import etree as etree_
+from lxml import etree as etre
 
 
 def _cast(typ, value):
@@ -33,7 +33,7 @@ def usage():
 
 
 def get_root_tag(node):
-    tag = Tag_pattern_.match(node.tag).groups()[-1]
+    tag = tag_pattern.match(node.tag).groups()[-1]
     prefix_tag = TagNamePrefix + tag
     rootClass = GDSClassesMapping.get(prefix_tag)
     if rootClass is None:
@@ -59,15 +59,15 @@ def get_required_ns_prefix_defs(rootNode):
 
 def parse(inFileName, silence=False, print_warnings=True):
     global CapturedNsmap_
-    gds_collector = GdsCollector_()
+    gds_collector = GdsCollector()
     parser = None
-    doc = parsexml_(inFileName, parser)
+    doc = parsexml(inFileName, parser)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     rootTag = "ecospold"
     rootClass = EcoSpold
     rootObj = EcoSpold()
-    rootObj.build(rootNode, gds_collector_=gds_collector)
+    rootObj.build(rootNode, gds_collector=gds_collector)
 
     CapturedNsmap_, namespacedefs = get_required_ns_prefix_defs(rootNode)
     if not SaveElementTreeNode:
@@ -76,7 +76,7 @@ def parse(inFileName, silence=False, print_warnings=True):
     if not silence:
         sys.stdout.write('<?xml version="1.0" ?>\n')
         rootObj.export(
-            sys.stdout, 0, name_=rootTag, namespacedef_=namespacedefs, pretty_print=True
+            sys.stdout, 0, name=rootTag, namespacedef=namespacedefs, pretty_print=True
         )
     if print_warnings and len(gds_collector.get_messages()) > 0:
         separator = ("-" * 50) + "\n"

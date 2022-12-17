@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../')
 from ecospold_base import *
-from lxml import etree as etree_
+from lxml import etree as etre
 
 
 def _cast(typ, value):
@@ -37,41 +37,32 @@ class Person(EcospoldBase):
         email=None,
         companyCode=None,
         countryCode=None,
-        gds_collector_=None,
-        **kwargs_
+        gds_collector=None,
+        **kwargs
     ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
+        self.gds_collector = gds_collector
+        self.gds_elementtree_node = None
+        self.original_tagname = None
+        self.parent_object = kwargs.get("parent_object")
         self.number = _cast(int, number)
-        self.number_nsprefix_ = None
         self.name = _cast(None, name)
-        self.name_nsprefix_ = None
         self.address = _cast(None, address)
-        self.address_nsprefix_ = None
         self.telephone = _cast(None, telephone)
-        self.telephone_nsprefix_ = None
         self.telefax = _cast(None, telefax)
-        self.telefax_nsprefix_ = None
         self.email = _cast(None, email)
-        self.email_nsprefix_ = None
         self.companyCode = _cast(None, companyCode)
-        self.companyCode_nsprefix_ = None
         self.countryCode = _cast(None, countryCode)
-        self.countryCode_nsprefix_ = None
 
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -80,8 +71,8 @@ class Person(EcospoldBase):
                 )
                 return False
             if value < 1:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on TIndexNumber'
                     % {"value": value, "lineno": lineno}
                 )
@@ -91,12 +82,12 @@ class Person(EcospoldBase):
         # Validate type TString40, a restriction on xsd:string.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -105,8 +96,8 @@ class Person(EcospoldBase):
                 )
                 return False
             if len(value) > 40:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString40'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -116,12 +107,12 @@ class Person(EcospoldBase):
         # Validate type TString255, a restriction on xsd:string.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -130,8 +121,8 @@ class Person(EcospoldBase):
                 )
                 return False
             if len(value) > 255:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString255'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -141,12 +132,12 @@ class Person(EcospoldBase):
         # Validate type TString80, a restriction on xsd:string.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -155,8 +146,8 @@ class Person(EcospoldBase):
                 )
                 return False
             if len(value) > 80:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString80'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -166,12 +157,12 @@ class Person(EcospoldBase):
         # Validate type TCompanyCode, a restriction on xsd:string.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -180,8 +171,8 @@ class Person(EcospoldBase):
                 )
                 return False
             if len(value) > 7:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TCompanyCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -191,12 +182,12 @@ class Person(EcospoldBase):
         # Validate type ISOCountryCode, a restriction on xsd:string.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -446,15 +437,15 @@ class Person(EcospoldBase):
                 "ZW",
             ]
             if value not in enumerations:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on ISOCountryCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
             if len(value) != 2:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd length restriction on ISOCountryCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -470,51 +461,49 @@ class Person(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Person",
+        namespaceprefix="",
+        namespacedef="",
+        name="Person",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Person")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
+        imported_ns_def = GenerateDSNamespaceDefs.get("Person")
+        if imported_ns_def is not None:
+            namespacedef = imported_ns_def
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Person":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
+            eol = ""
+        if self.original_tagname is not None and name == "Person":
+            name = self.original_tagname
         showIndent(outfile, level, pretty_print)
         outfile.write(
             "<%s%s%s"
             % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
+                namespaceprefix,
+                name,
+                namespacedef and " " + namespacedef or "",
             )
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Person"
+            outfile, level, already_processed, namespaceprefix, name="Person"
         )
         if self._hasContent():
-            outfile.write(">%s" % (eol_,))
+            outfile.write(">%s" % (eol,))
             self._exportChildren(
                 outfile,
                 level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Person",
+                namespaceprefix,
+                namespacedef,
+                name="Person",
                 pretty_print=pretty_print,
             )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+            outfile.write("</%s%s>%s" % (namespaceprefix, name, eol))
         else:
-            outfile.write("/>%s" % (eol_,))
+            outfile.write("/>%s" % (eol,))
 
     def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Person"
+        self, outfile, level, already_processed, namespaceprefix="", name="Person"
     ):
         if self.number is not None and "number" not in already_processed:
             already_processed.add("number")
@@ -611,63 +600,62 @@ class Person(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Person",
-        fromsubclass_=False,
+        namespaceprefix="",
+        namespacedef="",
+        name="Person",
+        fromsubclass=False,
         pretty_print=True,
     ):
         pass
 
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
+    def build(self, node, gds_collector=None):
+        self.gds_collector = gds_collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
+            self.gds_elementtree_node = node
         already_processed = set()
-        self.ns_prefix_ = node.prefix
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+            nodeName = tag_pattern.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("number", node)
+        value = find_attr_value("number", node)
         if value is not None and "number" not in already_processed:
             already_processed.add("number")
             self.number = self.gds_parse_integer(value, node, "number")
             self.validate_TIndexNumber(self.number)  # validate type TIndexNumber
-        value = find_attr_value_("name", node)
+        value = find_attr_value("name", node)
         if value is not None and "name" not in already_processed:
             already_processed.add("name")
             self.name = value
             self.validate_TString40(self.name)  # validate type TString40
-        value = find_attr_value_("address", node)
+        value = find_attr_value("address", node)
         if value is not None and "address" not in already_processed:
             already_processed.add("address")
             self.address = value
             self.validate_TString255(self.address)  # validate type TString255
-        value = find_attr_value_("telephone", node)
+        value = find_attr_value("telephone", node)
         if value is not None and "telephone" not in already_processed:
             already_processed.add("telephone")
             self.telephone = value
             self.validate_TString40(self.telephone)  # validate type TString40
-        value = find_attr_value_("telefax", node)
+        value = find_attr_value("telefax", node)
         if value is not None and "telefax" not in already_processed:
             already_processed.add("telefax")
             self.telefax = value
             self.validate_TString40(self.telefax)  # validate type TString40
-        value = find_attr_value_("email", node)
+        value = find_attr_value("email", node)
         if value is not None and "email" not in already_processed:
             already_processed.add("email")
             self.email = value
             self.validate_TString80(self.email)  # validate type TString80
-        value = find_attr_value_("companyCode", node)
+        value = find_attr_value("companyCode", node)
         if value is not None and "companyCode" not in already_processed:
             already_processed.add("companyCode")
             self.companyCode = value
             self.validate_TCompanyCode(self.companyCode)  # validate type TCompanyCode
-        value = find_attr_value_("countryCode", node)
+        value = find_attr_value("countryCode", node)
         if value is not None and "countryCode" not in already_processed:
             already_processed.add("countryCode")
             self.countryCode = value
@@ -676,7 +664,7 @@ class Person(EcospoldBase):
             )  # validate type ISOCountryCode
 
     def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
     ):
         pass
 

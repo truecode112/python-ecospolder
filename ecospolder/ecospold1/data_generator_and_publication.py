@@ -41,41 +41,32 @@ class DataGeneratorAndPublication(EcospoldBase):
         companyCode=None,
         countryCode=None,
         pageNumbers=None,
-        gds_collector_=None,
-        **kwargs_
+        gds_collector=None,
+        **kwargs
     ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = ""
+        self.gds_collector = gds_collector
+        self.gds_elementtree_node = None
+        self.original_tagname = None
+        self.parent_object = kwargs.get("parent_object")
         self.person = _cast(int, person)
-        self.person_nsprefix_ = None
         self.dataPublishedIn = _cast(int, dataPublishedIn)
-        self.dataPublishedIn_nsprefix_ = None
         self.referenceToPublishedSource = _cast(int, referenceToPublishedSource)
-        self.referenceToPublishedSource_nsprefix_ = None
         self.copyright = _cast(bool, copyright)
-        self.copyright_nsprefix_ = None
         self.accessRestrictedTo = _cast(int, accessRestrictedTo)
-        self.accessRestrictedTo_nsprefix_ = None
         self.companyCode = _cast(None, companyCode)
-        self.companyCode_nsprefix_ = None
         self.countryCode = _cast(None, countryCode)
-        self.countryCode_nsprefix_ = None
         self.pageNumbers = _cast(None, pageNumbers)
-        self.pageNumbers_nsprefix_ = None
 
     def validate_TIndexNumber(self, value):
         # Validate type TIndexNumber, a restriction on xsd:int.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -84,8 +75,8 @@ class DataGeneratorAndPublication(EcospoldBase):
                 )
                 return False
             if value < 1:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on TIndexNumber'
                     % {"value": value, "lineno": lineno}
                 )
@@ -95,12 +86,12 @@ class DataGeneratorAndPublication(EcospoldBase):
         # Validate type dataPublishedInType, a restriction on xsd:integer.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -109,15 +100,15 @@ class DataGeneratorAndPublication(EcospoldBase):
                 )
                 return False
             if value < 0:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on dataPublishedInType'
                     % {"value": value, "lineno": lineno}
                 )
                 result = False
             if value > 2:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on dataPublishedInType'
                     % {"value": value, "lineno": lineno}
                 )
@@ -127,12 +118,12 @@ class DataGeneratorAndPublication(EcospoldBase):
         # Validate type accessRestrictedToType, a restriction on xsd:integer.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -141,15 +132,15 @@ class DataGeneratorAndPublication(EcospoldBase):
                 )
                 return False
             if value < 0:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on accessRestrictedToType'
                     % {"value": value, "lineno": lineno}
                 )
                 result = False
             if value > 3:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on accessRestrictedToType'
                     % {"value": value, "lineno": lineno}
                 )
@@ -159,12 +150,12 @@ class DataGeneratorAndPublication(EcospoldBase):
         # Validate type TCompanyCode, a restriction on xsd:string.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -173,8 +164,8 @@ class DataGeneratorAndPublication(EcospoldBase):
                 )
                 return False
             if len(value) > 7:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TCompanyCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -184,12 +175,12 @@ class DataGeneratorAndPublication(EcospoldBase):
         # Validate type ISOCountryCode, a restriction on xsd:string.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -439,15 +430,15 @@ class DataGeneratorAndPublication(EcospoldBase):
                 "ZW",
             ]
             if value not in enumerations:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on ISOCountryCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
             if len(value) != 2:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd length restriction on ISOCountryCode'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -457,12 +448,12 @@ class DataGeneratorAndPublication(EcospoldBase):
         # Validate type TString30, a restriction on xsd:string.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -471,8 +462,8 @@ class DataGeneratorAndPublication(EcospoldBase):
                 )
                 return False
             if len(value) > 30:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString30'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -488,32 +479,30 @@ class DataGeneratorAndPublication(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="DataGeneratorAndPublication",
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
+        name="DataGeneratorAndPublication",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("DataGeneratorAndPublication")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
+        imported_ns_def = GenerateDSNamespaceDefs.get("DataGeneratorAndPublication")
+        if imported_ns_def is not None:
+            namespacedef = imported_ns_def
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
+            eol = ""
         if (
-            self.original_tagname_ is not None
-            and name_ == "DataGeneratorAndPublication"
+            self.original_tagname is not None
+            and name == "DataGeneratorAndPublication"
         ):
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
+            name = self.original_tagname
         showIndent(outfile, level, pretty_print)
         outfile.write(
             "<%s%s%s"
             % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
+                namespaceprefix,
+                name,
+                namespacedef and " " + namespacedef or "",
             )
         )
         already_processed = set()
@@ -521,30 +510,30 @@ class DataGeneratorAndPublication(EcospoldBase):
             outfile,
             level,
             already_processed,
-            namespaceprefix_,
-            name_="DataGeneratorAndPublication",
+            namespaceprefix,
+            name="DataGeneratorAndPublication",
         )
         if self._hasContent():
-            outfile.write(">%s" % (eol_,))
+            outfile.write(">%s" % (eol,))
             self._exportChildren(
                 outfile,
                 level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="DataGeneratorAndPublication",
+                namespaceprefix,
+                namespacedef,
+                name="DataGeneratorAndPublication",
                 pretty_print=pretty_print,
             )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+            outfile.write("</%s%s>%s" % (namespaceprefix, name, eol))
         else:
-            outfile.write("/>%s" % (eol_,))
+            outfile.write("/>%s" % (eol,))
 
     def _exportAttributes(
         self,
         outfile,
         level,
         already_processed,
-        namespaceprefix_="",
-        name_="DataGeneratorAndPublication",
+        namespaceprefix="",
+        name="DataGeneratorAndPublication",
     ):
         if self.person is not None and "person" not in already_processed:
             already_processed.add("person")
@@ -630,33 +619,32 @@ class DataGeneratorAndPublication(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
-        name_="DataGeneratorAndPublication",
-        fromsubclass_=False,
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
+        name="DataGeneratorAndPublication",
+        fromsubclass=False,
         pretty_print=True,
     ):
         pass
 
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
+    def build(self, node, gds_collector=None):
+        self.gds_collector = gds_collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
+            self.gds_elementtree_node = node
         already_processed = set()
-        self.ns_prefix_ = node.prefix
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+            nodeName = tag_pattern.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("person", node)
+        value = find_attr_value("person", node)
         if value is not None and "person" not in already_processed:
             already_processed.add("person")
             self.person = self.gds_parse_integer(value, node, "person")
             self.validate_TIndexNumber(self.person)  # validate type TIndexNumber
-        value = find_attr_value_("dataPublishedIn", node)
+        value = find_attr_value("dataPublishedIn", node)
         if value is not None and "dataPublishedIn" not in already_processed:
             already_processed.add("dataPublishedIn")
             self.dataPublishedIn = self.gds_parse_integer(
@@ -665,7 +653,7 @@ class DataGeneratorAndPublication(EcospoldBase):
             self.validate_dataPublishedInType(
                 self.dataPublishedIn
             )  # validate type dataPublishedInType
-        value = find_attr_value_("referenceToPublishedSource", node)
+        value = find_attr_value("referenceToPublishedSource", node)
         if value is not None and "referenceToPublishedSource" not in already_processed:
             already_processed.add("referenceToPublishedSource")
             self.referenceToPublishedSource = self.gds_parse_integer(
@@ -674,7 +662,7 @@ class DataGeneratorAndPublication(EcospoldBase):
             self.validate_TIndexNumber(
                 self.referenceToPublishedSource
             )  # validate type TIndexNumber
-        value = find_attr_value_("copyright", node)
+        value = find_attr_value("copyright", node)
         if value is not None and "copyright" not in already_processed:
             already_processed.add("copyright")
             if value in ("true", "1"):
@@ -683,7 +671,7 @@ class DataGeneratorAndPublication(EcospoldBase):
                 self.copyright = False
             else:
                 raise_parse_error(node, "Bad boolean attribute")
-        value = find_attr_value_("accessRestrictedTo", node)
+        value = find_attr_value("accessRestrictedTo", node)
         if value is not None and "accessRestrictedTo" not in already_processed:
             already_processed.add("accessRestrictedTo")
             self.accessRestrictedTo = self.gds_parse_integer(
@@ -692,26 +680,26 @@ class DataGeneratorAndPublication(EcospoldBase):
             self.validate_accessRestrictedToType(
                 self.accessRestrictedTo
             )  # validate type accessRestrictedToType
-        value = find_attr_value_("companyCode", node)
+        value = find_attr_value("companyCode", node)
         if value is not None and "companyCode" not in already_processed:
             already_processed.add("companyCode")
             self.companyCode = value
             self.validate_TCompanyCode(self.companyCode)  # validate type TCompanyCode
-        value = find_attr_value_("countryCode", node)
+        value = find_attr_value("countryCode", node)
         if value is not None and "countryCode" not in already_processed:
             already_processed.add("countryCode")
             self.countryCode = value
             self.validate_ISOCountryCode(
                 self.countryCode
             )  # validate type ISOCountryCode
-        value = find_attr_value_("pageNumbers", node)
+        value = find_attr_value("pageNumbers", node)
         if value is not None and "pageNumbers" not in already_processed:
             already_processed.add("pageNumbers")
             self.pageNumbers = value
             self.validate_TString30(self.pageNumbers)  # validate type TString30
 
     def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
     ):
         pass
 

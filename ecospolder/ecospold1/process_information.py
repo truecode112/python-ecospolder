@@ -25,24 +25,18 @@ class ProcessInformation(EcospoldBase):
         technology=None,
         timePeriod=None,
         dataSetInformation=None,
-        gds_collector_=None,
-        **kwargs_
+        gds_collector=None,
+        **kwargs
     ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
+        self.gds_collector = gds_collector
+        self.gds_elementtree_node = None
+        self.original_tagname = None
+        self.parent_object = kwargs.get("parent_object")
         self.referenceFunction = referenceFunction
-        self.referenceFunction_nsprefix_ = ""
         self.geography = geography
-        self.geography_nsprefix_ = ""
         self.technology = technology
-        self.technology_nsprefix_ = ""
         self.timePeriod = timePeriod
-        self.timePeriod_nsprefix_ = ""
         self.dataSetInformation = dataSetInformation
-        self.dataSetInformation_nsprefix_ = ""
 
     def _hasContent(self):
         if (
@@ -60,29 +54,27 @@ class ProcessInformation(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="ProcessInformation",
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name="ProcessInformation",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ProcessInformation")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
+        imported_ns_def = GenerateDSNamespaceDefs.get("ProcessInformation")
+        if imported_ns_def is not None:
+            namespacedef = imported_ns_def
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "ProcessInformation":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
+            eol = ""
+        if self.original_tagname is not None and name == "ProcessInformation":
+            name = self.original_tagname
         showIndent(outfile, level, pretty_print)
         outfile.write(
             "<%s%s%s"
             % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
+                namespaceprefix,
+                name,
+                namespacedef and " " + namespacedef or "",
             )
         )
         already_processed = set()
@@ -90,31 +82,31 @@ class ProcessInformation(EcospoldBase):
             outfile,
             level,
             already_processed,
-            namespaceprefix_,
-            name_="ProcessInformation",
+            namespaceprefix,
+            name="ProcessInformation",
         )
         if self._hasContent():
-            outfile.write(">%s" % (eol_,))
+            outfile.write(">%s" % (eol,))
             self._exportChildren(
                 outfile,
                 level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="ProcessInformation",
+                namespaceprefix,
+                namespacedef,
+                name="ProcessInformation",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+            outfile.write("</%s%s>%s" % (namespaceprefix, name, eol))
         else:
-            outfile.write("/>%s" % (eol_,))
+            outfile.write("/>%s" % (eol,))
 
     def _exportAttributes(
         self,
         outfile,
         level,
         already_processed,
-        namespaceprefix_="",
-        name_="ProcessInformation",
+        namespaceprefix="",
+        name="ProcessInformation",
     ):
         pass
 
@@ -122,130 +114,104 @@ class ProcessInformation(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="ProcessInformation",
-        fromsubclass_=False,
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name="ProcessInformation",
+        fromsubclass=False,
         pretty_print=True,
     ):
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
+            eol = ""
         if self.referenceFunction is not None:
-            namespaceprefix_ = (
-                self.referenceFunction_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.referenceFunction_nsprefix_)
-                else ""
-            )
             self.referenceFunction.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="referenceFunction",
+                namespaceprefix,
+                namespacedef="",
+                name="referenceFunction",
                 pretty_print=pretty_print,
             )
         if self.geography is not None:
-            namespaceprefix_ = (
-                self.geography_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.geography_nsprefix_)
-                else ""
-            )
             self.geography.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="geography",
+                namespaceprefix,
+                namespacedef="",
+                name="geography",
                 pretty_print=pretty_print,
             )
         if self.technology is not None:
-            namespaceprefix_ = (
-                self.technology_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.technology_nsprefix_)
-                else ""
-            )
             self.technology.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="technology",
+                namespaceprefix,
+                namespacedef="",
+                name="technology",
                 pretty_print=pretty_print,
             )
         if self.timePeriod is not None:
-            namespaceprefix_ = (
-                self.timePeriod_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.timePeriod_nsprefix_)
-                else ""
-            )
             self.timePeriod.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="timePeriod",
+                namespaceprefix,
+                namespacedef="",
+                name="timePeriod",
                 pretty_print=pretty_print,
             )
         if self.dataSetInformation is not None:
-            namespaceprefix_ = (
-                self.dataSetInformation_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.dataSetInformation_nsprefix_)
-                else ""
-            )
             self.dataSetInformation.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="dataSetInformation",
+                namespaceprefix,
+                namespacedef="",
+                name="dataSetInformation",
                 pretty_print=pretty_print,
             )
 
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
+    def build(self, node, gds_collector=None):
+        self.gds_collector = gds_collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
+            self.gds_elementtree_node = node
         already_processed = set()
-        self.ns_prefix_ = node.prefix
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+            nodeName = tag_pattern.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
         pass
 
     def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
     ):
-        if nodeName_ == "referenceFunction":
-            obj_ = ReferenceFunction(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.referenceFunction = obj_
-            obj_.original_tagname_ = "referenceFunction"
-        elif nodeName_ == "geography":
-            obj_ = Geography(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.geography = obj_
-            obj_.original_tagname_ = "geography"
-        elif nodeName_ == "technology":
-            obj_ = Technology(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.technology = obj_
-            obj_.original_tagname_ = "technology"
-        elif nodeName_ == "timePeriod":
-            obj_ = TimePeriod(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.timePeriod = obj_
-            obj_.original_tagname_ = "timePeriod"
-        elif nodeName_ == "dataSetInformation":
-            obj_ = DatasetInformation(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.dataSetInformation = obj_
-            obj_.original_tagname_ = "dataSetInformation"
+        if nodeName == "referenceFunction":
+            obj = ReferenceFunction(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.referenceFunction = obj
+            obj.original_tagname = "referenceFunction"
+        elif nodeName == "geography":
+            obj = Geography(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.geography = obj
+            obj.original_tagname = "geography"
+        elif nodeName == "technology":
+            obj = Technology(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.technology = obj
+            obj.original_tagname = "technology"
+        elif nodeName == "timePeriod":
+            obj = TimePeriod(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.timePeriod = obj
+            obj.original_tagname = "timePeriod"
+        elif nodeName == "dataSetInformation":
+            obj = DatasetInformation(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.dataSetInformation = obj
+            obj.original_tagname = "dataSetInformation"
 
 
 # end class ProcessInformation

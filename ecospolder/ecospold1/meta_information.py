@@ -25,20 +25,16 @@ class MetaInformation(EcospoldBase):
         processInformation=None,
         modellingAndValidation=None,
         administrativeInformation=None,
-        gds_collector_=None,
-        **kwargs_
+        gds_collector=None,
+        **kwargs
     ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
+        self.gds_collector = gds_collector
+        self.gds_elementtree_node = None
+        self.original_tagname = None
+        self.parent_object = kwargs.get("parent_object")
         self.processInformation = processInformation
-        self.processInformation_nsprefix_ = ""
         self.modellingAndValidation = modellingAndValidation
-        self.modellingAndValidation_nsprefix_ = ""
         self.administrativeInformation = administrativeInformation
-        self.administrativeInformation_nsprefix_ = ""
 
     def _hasContent(self):
         if (
@@ -54,29 +50,27 @@ class MetaInformation(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="MetaInformation",
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name="MetaInformation",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("MetaInformation")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
+        imported_ns_def = GenerateDSNamespaceDefs.get("MetaInformation")
+        if imported_ns_def is not None:
+            namespacedef = imported_ns_def
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "MetaInformation":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
+            eol = ""
+        if self.original_tagname is not None and name == "MetaInformation":
+            name = self.original_tagname
         showIndent(outfile, level, pretty_print)
         outfile.write(
             "<%s%s%s"
             % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
+                namespaceprefix,
+                name,
+                namespacedef and " " + namespacedef or "",
             )
         )
         already_processed = set()
@@ -84,31 +78,31 @@ class MetaInformation(EcospoldBase):
             outfile,
             level,
             already_processed,
-            namespaceprefix_,
-            name_="MetaInformation",
+            namespaceprefix,
+            name="MetaInformation",
         )
         if self._hasContent():
-            outfile.write(">%s" % (eol_,))
+            outfile.write(">%s" % (eol,))
             self._exportChildren(
                 outfile,
                 level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="MetaInformation",
+                namespaceprefix,
+                namespacedef,
+                name="MetaInformation",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+            outfile.write("</%s%s>%s" % (namespaceprefix, name, eol))
         else:
-            outfile.write("/>%s" % (eol_,))
+            outfile.write("/>%s" % (eol,))
 
     def _exportAttributes(
         self,
         outfile,
         level,
         already_processed,
-        namespaceprefix_="",
-        name_="MetaInformation",
+        namespaceprefix="",
+        name="MetaInformation",
     ):
         pass
 
@@ -116,92 +110,76 @@ class MetaInformation(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="MetaInformation",
-        fromsubclass_=False,
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name="MetaInformation",
+        fromsubclass=False,
         pretty_print=True,
     ):
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
+            eol = ""
         if self.processInformation is not None:
-            namespaceprefix_ = (
-                self.processInformation_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.processInformation_nsprefix_)
-                else ""
-            )
             self.processInformation.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="processInformation",
+                namespaceprefix,
+                namespacedef="",
+                name="processInformation",
                 pretty_print=pretty_print,
             )
         if self.modellingAndValidation is not None:
-            namespaceprefix_ = (
-                self.modellingAndValidation_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.modellingAndValidation_nsprefix_)
-                else ""
-            )
             self.modellingAndValidation.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="modellingAndValidation",
+                namespaceprefix,
+                namespacedef="",
+                name="modellingAndValidation",
                 pretty_print=pretty_print,
             )
         if self.administrativeInformation is not None:
-            namespaceprefix_ = (
-                self.administrativeInformation_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.administrativeInformation_nsprefix_)
-                else ""
-            )
             self.administrativeInformation.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="administrativeInformation",
+                namespaceprefix,
+                namespacedef="",
+                name="administrativeInformation",
                 pretty_print=pretty_print,
             )
 
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
+    def build(self, node, gds_collector=None):
+        self.gds_collector = gds_collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
+            self.gds_elementtree_node = node
         already_processed = set()
-        self.ns_prefix_ = node.prefix
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+            nodeName = tag_pattern.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
         pass
 
     def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
     ):
-        if nodeName_ == "processInformation":
-            obj_ = ProcessInformation(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.processInformation = obj_
-            obj_.original_tagname_ = "processInformation"
-        elif nodeName_ == "modellingAndValidation":
-            obj_ = ModelingAndValidation(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.modellingAndValidation = obj_
-            obj_.original_tagname_ = "modellingAndValidation"
-        elif nodeName_ == "administrativeInformation":
-            obj_ = AdministrativeInformation(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.administrativeInformation = obj_
-            obj_.original_tagname_ = "administrativeInformation"
+        if nodeName == "processInformation":
+            obj = ProcessInformation(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.processInformation = obj
+            obj.original_tagname = "processInformation"
+        elif nodeName == "modellingAndValidation":
+            obj = ModelingAndValidation(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.modellingAndValidation = obj
+            obj.original_tagname = "modellingAndValidation"
+        elif nodeName == "administrativeInformation":
+            obj = AdministrativeInformation(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.administrativeInformation = obj
+            obj.original_tagname = "administrativeInformation"
 
 
 # end class MetaInformation

@@ -30,23 +30,19 @@ class AdministrativeInformation(EcospoldBase):
         dataEntryBy=None,
         dataGeneratorAndPublication=None,
         person=None,
-        gds_collector_=None,
-        **kwargs_
+        gds_collector=None,
+        **kwargs
     ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
+        self.gds_collector = gds_collector
+        self.gds_elementtree_node = None
+        self.original_tagname = None
+        self.parent_object = kwargs.get("parent_object")
         self.dataEntryBy = dataEntryBy
-        self.dataEntryBy_nsprefix_ = ""
         self.dataGeneratorAndPublication = dataGeneratorAndPublication
-        self.dataGeneratorAndPublication_nsprefix_ = ""
         if person is None:
             self.person = []
         else:
             self.person = person
-        self.person_nsprefix_ = ""
 
     def _hasContent(self):
         if (
@@ -62,29 +58,27 @@ class AdministrativeInformation(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="AdministrativeInformation",
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name="AdministrativeInformation",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("AdministrativeInformation")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
+        imported_ns_def = GenerateDSNamespaceDefs.get("AdministrativeInformation")
+        if imported_ns_def is not None:
+            namespacedef = imported_ns_def
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "AdministrativeInformation":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
+            eol = ""
+        if self.original_tagname is not None and name == "AdministrativeInformation":
+            name = self.original_tagname
         showIndent(outfile, level, pretty_print)
         outfile.write(
             "<%s%s%s"
             % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
+                namespaceprefix,
+                name,
+                namespacedef and " " + namespacedef or "",
             )
         )
         already_processed = set()
@@ -92,31 +86,31 @@ class AdministrativeInformation(EcospoldBase):
             outfile,
             level,
             already_processed,
-            namespaceprefix_,
-            name_="AdministrativeInformation",
+            namespaceprefix,
+            name="AdministrativeInformation",
         )
         if self._hasContent():
-            outfile.write(">%s" % (eol_,))
+            outfile.write(">%s" % (eol,))
             self._exportChildren(
                 outfile,
                 level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="AdministrativeInformation",
+                namespaceprefix,
+                namespacedef,
+                name="AdministrativeInformation",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+            outfile.write("</%s%s>%s" % (namespaceprefix, name, eol))
         else:
-            outfile.write("/>%s" % (eol_,))
+            outfile.write("/>%s" % (eol,))
 
     def _exportAttributes(
         self,
         outfile,
         level,
         already_processed,
-        namespaceprefix_="",
-        name_="AdministrativeInformation",
+        namespaceprefix="",
+        name="AdministrativeInformation",
     ):
         pass
 
@@ -124,92 +118,76 @@ class AdministrativeInformation(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="AdministrativeInformation",
-        fromsubclass_=False,
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name="AdministrativeInformation",
+        fromsubclass=False,
         pretty_print=True,
     ):
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
+            eol = ""
         if self.dataEntryBy is not None:
-            namespaceprefix_ = (
-                self.dataEntryBy_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.dataEntryBy_nsprefix_)
-                else ""
-            )
             self.dataEntryBy.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="dataEntryBy",
+                namespaceprefix,
+                namespacedef="",
+                name="dataEntryBy",
                 pretty_print=pretty_print,
             )
         if self.dataGeneratorAndPublication is not None:
-            namespaceprefix_ = (
-                self.dataGeneratorAndPublication_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.dataGeneratorAndPublication_nsprefix_)
-                else ""
-            )
             self.dataGeneratorAndPublication.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="dataGeneratorAndPublication",
+                namespaceprefix,
+                namespacedef="",
+                name="dataGeneratorAndPublication",
                 pretty_print=pretty_print,
             )
-        for person_ in self.person:
-            namespaceprefix_ = (
-                self.person_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.person_nsprefix_)
-                else ""
-            )
-            person_.export(
+        for one_person in self.person:
+            one_person.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="person",
+                namespaceprefix,
+                namespacedef="",
+                name="person",
                 pretty_print=pretty_print,
             )
 
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
+    def build(self, node, gds_collector=None):
+        self.gds_collector = gds_collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
+            self.gds_elementtree_node = node
         already_processed = set()
-        self.ns_prefix_ = node.prefix
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+            nodeName = tag_pattern.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
         pass
 
     def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
     ):
-        if nodeName_ == "dataEntryBy":
-            obj_ = DataEntryBy(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.dataEntryBy = obj_
-            obj_.original_tagname_ = "dataEntryBy"
-        elif nodeName_ == "dataGeneratorAndPublication":
-            obj_ = DataGeneratorAndPublication(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.dataGeneratorAndPublication = obj_
-            obj_.original_tagname_ = "dataGeneratorAndPublication"
-        elif nodeName_ == "person":
-            obj_ = Person(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.person.append(obj_)
-            obj_.original_tagname_ = "person"
+        if nodeName == "dataEntryBy":
+            obj = DataEntryBy(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.dataEntryBy = obj
+            obj.original_tagname = "dataEntryBy"
+        elif nodeName == "dataGeneratorAndPublication":
+            obj = DataGeneratorAndPublication(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.dataGeneratorAndPublication = obj
+            obj.original_tagname = "dataGeneratorAndPublication"
+        elif nodeName == "person":
+            obj = Person(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.person.append(obj)
+            obj.original_tagname = "person"
 
 
 

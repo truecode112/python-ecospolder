@@ -21,23 +21,19 @@ class EcoSpold(EcospoldBase):
         validationId=None,
         validationStatus=None,
         dataset=None,
-        gds_collector_=None,
-        **kwargs_
+        gds_collector=None,
+        **kwargs
     ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
+        self.gds_collector = gds_collector
+        self.gds_elementtree_node = None
+        self.original_tagname = None
+        self.parent_object = kwargs.get("parent_object")
         self.validationId = _cast(int, validationId)
-        self.validationId_nsprefix_ = None
         self.validationStatus = _cast(None, validationStatus)
-        self.validationStatus_nsprefix_ = None
         if dataset is None:
             self.dataset = []
         else:
             self.dataset = dataset
-        self.dataset_nsprefix_ = ""
 
     def _hasContent(self):
         if self.dataset:
@@ -49,52 +45,50 @@ class EcoSpold(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="EcoSpold",
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name="EcoSpold",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("EcoSpold")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
+        imported_ns_def = GenerateDSNamespaceDefs.get("EcoSpold")
+        if imported_ns_def is not None:
+            namespacedef = imported_ns_def
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "EcoSpold":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
+            eol = ""
+        if self.original_tagname is not None and name == "EcoSpold":
+            name = self.original_tagname
         showIndent(outfile, level, pretty_print)
         outfile.write(
             "<%s%s%s"
             % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
+                namespaceprefix,
+                name,
+                namespacedef and " " + namespacedef or "",
             )
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="EcoSpold"
+            outfile, level, already_processed, namespaceprefix, name="EcoSpold"
         )
         if self._hasContent():
-            outfile.write(">%s" % (eol_,))
+            outfile.write(">%s" % (eol,))
             self._exportChildren(
                 outfile,
                 level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="EcoSpold",
+                namespaceprefix,
+                namespacedef,
+                name="EcoSpold",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+            outfile.write("</%s%s>%s" % (namespaceprefix, name, eol))
         else:
-            outfile.write("/>%s" % (eol_,))
+            outfile.write("/>%s" % (eol,))
 
     def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="EcoSpold"
+        self, outfile, level, already_processed, namespaceprefix="", name="EcoSpold"
     ):
         if self.validationId is not None and "validationId" not in already_processed:
             already_processed.add("validationId")
@@ -123,61 +117,55 @@ class EcoSpold(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="EcoSpold",
-        fromsubclass_=False,
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name="EcoSpold",
+        fromsubclass=False,
         pretty_print=True,
     ):
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
-        for dataset_ in self.dataset:
-            namespaceprefix_ = (
-                self.dataset_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.dataset_nsprefix_)
-                else ""
-            )
-            dataset_.export(
+            eol = ""
+        for dataset_item in self.dataset:
+            dataset_item.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="dataset",
+                namespaceprefix,
+                namespacedef="",
+                name="dataset",
                 pretty_print=pretty_print,
             )
 
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
+    def build(self, node, gds_collector=None):
+        self.gds_collector = gds_collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
+            self.gds_elementtree_node = node
         already_processed = set()
-        self.ns_prefix_ = node.prefix
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+            nodeName = tag_pattern.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("validationId", node)
+        value = find_attr_value("validationId", node)
         if value is not None and "validationId" not in already_processed:
             already_processed.add("validationId")
             self.validationId = self.gds_parse_integer(value, node, "validationId")
-        value = find_attr_value_("validationStatus", node)
+        value = find_attr_value("validationStatus", node)
         if value is not None and "validationStatus" not in already_processed:
             already_processed.add("validationStatus")
             self.validationStatus = value
 
     def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
     ):
-        if nodeName_ == "dataset":
-            obj_ = Dataset(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.dataset.append(obj_)
-            obj_.original_tagname_ = "dataset"
+        if nodeName == "dataset":
+            obj = Dataset(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.dataset.append(obj)
+            obj.original_tagname = "dataset"
 
 
 # end class EcoSpold

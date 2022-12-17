@@ -32,51 +32,41 @@ class Dataset(EcospoldBase):
         validUnits=None,
         metaInformation=None,
         flowData=None,
-        gds_collector_=None,
-        **kwargs_
+        gds_collector=None,
+        **kwargs
     ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
+        self.gds_collector = gds_collector
+        self.gds_elementtree_node = None
+        self.original_tagname = None
+        self.parent_object = kwargs.get("parent_object")
         self.number = _cast(int, number)
-        self.number_nsprefix_ = None
         self.internalSchemaVersion = _cast(None, internalSchemaVersion)
-        self.internalSchemaVersion_nsprefix_ = None
         self.generator = _cast(None, generator)
-        self.generator_nsprefix_ = None
-        if isinstance(timestamp, BaseStrType_):
-            initvalue_ = datetime_.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S")
+        if isinstance(timestamp, BaseStrType):
+            initvalue = date_t.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S")
         else:
-            initvalue_ = timestamp
-        self.timestamp = initvalue_
+            initvalue = timestamp
+        self.timestamp = initvalue
         self.validCompanyCodes = _cast(None, validCompanyCodes)
-        self.validCompanyCodes_nsprefix_ = None
         self.validRegionalCodes = _cast(None, validRegionalCodes)
-        self.validRegionalCodes_nsprefix_ = None
         self.validCategories = _cast(None, validCategories)
-        self.validCategories_nsprefix_ = None
         self.validUnits = _cast(None, validUnits)
-        self.validUnits_nsprefix_ = None
         self.metaInformation = metaInformation
-        self.metaInformation_nsprefix_ = ""
         if flowData is None:
             self.flowData = []
         else:
             self.flowData = flowData
-        self.flowData_nsprefix_ = ""
 
     def validate_TIndexNumber(self, value):
         # Validate type es:TIndexNumber, a restriction on xsd:int.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
                     % {
                         "value": value,
@@ -85,8 +75,8 @@ class Dataset(EcospoldBase):
                 )
                 return False
             if value < 1:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on TIndexNumber'
                     % {"value": value, "lineno": lineno}
                 )
@@ -96,12 +86,12 @@ class Dataset(EcospoldBase):
         # Validate type es:TString255, a restriction on xsd:string.
         if (
             value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
+            and Validate_simpletypes
+            and self.gds_collector is not None
         ):
             if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
                     % {
                         "value": value,
@@ -110,8 +100,8 @@ class Dataset(EcospoldBase):
                 )
                 return False
             if len(value) > 255:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
+                lineno = self.gds_get_node_lineno()
+                self.gds_collector.add_message(
                     'Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on TString255'
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
@@ -127,52 +117,50 @@ class Dataset(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="Dataset",
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name="Dataset",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Dataset")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
+        imported_ns_def = GenerateDSNamespaceDefs.get("Dataset")
+        if imported_ns_def is not None:
+            namespacedef = imported_ns_def
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Dataset":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
+            eol = ""
+        if self.original_tagname is not None and name == "Dataset":
+            name = self.original_tagname
         showIndent(outfile, level, pretty_print)
         outfile.write(
             "<%s%s%s"
             % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
+                namespaceprefix,
+                name,
+                namespacedef and " " + namespacedef or "",
             )
         )
         already_processed = set()
         self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Dataset"
+            outfile, level, already_processed, namespaceprefix, name="Dataset"
         )
         if self._hasContent():
-            outfile.write(">%s" % (eol_,))
+            outfile.write(">%s" % (eol,))
             self._exportChildren(
                 outfile,
                 level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Dataset",
+                namespaceprefix,
+                namespacedef,
+                name="Dataset",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+            outfile.write("</%s%s>%s" % (namespaceprefix, name, eol))
         else:
-            outfile.write("/>%s" % (eol_,))
+            outfile.write("/>%s" % (eol,))
 
     def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Dataset"
+        self, outfile, level, already_processed, namespaceprefix="", name="Dataset"
     ):
         if self.number is not None and "number" not in already_processed:
             already_processed.add("number")
@@ -279,109 +267,98 @@ class Dataset(EcospoldBase):
         self,
         outfile,
         level,
-        namespaceprefix_="",
-        namespacedef_='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
-        name_="Dataset",
-        fromsubclass_=False,
+        namespaceprefix="",
+        namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
+        name="Dataset",
+        fromsubclass=False,
         pretty_print=True,
     ):
         if pretty_print:
-            eol_ = "\n"
+            eol = "\n"
         else:
-            eol_ = ""
+            eol = ""
         if self.metaInformation is not None:
-            namespaceprefix_ = (
-                self.metaInformation_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.metaInformation_nsprefix_)
-                else ""
-            )
             self.metaInformation.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="metaInformation",
+                namespaceprefix,
+                namespacedef="",
+                name="metaInformation",
                 pretty_print=pretty_print,
             )
-        for flowData_ in self.flowData:
-            namespaceprefix_ = (
-                self.flowData_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.flowData_nsprefix_)
-                else ""
-            )
-            flowData_.export(
+        for flowData_item in self.flowData:
+            flowData_item.export(
                 outfile,
                 level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="flowData",
+                namespaceprefix,
+                namespacedef="",
+                name="flowData",
                 pretty_print=pretty_print,
             )
 
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
+    def build(self, node, gds_collector=None):
+        self.gds_collector = gds_collector
         if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
+            self.gds_elementtree_node = node
         already_processed = set()
-        self.ns_prefix_ = node.prefix
         self._buildAttributes(node, node.attrib, already_processed)
         for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+            nodeName = tag_pattern.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName, gds_collector=gds_collector)
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("number", node)
+        value = find_attr_value("number", node)
         if value is not None and "number" not in already_processed:
             already_processed.add("number")
             self.number = self.gds_parse_integer(value, node, "number")
             self.validate_TIndexNumber(self.number)  # validate type TIndexNumber
-        value = find_attr_value_("internalSchemaVersion", node)
+        value = find_attr_value("internalSchemaVersion", node)
         if value is not None and "internalSchemaVersion" not in already_processed:
             already_processed.add("internalSchemaVersion")
             self.internalSchemaVersion = value
-        value = find_attr_value_("generator", node)
+        value = find_attr_value("generator", node)
         if value is not None and "generator" not in already_processed:
             already_processed.add("generator")
             self.generator = value
             self.validate_TString255(self.generator)  # validate type TString255
-        value = find_attr_value_("timestamp", node)
+        value = find_attr_value("timestamp", node)
         if value is not None and "timestamp" not in already_processed:
             already_processed.add("timestamp")
             try:
                 self.timestamp = self.gds_parse_datetime(value)
             except ValueError as exp:
                 raise ValueError("Bad date-time attribute (timestamp): %s" % exp)
-        value = find_attr_value_("validCompanyCodes", node)
+        value = find_attr_value("validCompanyCodes", node)
         if value is not None and "validCompanyCodes" not in already_processed:
             already_processed.add("validCompanyCodes")
             self.validCompanyCodes = value
-        value = find_attr_value_("validRegionalCodes", node)
+        value = find_attr_value("validRegionalCodes", node)
         if value is not None and "validRegionalCodes" not in already_processed:
             already_processed.add("validRegionalCodes")
             self.validRegionalCodes = value
-        value = find_attr_value_("validCategories", node)
+        value = find_attr_value("validCategories", node)
         if value is not None and "validCategories" not in already_processed:
             already_processed.add("validCategories")
             self.validCategories = value
-        value = find_attr_value_("validUnits", node)
+        value = find_attr_value("validUnits", node)
         if value is not None and "validUnits" not in already_processed:
             already_processed.add("validUnits")
             self.validUnits = value
 
     def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+        self, child_, node, nodeName, fromsubclass=False, gds_collector=None
     ):
-        if nodeName_ == "metaInformation":
-            obj_ = MetaInformation(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.metaInformation = obj_
-            obj_.original_tagname_ = "metaInformation"
-        elif nodeName_ == "flowData":
-            obj_ = FlowData(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.flowData.append(obj_)
-            obj_.original_tagname_ = "flowData"
+        if nodeName == "metaInformation":
+            obj = MetaInformation(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.metaInformation = obj
+            obj.original_tagname = "metaInformation"
+        elif nodeName == "flowData":
+            obj = FlowData(parent_object=self)
+            obj.build(child_, gds_collector=gds_collector)
+            self.flowData.append(obj)
+            obj.original_tagname = "flowData"
 
 
 # end class Dataset
