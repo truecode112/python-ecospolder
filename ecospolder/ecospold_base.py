@@ -9,6 +9,8 @@ from io import StringIO
 from lxml import etree as etre
 from typing import List
 import time
+from io import TextIOBase
+import typing
 
 try:
     ModulenotfoundExp = ModuleNotFoundError
@@ -106,28 +108,22 @@ class EcospoldBase:
         output.close()
         return strval
 
-    def format_string(self, input_data : str, input_name="") -> str:
+    def format_string(self, input_data : str, input_name : str) -> str:
         return input_data
 
-    def parse_string(self, input_data : str) -> str:
+    def parse_string(self, input_data : str, node=None, input_name="") -> str:
         return input_data
 
-    def validate_string(self, input_data : str) -> str:
+    def validate_string(self, input_data : str, node=None, input_name="") -> str:
         if not input_data:
             return ""
         else:
             return input_data
 
-    def format_base64(self, input_data) -> str:
-        return base64.b64encode(input_data).decode("ascii")
-
-    def validate_base64(self, input_data, node=None, input_name=""):
-        return input_data
-
-    def format_integer(self, input_data, input_name=""):
+    def format_integer(self, input_data : int, input_name="") -> str:
         return "%d" % int(input_data)
 
-    def parse_integer(self, input_data : int, node=None, input_name=""):
+    def parse_integer(self, input_data : int, node=None, input_name="") -> int:
         try:
             ival = int(input_data)
         except (TypeError, ValueError) as exp:
@@ -141,7 +137,7 @@ class EcospoldBase:
             raise_parse_error(node, "Requires integer value")
         return value
 
-    def format_integer_list(self, input_data : List[int], input_name=""):
+    def format_integer_list(self, input_data : List[int], input_name="") -> str:
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
@@ -155,10 +151,10 @@ class EcospoldBase:
                 raise_parse_error(node, "Requires sequence of integer values")
         return values
 
-    def format_float(self, input_data : float, input_name=""):
+    def format_float(self, input_data : float, input_name="") -> str:
         return ("%.15f" % float(input_data)).rstrip("0")
 
-    def parse_float(self, input_data : float, node=None, input_name=""):
+    def parse_float(self, input_data : float, node=None, input_name="") -> float:
         try:
             fval = float(input_data)
         except (TypeError, ValueError) as exp:
@@ -172,7 +168,7 @@ class EcospoldBase:
             raise_parse_error(node, "Requires float value")
         return value
 
-    def format_float_list(self, input_data : List[float], input_name=""):
+    def format_float_list(self, input_data : List[float], input_name="") -> str:
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
@@ -186,7 +182,7 @@ class EcospoldBase:
                 raise_parse_error(node, "Requires sequence of float values")
         return values
 
-    def format_decimal(self, input_data : Decimal, input_name=""):
+    def format_decimal(self, input_data : Decimal, input_name="") -> str:
         return_value = "%s" % input_data
         if "." in return_value:
             return_value = return_value.rstrip("0")
@@ -194,7 +190,7 @@ class EcospoldBase:
                 return_value = return_value.rstrip(".")
         return return_value
 
-    def parse_decimal(self, input_data : Decimal, node=None, input_name=""):
+    def parse_decimal(self, input_data : Decimal, node=None, input_name="") -> Decimal:
         try:
             decimal_value = Decimal(input_data)
         except (TypeError, ValueError):
@@ -208,7 +204,7 @@ class EcospoldBase:
             raise_parse_error(node, "Requires decimal value")
         return value
 
-    def format_decimal_list(self, input_data : List[Decimal], input_name=""):
+    def format_decimal_list(self, input_data : List[Decimal], input_name="") -> str:
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return " ".join([self.format_decimal(item) for item in input_data])
@@ -222,10 +218,10 @@ class EcospoldBase:
                 raise_parse_error(node, "Requires sequence of decimal values")
         return values
 
-    def format_double(self, input_data : float, input_name=""):
+    def format_double(self, input_data : float, input_name="") -> str:
         return "%s" % input_data
 
-    def parse_double(self, input_data : float, node=None, input_name=""):
+    def parse_double(self, input_data : float, node=None, input_name="") -> float:
         try:
             fval = float(input_data)
         except (TypeError, ValueError) as exp:
@@ -239,7 +235,7 @@ class EcospoldBase:
             raise_parse_error(node, "Requires double or float value")
         return value
 
-    def format_double_list(self, input_data : List[float], input_name=""):
+    def format_double_list(self, input_data : List[float], input_name="") -> str:
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
@@ -253,10 +249,10 @@ class EcospoldBase:
                 raise_parse_error(node, "Requires sequence of double or float values")
         return values
 
-    def format_boolean(self, input_data, input_name=""):
+    def format_boolean(self, input_data, input_name="") -> str:
         return ("%s" % input_data).lower()
 
-    def parse_boolean(self, input_data : str, node=None, input_name=""):
+    def parse_boolean(self, input_data : str, node=None, input_name="") -> bool:
         input_data = input_data.strip()
         if input_data in ("true", "1"):
             bval = True
@@ -278,7 +274,7 @@ class EcospoldBase:
             )
         return input_data
 
-    def format_boolean_list(self, input_data : List[str], input_name=""):
+    def format_boolean_list(self, input_data : List[str], input_name="") -> str:
         if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType):
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
@@ -302,7 +298,7 @@ class EcospoldBase:
     def validate_datetime(self, input_data : date_t, node=None, input_name="") -> date_t:
         return input_data
 
-    def format_datetime(self, input_data : date_t, input_name=""):
+    def format_datetime(self, input_data : date_t, input_name="") -> str:
         if input_data.microsecond == 0:
             _svalue = "%04d-%02d-%02dT%02d:%02d:%02d" % (
                 input_data.year,
@@ -340,7 +336,7 @@ class EcospoldBase:
         return _svalue
 
     @classmethod
-    def parse_datetime(cls, input_data : str):
+    def parse_datetime(cls, input_data : str) -> date_t.datetime:
         tz = None
         if input_data[-1] == "Z":
             tz = EcospoldBase._FixedOffsetTZ(0, "UTC")
@@ -370,7 +366,7 @@ class EcospoldBase:
     def validate_date(self, input_data : date_t, node=None, input_name="") -> date_t:
         return input_data
 
-    def format_date(self, input_data : date_t, input_name=""):
+    def format_date(self, input_data : date_t, input_name="") -> str:
         _svalue = "%04d-%02d-%02d" % (
             input_data.year,
             input_data.month,
@@ -397,7 +393,7 @@ class EcospoldBase:
         return _svalue
 
     @classmethod
-    def parse_date(cls, input_data : str):
+    def parse_date(cls, input_data : str) -> date_t.date:
         tz = None
         if input_data[-1] == "Z":
             tz = EcospoldBase._FixedOffsetTZ(0, "UTC")
@@ -415,10 +411,10 @@ class EcospoldBase:
         dt = dt.replace(tzinfo=tz)
         return dt.date()
 
-    def validate_time(self, input_data, node=None, input_name=""):
+    def validate_time(self, input_data : str, node=None, input_name="") -> str:
         return input_data
 
-    def format_time(self, input_data, input_name=""):
+    def format_time(self, input_data : date_t.time, input_name="") -> str:
         if input_data.microsecond == 0:
             _svalue = "%02d:%02d:%02d" % (
                 input_data.hour,
@@ -449,7 +445,7 @@ class EcospoldBase:
                     _svalue += "{0:02d}:{1:02d}".format(hours, minutes)
         return _svalue
 
-    def validate_simple_patterns(self, patterns, target) -> bool:
+    def validate_simple_patterns(self, patterns : List[str], target : str) -> bool:
         # pat is a list of lists of strings/patterns.
         # The target value must match at least one of the patterns
         # in order for the test to succeed.
@@ -468,7 +464,7 @@ class EcospoldBase:
         return found1
 
     @classmethod
-    def parse_time(cls, input_data):
+    def parse_time(cls, input_data : str) -> date_t.time:
         tz = None
         if input_data[-1] == "Z":
             tz = EcospoldBase._FixedOffsetTZ(0, "UTC")
@@ -490,8 +486,8 @@ class EcospoldBase:
         return dt.time()
 
     def check_cardinality(
-        self, value, input_name, min_occurs=0, max_occurs=1, required=None
-    ):
+        self, value : List[str], input_name : str, min_occurs=0, max_occurs=1, required=None
+    ) -> None:
         if value is None:
             length = 0
         elif isinstance(value, list):
@@ -554,10 +550,10 @@ class EcospoldBase:
                 self.collector.add_message(str(parse_error))
         return True
 
-    def str_lower(self, instring):
+    def str_lower(self, instring : str) -> str:
         return instring.lower()
 
-    def get_path(self, node):
+    def get_path(self, node) -> str:
         path_list = []
         self.get_path_list(node, path_list)
         path_list.reverse()
@@ -566,7 +562,7 @@ class EcospoldBase:
 
     Tag_strip_pattern_ = re.compile(r"\{.*\}")
 
-    def get_path_list(self, node, path_list):
+    def get_path_list(self, node, path_list) -> str:
         if node is None:
             return
         tag = EcospoldBase.Tag_strip_pattern_.sub("", node.tag)
@@ -574,18 +570,8 @@ class EcospoldBase:
             path_list.append(tag)
         self.get_path_list(node.getparent(), path_list)
 
-    def build_any(self, node, type_name=None):
-        # provide default value in case option --disable-xml is used.
-        content = ""
-        content = etre.tostring(node, encoding="unicode")
-        return content
-
-    @classmethod
-    def reverse_node_mapping(cls, mapping):
-        return dict(((v, k) for k, v in mapping.items()))
-
     @staticmethod
-    def encode(instring):
+    def encode(instring : str) -> str:
         if sys.version_info.major == 2:
             encoding = "utf-8"
             return instring.encode(encoding)
@@ -593,7 +579,7 @@ class EcospoldBase:
             return instring
 
     @staticmethod
-    def convert_unicode(instring):
+    def convert_unicode(instring : str) -> str:
         if isinstance(instring, str):
             result = quote_xml(instring)
         elif sys.version_info.major == 2 and isinstance(instring, unicode):
@@ -602,38 +588,7 @@ class EcospoldBase:
             result = EcospoldBase.encode(str(instring))
         return result
 
-    def __eq__(self, other):
-        def excl_select_objs(obj):
-            return obj[0] != "parent_object" and obj[0] != "collector"
-
-        if type(self) != type(other):
-            return False
-        return all(
-            x == y
-            for x, y in zip_longest(
-                filter(excl_select_objs, self.__dict__.items()),
-                filter(excl_select_objs, other.__dict__.items()),
-            )
-        )
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
-
-    # Django ETL transform hooks.
-    def djo_etl_transform(self):
-        pass
-
-    def djo_etl_transform_db_obj(self, dbobj):
-        pass
-
-    # SQLAlchemy ETL transform hooks.
-    def sqa_etl_transform(self):
-        return 0, None
-
-    def sqa_etl_transform_db_obj(self, dbobj):
-        pass
-
-    def get_node_lineno(self):
+    def get_node_lineno(self) -> str:
         if (
             hasattr(self, "elementtree_node")
             and self.elementtree_node is not None
@@ -642,17 +597,7 @@ class EcospoldBase:
         else:
             return ""
 
-
-def getSubclassFromModule(module, class_):
-    """Get the subclass of a class from a specific module."""
-    name = class_.__name__ + "Sub"
-    if hasattr(module, name):
-        return getattr(module, name)
-    else:
-        return None
-
-
-def parsexml(infile, parser=None, **kwargs):
+def parsexml(infile : str, parser=None, **kwargs) -> object:
     if parser is None:
         # Use the lxml ElementTree compatible parser so that, e.g.,
         #   we ignore comments.
@@ -669,27 +614,13 @@ def parsexml(infile, parser=None, **kwargs):
     doc = etre.parse(infile, parser=parser, **kwargs)
     return doc
 
-
-def parsexmlstring(instring, parser=None, **kwargs):
-    if parser is None:
-        # Use the lxml ElementTree compatible parser so that, e.g.,
-        #   we ignore comments.
-        try:
-            parser = etre.ETCompatXMLParser()
-        except AttributeError:
-            # fallback to xml.etree
-            parser = etre.XMLParser()
-    element = etre.fromstring(instring, parser=parser, **kwargs)
-    return element
-
-
-def showIndent(outfile, level, pretty_print=True):
+def showIndent(outfile, level : int, pretty_print=True) -> None:
     if pretty_print:
         for idx in range(level):
             outfile.write("    ")
 
 
-def quote_xml(inStr):
+def quote_xml(inStr : str) -> str:
     "Escape markup chars, but do not modify CDATA sections."
     if not inStr:
         return ""
@@ -707,14 +638,14 @@ def quote_xml(inStr):
     return s2
 
 
-def quote_xml_aux(inStr):
+def quote_xml_aux(inStr : str) -> str:
     s1 = inStr.replace("&", "&amp;")
     s1 = s1.replace("<", "&lt;")
     s1 = s1.replace(">", "&gt;")
     return s1
 
 
-def quote_attrib(inStr):
+def quote_attrib(inStr : str) -> str:
     s1 = isinstance(inStr, BaseStrType) and inStr or "%s" % inStr
     s1 = s1.replace("&", "&amp;")
     s1 = s1.replace("<", "&lt;")
@@ -730,7 +661,7 @@ def quote_attrib(inStr):
     return s1
 
 
-def quote_python(inStr):
+def quote_python(inStr : str) -> str:
     s1 = inStr
     if s1.find("'") == -1:
         if s1.find("\n") == -1:
@@ -745,19 +676,7 @@ def quote_python(inStr):
         else:
             return '"""%s"""' % s1
 
-
-def get_all_text(node):
-    if node.text is not None:
-        text = node.text
-    else:
-        text = ""
-    for child in node:
-        if child.tail is not None:
-            text += child.tail
-    return text
-
-
-def find_attr_value(attr_name, node):
+def find_attr_value(attr_name, node : object) -> object:
     attrs = node.attrib
     attr_parts = attr_name.split(":")
     value = None
@@ -780,7 +699,7 @@ def find_attr_value(attr_name, node):
     return value
 
 
-def encode_str_2_3(instr):
+def encode_str_2_3(instr : str) -> str:
     return instr
 
 
@@ -788,7 +707,7 @@ class ParseError(Exception):
     pass
 
 
-def raise_parse_error(node, msg):
+def raise_parse_error(node : object, msg : str) -> None:
     if node is not None:
         msg = "%s (element %s/line %d)" % (
             msg,
@@ -815,25 +734,25 @@ class MixedContainer:
     TypeBoolean = 7
     TypeBase64 = 8
 
-    def __init__(self, category, content_type, name, value) -> None:
+    def __init__(self, category : int, content_type : int, name : str, value : str) -> None:
         self.category = category
         self.content_type = content_type
         self.name = name
         self.value = value
 
-    def getCategory(self):
+    def getCategory(self) -> int:
         return self.category
 
-    def getContenttype(self, content_type):
+    def getContenttype(self, content_type) -> int:
         return self.content_type
 
-    def getValue(self):
+    def getValue(self) -> str:
         return self.value
 
-    def getName(self):
+    def getName(self) -> str:
         return self.name
 
-    def export(self, outfile, level, name, namespace, pretty_print=True):
+    def export(self, outfile : TextIOBase, level : int, name : str, namespace : str, pretty_print=True) -> None:
         if self.category == MixedContainer.CategoryText:
             # Prevent exporting empty content as empty lines.
             if self.value.strip():
@@ -845,7 +764,7 @@ class MixedContainer:
                 outfile, level, namespace, name=name, pretty_print=pretty_print
             )
 
-    def exportSimple(self, outfile, level, name):
+    def exportSimple(self, outfile : TextIOBase, level : int, name : str) -> None:
         if self.content_type == MixedContainer.TypeString:
             outfile.write("<%s>%s</%s>" % (self.name, self.value, self.name))
         elif (
@@ -865,7 +784,7 @@ class MixedContainer:
                 "<%s>%s</%s>" % (self.name, base64.b64encode(self.value), self.name)
             )
 
-    def to_etree(self, element, mapping=None, reverse_mapping=None, nsmap=None):
+    def to_etree(self, element : typing.Any, mapping=None, reverse_mapping=None, nsmap=None) -> None:
         if self.category == MixedContainer.CategoryText:
             # Prevent exporting empty content as empty lines.
             if self.value.strip():
@@ -885,7 +804,7 @@ class MixedContainer:
         else:  # category == MixedContainer.CategoryComplex
             self.value.to_etree(element)
 
-    def to_etresimple(self, mapping=None, reverse_mapping=None, nsmap=None):
+    def to_etresimple(self, mapping=None, reverse_mapping=None, nsmap=None) -> str:
         if self.content_type == MixedContainer.TypeString:
             text = self.value
         elif (
@@ -904,7 +823,7 @@ class MixedContainer:
             text = "%s" % base64.b64encode(self.value)
         return text
 
-    def exportLiteral(self, outfile, level, name):
+    def exportLiteral(self, outfile : TextIOBase, level : int, name : str) -> None:
         if self.category == MixedContainer.CategoryText:
             showIndent(outfile, level)
             outfile.write(
@@ -949,19 +868,19 @@ class MemberSpec(object):
         self.choice = choice
         self.optional = optional
 
-    def set_name(self, name):
+    def set_name(self, name : str) -> None:
         self.name = name
 
-    def get_name(self):
+    def get_name(self) -> str:
         return self.name
 
-    def set_data_type(self, data_type):
+    def set_data_type(self, data_type : str) -> None:
         self.data_type = data_type
 
-    def get_data_type_chain(self):
+    def get_data_type_chain(self) -> str:
         return self.data_type
 
-    def get_data_type(self):
+    def get_data_type(self) -> str:
         if isinstance(self.data_type, list):
             if len(self.data_type) > 0:
                 return self.data_type[-1]
@@ -970,26 +889,26 @@ class MemberSpec(object):
         else:
             return self.data_type
 
-    def set_container(self, container):
+    def set_container(self, container : int) -> None:
         self.container = container
 
-    def get_container(self):
+    def get_container(self) -> int:
         return self.container
 
-    def set_child_attrs(self, child_attrs):
+    def set_child_attrs(self, child_attrs : object) -> None:
         self.child_attrs = child_attrs
 
-    def get_child_attrs(self):
+    def get_child_attrs(self) -> object:
         return self.child_attrs
 
-    def set_choice(self, choice):
+    def set_choice(self, choice : object) -> None:
         self.choice = choice
 
-    def get_choice(self):
+    def get_choice(self) -> object:
         return self.choice
 
-    def set_optional(self, optional):
+    def set_optional(self, optional : int) -> None:
         self.optional = optional
 
-    def get_optional(self):
+    def get_optional(self)  -> int:
         return self.optional

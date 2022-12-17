@@ -59,7 +59,6 @@ def parse(inFileName, silence=False, print_warnings=True):
     rootClass = EcoSpold
     rootObj = EcoSpold()
     rootObj.build(rootNode, collector=collector)
-    return
 
     CapturedNsmap_, namespacedefs = get_required_ns_prefix_defs(rootNode)
     if not SaveElementTreeNode:
