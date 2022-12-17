@@ -25,7 +25,6 @@ class MetaInformation(EcospoldBase):
         processInformation=None,
         modellingAndValidation=None,
         administrativeInformation=None,
-        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -40,17 +39,12 @@ class MetaInformation(EcospoldBase):
         self.modellingAndValidation_nsprefix_ = ""
         self.administrativeInformation = administrativeInformation
         self.administrativeInformation_nsprefix_ = ""
-        if anytypeobjs_ is None:
-            self.anytypeobjs_ = []
-        else:
-            self.anytypeobjs_ = anytypeobjs_
 
     def _hasContent(self):
         if (
             self.processInformation is not None
             or self.modellingAndValidation is not None
             or self.administrativeInformation is not None
-            or self.anytypeobjs_
         ):
             return True
         else:
@@ -174,11 +168,6 @@ class MetaInformation(EcospoldBase):
                 name_="administrativeInformation",
                 pretty_print=pretty_print,
             )
-        if not fromsubclass_:
-            for obj_ in self.anytypeobjs_:
-                showIndent(outfile, level, pretty_print)
-                outfile.write(str(obj_))
-                outfile.write("\n")
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -213,9 +202,6 @@ class MetaInformation(EcospoldBase):
             obj_.build(child_, gds_collector_=gds_collector_)
             self.administrativeInformation = obj_
             obj_.original_tagname_ = "administrativeInformation"
-        else:
-            content_ = self.gds_build_any(child_, "MetaInformation")
-            self.anytypeobjs_.append(content_)
 
 
 # end class MetaInformation

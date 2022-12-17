@@ -25,7 +25,6 @@ class ProcessInformation(EcospoldBase):
         technology=None,
         timePeriod=None,
         dataSetInformation=None,
-        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -44,10 +43,6 @@ class ProcessInformation(EcospoldBase):
         self.timePeriod_nsprefix_ = ""
         self.dataSetInformation = dataSetInformation
         self.dataSetInformation_nsprefix_ = ""
-        if anytypeobjs_ is None:
-            self.anytypeobjs_ = []
-        else:
-            self.anytypeobjs_ = anytypeobjs_
 
     def _hasContent(self):
         if (
@@ -56,7 +51,6 @@ class ProcessInformation(EcospoldBase):
             or self.technology is not None
             or self.timePeriod is not None
             or self.dataSetInformation is not None
-            or self.anytypeobjs_
         ):
             return True
         else:
@@ -208,11 +202,6 @@ class ProcessInformation(EcospoldBase):
                 name_="dataSetInformation",
                 pretty_print=pretty_print,
             )
-        if not fromsubclass_:
-            for obj_ in self.anytypeobjs_:
-                showIndent(outfile, level, pretty_print)
-                outfile.write(str(obj_))
-                outfile.write("\n")
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -257,9 +246,6 @@ class ProcessInformation(EcospoldBase):
             obj_.build(child_, gds_collector_=gds_collector_)
             self.dataSetInformation = obj_
             obj_.original_tagname_ = "dataSetInformation"
-        else:
-            content_ = self.gds_build_any(child_, "ProcessInformation")
-            self.anytypeobjs_.append(content_)
 
 
 # end class ProcessInformation

@@ -382,9 +382,6 @@ class Dataset(EcospoldBase):
             obj_.build(child_, gds_collector_=gds_collector_)
             self.flowData.append(obj_)
             obj_.original_tagname_ = "flowData"
-        else:
-            content_ = self.gds_build_any(child_, "Dataset")
-            self.anytypeobjs_.append(content_)
 
 
 # end class Dataset

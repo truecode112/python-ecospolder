@@ -24,7 +24,6 @@ class FlowData(EcospoldBase):
         self,
         exchange=None,
         allocation=None,
-        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -43,13 +42,9 @@ class FlowData(EcospoldBase):
         else:
             self.allocation = allocation
         self.allocation_nsprefix_ = None
-        if anytypeobjs_ is None:
-            self.anytypeobjs_ = []
-        else:
-            self.anytypeobjs_ = anytypeobjs_
 
     def _hasContent(self):
-        if self.exchange or self.allocation or self.anytypeobjs_:
+        if self.exchange or self.allocation:
             return True
         else:
             return False
@@ -149,11 +144,6 @@ class FlowData(EcospoldBase):
                 name_="allocation",
                 pretty_print=pretty_print,
             )
-        if not fromsubclass_:
-            for obj_ in self.anytypeobjs_:
-                showIndent(outfile, level, pretty_print)
-                outfile.write(str(obj_))
-                outfile.write("\n")
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -183,9 +173,6 @@ class FlowData(EcospoldBase):
             obj_.build(child_, gds_collector_=gds_collector_)
             self.allocation.append(obj_)
             obj_.original_tagname_ = "allocation"
-        else:
-            content_ = self.gds_build_any(child_, "FlowData")
-            self.anytypeobjs_.append(content_)
 
 
 # end class FlowData
