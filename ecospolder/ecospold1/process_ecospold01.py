@@ -28,6 +28,7 @@ def usage():
 def get_root_tag(node):
     tag = tag_pattern.match(node.tag).groups()[-1]
     prefix_tag = TagNamePrefix + tag
+
     rootClass = ClassesMapping.get(prefix_tag)
     if rootClass is None:
         rootClass = globals().get(prefix_tag)

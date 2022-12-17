@@ -46,10 +46,7 @@ class Dataset(EcospoldBase):
         self.validCategories = cast_value_with_type(None, validCategories)
         self.validUnits = cast_value_with_type(None, validUnits)
         self.metaInformation = metaInformation
-        if flowData is None:
-            self.flowData = []
-        else:
-            self.flowData = flowData
+        self.flowData = [] if flowData is None else flowData
 
     def validate_TIndexNumber(self, value):
         # Validate type es:TIndexNumber, a restriction on xsd:int.

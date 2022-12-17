@@ -33,10 +33,7 @@ class AdministrativeInformation(EcospoldBase):
         self.parent_object = kwargs.get("parent_object")
         self.dataEntryBy = dataEntryBy
         self.dataGeneratorAndPublication = dataGeneratorAndPublication
-        if person is None:
-            self.person = []
-        else:
-            self.person = person
+        self.person = [] if person is None else person
 
     def hasContent(self):
         if (

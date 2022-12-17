@@ -24,10 +24,7 @@ class EcoSpold(EcospoldBase):
         self.parent_object = kwargs.get("parent_object")
         self.validationId = cast_value_with_type(int, validationId)
         self.validationStatus = cast_value_with_type(None, validationStatus)
-        if dataset is None:
-            self.dataset = []
-        else:
-            self.dataset = dataset
+        self.dataset = [] if dataset is None else dataset
 
     def hasContent(self):
         if self.dataset:

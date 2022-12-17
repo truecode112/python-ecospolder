@@ -38,10 +38,7 @@ class Allocation(EcospoldBase):
         self.allocationMethod = cast_value_with_type(int, allocationMethod)
         self.fraction = cast_value_with_type(float, fraction)
         self.explanations = cast_value_with_type(None, explanations)
-        if referenceToInputOutput is None:
-            self.referenceToInputOutput = []
-        else:
-            self.referenceToInputOutput = referenceToInputOutput
+        self.referenceToInputOutput = [] if referenceToInputOutput is None else referenceToInputOutput
 
     def validate_TIndexNumber(self, value):
         result = True

@@ -25,14 +25,8 @@ class FlowData(EcospoldBase):
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
-        if exchange is None:
-            self.exchange = []
-        else:
-            self.exchange = exchange
-        if allocation is None:
-            self.allocation = []
-        else:
-            self.allocation = allocation
+        self.exchange = [] if exchange is None else exchange
+        self.allocation = [] if allocation is None else allocation
 
     def hasContent(self):
         if self.exchange or self.allocation:

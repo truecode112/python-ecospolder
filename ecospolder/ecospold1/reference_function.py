@@ -90,10 +90,7 @@ class ReferenceFunction(EcospoldBase):
         self.CASNumber = cast_value_with_type(None, CASNumber)
         self.statisticalClassification = cast_value_with_type(int, statisticalClassification)
         self.formula = cast_value_with_type(None, formula)
-        if synonym is None:
-            self.synonym = []
-        else:
-            self.synonym = synonym
+        self.synonym = [] if synonym is None else synonym
 
     def validate_TString80(self, value):
         result = True

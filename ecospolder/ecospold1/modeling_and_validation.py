@@ -26,10 +26,7 @@ class ModelingAndValidation(EcospoldBase):
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.representativeness = representativeness
-        if source is None:
-            self.source = []
-        else:
-            self.source = source
+        self.source = [] if source is None else source
         self.validation = validation
 
     def hasContent(self):
