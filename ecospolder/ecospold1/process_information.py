@@ -27,7 +27,7 @@ class ProcessInformation(EcospoldBase):
         dataSetInformation=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -38,7 +38,7 @@ class ProcessInformation(EcospoldBase):
         self.timePeriod = timePeriod
         self.dataSetInformation = dataSetInformation
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if (
             self.referenceFunction is not None
             or self.geography is not None

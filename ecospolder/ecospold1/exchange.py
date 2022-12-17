@@ -77,7 +77,7 @@ class Exchange(EcospoldBase):
         outputGroup=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -108,7 +108,7 @@ class Exchange(EcospoldBase):
         self.outputGroup = outputGroup
         self.validate_outputGroupType(self.outputGroup)
 
-    def validate_inputGroupType(self, value):
+    def validate_inputGroupType(self, value) -> bool:
         result = True
         # Validate type inputGroupType, a restriction on xsd:integer.
         if (
@@ -142,7 +142,7 @@ class Exchange(EcospoldBase):
                 result = False
         return result
 
-    def validate_outputGroupType(self, value):
+    def validate_outputGroupType(self, value) -> bool:
         result = True
         # Validate type outputGroupType, a restriction on xsd:integer.
         if (
@@ -176,7 +176,7 @@ class Exchange(EcospoldBase):
                 result = False
         return result
 
-    def validate_TIndexNumber(self, value):
+    def validate_TIndexNumber(self, value) -> bool:
         # Validate type TIndexNumber, a restriction on xsd:int.
         if (
             value is not None
@@ -201,7 +201,7 @@ class Exchange(EcospoldBase):
                 )
                 result = False
 
-    def validate_TCategoryName(self, value):
+    def validate_TCategoryName(self, value) -> bool:
         # Validate type TCategoryName, a restriction on xsd:string.
         if (
             value is not None
@@ -233,7 +233,7 @@ class Exchange(EcospoldBase):
                 )
                 result = False
 
-    def validate_CASNumberType1(self, value):
+    def validate_CASNumberType1(self, value) -> bool:
         # Validate type CASNumberType1, a restriction on xsd:string.
         if (
             value is not None
@@ -270,7 +270,7 @@ class Exchange(EcospoldBase):
 
     validate_CASNumberType1_patterns_ = [["^(\\d{6,6}-\\d{2,2}-\\d)$"]]
 
-    def validate_TString80(self, value):
+    def validate_TString80(self, value) -> bool:
         # Validate type TString80, a restriction on xsd:string.
         if (
             value is not None
@@ -295,7 +295,7 @@ class Exchange(EcospoldBase):
                 )
                 result = False
 
-    def validate_TRegionalCode(self, value):
+    def validate_TRegionalCode(self, value) -> bool:
         # Validate type TRegionalCode, a restriction on xsd:string.
         if (
             value is not None
@@ -320,7 +320,7 @@ class Exchange(EcospoldBase):
                 )
                 result = False
 
-    def validate_TUnit(self, value):
+    def validate_TUnit(self, value) -> bool:
         # Validate type TUnit, a restriction on xsd:string.
         if (
             value is not None
@@ -345,7 +345,7 @@ class Exchange(EcospoldBase):
                 )
                 result = False
 
-    def validate_TFloatNumber(self, value):
+    def validate_TFloatNumber(self, value) -> bool:
         # Validate type TFloatNumber, a restriction on xsd:double.
         if (
             value is not None
@@ -364,7 +364,7 @@ class Exchange(EcospoldBase):
                 return False
             pass
 
-    def validate_uncertaintyTypeType(self, value):
+    def validate_uncertaintyTypeType(self, value) -> bool:
         # Validate type uncertaintyTypeType, a restriction on xsd:integer.
         if (
             value is not None
@@ -396,7 +396,7 @@ class Exchange(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString40(self, value):
+    def validate_TString40(self, value) -> bool:
         # Validate type TString40, a restriction on xsd:string.
         if (
             value is not None
@@ -421,7 +421,7 @@ class Exchange(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString30(self, value):
+    def validate_TString30(self, value) -> bool:
         # Validate type TString30, a restriction on xsd:string.
         if (
             value is not None
@@ -446,7 +446,7 @@ class Exchange(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString32000(self, value):
+    def validate_TString32000(self, value) -> bool:
         # Validate type TString32000, a restriction on xsd:string.
         if (
             value is not None
@@ -471,7 +471,7 @@ class Exchange(EcospoldBase):
                 )
                 result = False
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if self.inputGroup is not None or self.outputGroup is not None:
             return True
         else:

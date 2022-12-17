@@ -54,7 +54,7 @@ class Source(EcospoldBase):
         text=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -75,7 +75,7 @@ class Source(EcospoldBase):
         self.issueNo = cast_value_with_type(None, issueNo)
         self.text = cast_value_with_type(None, text)
 
-    def validate_TIndexNumber(self, value):
+    def validate_TIndexNumber(self, value) -> bool:
         # Validate type TIndexNumber, a restriction on xsd:int.
         if (
             value is not None
@@ -100,7 +100,7 @@ class Source(EcospoldBase):
                 )
                 result = False
 
-    def validate_sourceTypeType(self, value):
+    def validate_sourceTypeType(self, value) -> bool:
         # Validate type sourceTypeType, a restriction on xsd:integer.
         if (
             value is not None
@@ -132,7 +132,7 @@ class Source(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString40(self, value):
+    def validate_TString40(self, value) -> bool:
         # Validate type TString40, a restriction on xsd:string.
         if (
             value is not None
@@ -157,7 +157,7 @@ class Source(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString255(self, value):
+    def validate_TString255(self, value) -> bool:
         # Validate type TString255, a restriction on xsd:string.
         if (
             value is not None
@@ -182,7 +182,7 @@ class Source(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString32000(self, value):
+    def validate_TString32000(self, value) -> bool:
         # Validate type TString32000, a restriction on xsd:string.
         if (
             value is not None
@@ -207,7 +207,7 @@ class Source(EcospoldBase):
                 )
                 result = False
 
-    def validate_pageNumbersType(self, value):
+    def validate_pageNumbersType(self, value) -> bool:
         # Validate type pageNumbersType, a restriction on xsd:string.
         if (
             value is not None
@@ -232,7 +232,7 @@ class Source(EcospoldBase):
                 )
                 result = False
 
-    def validate_volumeNoType(self, value):
+    def validate_volumeNoType(self, value) -> bool:
         # Validate type volumeNoType, a restriction on xsd:integer.
         if (
             value is not None
@@ -262,7 +262,7 @@ class Source(EcospoldBase):
 
     validate_volumeNoType_patterns_ = [["^(\\d{1,3})$"]]
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if ():
             return True
         else:

@@ -36,7 +36,7 @@ class DatasetInformation(EcospoldBase):
         localLanguageCode="de",
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -54,7 +54,7 @@ class DatasetInformation(EcospoldBase):
         self.languageCode = cast_value_with_type(None, languageCode)
         self.localLanguageCode = cast_value_with_type(None, localLanguageCode)
 
-    def validate_typeType(self, value):
+    def validate_typeType(self, value) -> bool:
         # Validate type typeType, a restriction on xsd:integer.
         if (
             value is not None
@@ -86,7 +86,7 @@ class DatasetInformation(EcospoldBase):
                 )
                 result = False
 
-    def validate_versionType(self, value):
+    def validate_versionType(self, value) -> bool:
         # Validate type versionType, a restriction on xsd:float.
         if (
             value is not None
@@ -116,7 +116,7 @@ class DatasetInformation(EcospoldBase):
 
     validate_versionType_patterns_ = [["^(\\d{1,2} ?\\.?\\d{0,2})$"]]
 
-    def validate_internalVersionType(self, value):
+    def validate_internalVersionType(self, value) -> bool:
         # Validate type internalVersionType, a restriction on xsd:float.
         if (
             value is not None
@@ -146,7 +146,7 @@ class DatasetInformation(EcospoldBase):
 
     validate_internalVersionType_patterns_ = [["^(\\d{1,2}\\.\\d{1,2})$"]]
 
-    def validate_energyValuesType(self, value):
+    def validate_energyValuesType(self, value) -> bool:
         # Validate type energyValuesType, a restriction on xsd:integer.
         if (
             value is not None
@@ -178,7 +178,7 @@ class DatasetInformation(EcospoldBase):
                 )
                 result = False
 
-    def validate_ISOLanguageCode(self, value):
+    def validate_ISOLanguageCode(self, value) -> bool:
         # Validate type ISOLanguageCode, a restriction on xsd:string.
         if (
             value is not None
@@ -355,7 +355,7 @@ class DatasetInformation(EcospoldBase):
                 )
                 result = False
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if ():
             return True
         else:
@@ -369,7 +369,7 @@ class DatasetInformation(EcospoldBase):
         namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
         name="DatasetInformation",
         pretty_print=True,
-    ):
+    ) -> None:
         if pretty_print:
             eol = "\n"
         else:
@@ -414,7 +414,7 @@ class DatasetInformation(EcospoldBase):
         already_processed,
         namespaceprefix="",
         name="DatasetInformation",
-    ):
+    ) -> None:
         if self.type is not None and "type" not in already_processed:
             already_processed.add("type")
             outfile.write(
@@ -498,10 +498,10 @@ class DatasetInformation(EcospoldBase):
         name="DatasetInformation",
         fromsubclass=False,
         pretty_print=True,
-    ):
+    ) -> None:
         pass
 
-    def build(self, node, collector=None):
+    def build(self, node, collector=None) -> None:
         self.collector = collector
         if SaveElementTreeNode:
             self.elementtree_node = node
@@ -510,9 +510,8 @@ class DatasetInformation(EcospoldBase):
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName, collector=collector)
-        return self
 
-    def buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed) -> None:
         value = find_attr_value("type", node)
         if value is not None and "type" not in already_processed:
             already_processed.add("type")
@@ -572,7 +571,7 @@ class DatasetInformation(EcospoldBase):
 
     def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
-    ):
+    ) -> None:
         pass
 
 

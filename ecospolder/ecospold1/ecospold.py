@@ -17,7 +17,7 @@ class EcoSpold(EcospoldBase):
         dataset=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -26,7 +26,7 @@ class EcoSpold(EcospoldBase):
         self.validationStatus = cast_value_with_type(None, validationStatus)
         self.dataset = [] if dataset is None else dataset
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if self.dataset:
             return True
         else:
@@ -40,7 +40,7 @@ class EcoSpold(EcospoldBase):
         namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
         name="EcoSpold",
         pretty_print=True,
-    ):
+    ) -> None:
         if pretty_print:
             eol = "\n"
         else:
@@ -77,7 +77,7 @@ class EcoSpold(EcospoldBase):
 
     def exportAttributes(
         self, outfile, level, already_processed, namespaceprefix="", name="EcoSpold"
-    ):
+    ) -> None:
         if self.validationId is not None and "validationId" not in already_processed:
             already_processed.add("validationId")
             outfile.write(
@@ -110,7 +110,7 @@ class EcoSpold(EcospoldBase):
         name="EcoSpold",
         fromsubclass=False,
         pretty_print=True,
-    ):
+    ) -> None:
         if pretty_print:
             eol = "\n"
         else:
@@ -125,7 +125,7 @@ class EcoSpold(EcospoldBase):
                 pretty_print=pretty_print,
             )
 
-    def build(self, node, collector=None):
+    def build(self, node, collector=None) -> None:
         self.collector = collector
         if SaveElementTreeNode:
             self.elementtree_node = node
@@ -134,9 +134,8 @@ class EcoSpold(EcospoldBase):
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName, collector=collector)
-        return self
 
-    def buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed) -> None:
         value = find_attr_value("validationId", node)
         if value is not None and "validationId" not in already_processed:
             already_processed.add("validationId")
@@ -148,7 +147,7 @@ class EcoSpold(EcospoldBase):
 
     def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
-    ):
+    ) -> None:
         if nodeName == "dataset":
             obj = Dataset(parent_object=self)
             obj.build(child_, collector=collector)

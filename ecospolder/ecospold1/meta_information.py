@@ -21,7 +21,7 @@ class MetaInformation(EcospoldBase):
         administrativeInformation=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -30,7 +30,7 @@ class MetaInformation(EcospoldBase):
         self.modellingAndValidation = modellingAndValidation
         self.administrativeInformation = administrativeInformation
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if (
             self.processInformation is not None
             or self.modellingAndValidation is not None

@@ -39,7 +39,7 @@ class TimePeriod(EcospoldBase):
         endDate=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -61,7 +61,7 @@ class TimePeriod(EcospoldBase):
             initvalue = endDate
         self.endDate = initvalue
 
-    def validate_TString32000(self, value):
+    def validate_TString32000(self, value) -> bool:
         # Validate type TString32000, a restriction on xsd:string.
         if (
             value is not None
@@ -86,7 +86,7 @@ class TimePeriod(EcospoldBase):
                 )
                 result = False
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if (
             self.startYear is not None
             or self.startYearMonth is not None

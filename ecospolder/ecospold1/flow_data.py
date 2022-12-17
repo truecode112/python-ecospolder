@@ -20,7 +20,7 @@ class FlowData(EcospoldBase):
         allocation=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -28,7 +28,7 @@ class FlowData(EcospoldBase):
         self.exchange = [] if exchange is None else exchange
         self.allocation = [] if allocation is None else allocation
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if self.exchange or self.allocation:
             return True
         else:

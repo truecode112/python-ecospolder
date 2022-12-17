@@ -29,7 +29,7 @@ class Allocation(EcospoldBase):
         referenceToInputOutput=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -40,7 +40,7 @@ class Allocation(EcospoldBase):
         self.explanations = cast_value_with_type(None, explanations)
         self.referenceToInputOutput = [] if referenceToInputOutput is None else referenceToInputOutput
 
-    def validate_TIndexNumber(self, value):
+    def validate_TIndexNumber(self, value) -> bool:
         result = True
         # Validate type TIndexNumber, a restriction on xsd:int.
         if (
@@ -66,7 +66,7 @@ class Allocation(EcospoldBase):
                 result = False
         return result
 
-    def validate_allocationMethodType(self, value):
+    def validate_allocationMethodType(self, value) -> bool:
         # Validate type allocationMethodType, a restriction on xsd:integer.
         if (
             value is not None
@@ -97,7 +97,7 @@ class Allocation(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString32000(self, value):
+    def validate_TString32000(self, value) -> bool:
         # Validate type TString32000, a restriction on xsd:string.
         if (
             value is not None
@@ -121,7 +121,7 @@ class Allocation(EcospoldBase):
                 )
                 result = False
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if self.referenceToInputOutput:
             return True
         else:
@@ -135,7 +135,7 @@ class Allocation(EcospoldBase):
         namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
         name="Allocation",
         pretty_print=True,
-    ):
+    ) -> None:
         if pretty_print:
             eol = "\n"
         else:
@@ -177,7 +177,7 @@ class Allocation(EcospoldBase):
         already_processed,
         namespaceprefix="",
         name="Allocation",
-    ):
+    ) -> None:
         if (
             self.referenceToCoProduct is not None
             and "referenceToCoProduct" not in already_processed
@@ -225,7 +225,7 @@ class Allocation(EcospoldBase):
         name="Allocation",
         fromsubclass=False,
         pretty_print=True,
-    ):
+    ) -> None:
         if pretty_print:
             eol = "\n"
         else:
@@ -244,7 +244,7 @@ class Allocation(EcospoldBase):
                 )
             )
 
-    def build(self, node, collector=None):
+    def build(self, node, collector=None) -> None:
         self.collector = collector
         if SaveElementTreeNode:
             self.elementtree_node = node
@@ -253,9 +253,8 @@ class Allocation(EcospoldBase):
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName, collector=collector)
-        return self
 
-    def buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed) -> None:
         value = find_attr_value("referenceToCoProduct", node)
         if value is not None and "referenceToCoProduct" not in already_processed:
             already_processed.add("referenceToCoProduct")
@@ -287,7 +286,7 @@ class Allocation(EcospoldBase):
 
     def buildChildren(
         self, child, node, nodeName, fromsubclass=False, collector=None
-    ):
+    ) -> None:
         if nodeName == "referenceToInputOutput" and child.text:
             sval = child.text
             ival = self.parse_integer(sval, node, "referenceToInputOutput")

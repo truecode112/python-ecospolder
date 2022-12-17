@@ -38,7 +38,7 @@ class DataGeneratorAndPublication(EcospoldBase):
         pageNumbers=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -51,8 +51,8 @@ class DataGeneratorAndPublication(EcospoldBase):
         self.companyCode = cast_value_with_type(None, companyCode)
         self.countryCode = cast_value_with_type(None, countryCode)
         self.pageNumbers = cast_value_with_type(None, pageNumbers)
-
-    def validate_TIndexNumber(self, value):
+    
+    def validate_TIndexNumber(self, value) -> bool:
         # Validate type TIndexNumber, a restriction on xsd:int.
         if (
             value is not None
@@ -77,7 +77,7 @@ class DataGeneratorAndPublication(EcospoldBase):
                 )
                 result = False
 
-    def validate_dataPublishedInType(self, value):
+    def validate_dataPublishedInType(self, value) -> bool:
         # Validate type dataPublishedInType, a restriction on xsd:integer.
         if (
             value is not None
@@ -109,7 +109,7 @@ class DataGeneratorAndPublication(EcospoldBase):
                 )
                 result = False
 
-    def validate_accessRestrictedToType(self, value):
+    def validate_accessRestrictedToType(self, value) -> bool:
         # Validate type accessRestrictedToType, a restriction on xsd:integer.
         if (
             value is not None
@@ -141,7 +141,7 @@ class DataGeneratorAndPublication(EcospoldBase):
                 )
                 result = False
 
-    def validate_TCompanyCode(self, value):
+    def validate_TCompanyCode(self, value) -> bool:
         # Validate type TCompanyCode, a restriction on xsd:string.
         if (
             value is not None
@@ -166,7 +166,7 @@ class DataGeneratorAndPublication(EcospoldBase):
                 )
                 result = False
 
-    def validate_ISOCountryCode(self, value):
+    def validate_ISOCountryCode(self, value) -> bool:
         # Validate type ISOCountryCode, a restriction on xsd:string.
         if (
             value is not None
@@ -439,7 +439,7 @@ class DataGeneratorAndPublication(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString30(self, value):
+    def validate_TString30(self, value) -> bool:
         # Validate type TString30, a restriction on xsd:string.
         if (
             value is not None
@@ -464,7 +464,7 @@ class DataGeneratorAndPublication(EcospoldBase):
                 )
                 result = False
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if ():
             return True
         else:
@@ -478,7 +478,7 @@ class DataGeneratorAndPublication(EcospoldBase):
         namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
         name="DataGeneratorAndPublication",
         pretty_print=True,
-    ):
+    ) -> None:
         if pretty_print:
             eol = "\n"
         else:
@@ -526,7 +526,7 @@ class DataGeneratorAndPublication(EcospoldBase):
         already_processed,
         namespaceprefix="",
         name="DataGeneratorAndPublication",
-    ):
+    ) -> None:
         if self.person is not None and "person" not in already_processed:
             already_processed.add("person")
             outfile.write(
@@ -616,7 +616,7 @@ class DataGeneratorAndPublication(EcospoldBase):
         name="DataGeneratorAndPublication",
         fromsubclass=False,
         pretty_print=True,
-    ):
+    ) -> None:
         pass
 
     def build(self, node, collector=None):

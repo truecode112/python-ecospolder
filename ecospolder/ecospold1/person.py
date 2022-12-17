@@ -33,7 +33,7 @@ class Person(EcospoldBase):
         countryCode=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -47,7 +47,7 @@ class Person(EcospoldBase):
         self.companyCode = cast_value_with_type(None, companyCode)
         self.countryCode = cast_value_with_type(None, countryCode)
 
-    def validate_TIndexNumber(self, value):
+    def validate_TIndexNumber(self, value) -> bool:
         # Validate type TIndexNumber, a restriction on xsd:int.
         if (
             value is not None
@@ -72,7 +72,7 @@ class Person(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString40(self, value):
+    def validate_TString40(self, value) -> bool:
         # Validate type TString40, a restriction on xsd:string.
         if (
             value is not None
@@ -97,7 +97,7 @@ class Person(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString255(self, value):
+    def validate_TString255(self, value) -> bool:
         # Validate type TString255, a restriction on xsd:string.
         if (
             value is not None
@@ -122,7 +122,7 @@ class Person(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString80(self, value):
+    def validate_TString80(self, value) -> bool:
         # Validate type TString80, a restriction on xsd:string.
         if (
             value is not None
@@ -147,7 +147,7 @@ class Person(EcospoldBase):
                 )
                 result = False
 
-    def validate_TCompanyCode(self, value):
+    def validate_TCompanyCode(self, value) -> bool:
         # Validate type TCompanyCode, a restriction on xsd:string.
         if (
             value is not None
@@ -172,7 +172,7 @@ class Person(EcospoldBase):
                 )
                 result = False
 
-    def validate_ISOCountryCode(self, value):
+    def validate_ISOCountryCode(self, value) -> bool:
         # Validate type ISOCountryCode, a restriction on xsd:string.
         if (
             value is not None
@@ -445,7 +445,7 @@ class Person(EcospoldBase):
                 )
                 result = False
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if ():
             return True
         else:

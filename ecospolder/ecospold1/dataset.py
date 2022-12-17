@@ -28,7 +28,7 @@ class Dataset(EcospoldBase):
         flowData=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -48,7 +48,7 @@ class Dataset(EcospoldBase):
         self.metaInformation = metaInformation
         self.flowData = [] if flowData is None else flowData
 
-    def validate_TIndexNumber(self, value):
+    def validate_TIndexNumber(self, value) -> bool:
         # Validate type es:TIndexNumber, a restriction on xsd:int.
         if (
             value is not None
@@ -73,7 +73,7 @@ class Dataset(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString255(self, value):
+    def validate_TString255(self, value) -> bool:
         # Validate type es:TString255, a restriction on xsd:string.
         if (
             value is not None
@@ -98,7 +98,7 @@ class Dataset(EcospoldBase):
                 )
                 result = False
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if self.metaInformation is not None or self.flowData:
             return True
         else:
@@ -112,7 +112,7 @@ class Dataset(EcospoldBase):
         namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
         name="Dataset",
         pretty_print=True,
-    ):
+    ) -> None:
         if pretty_print:
             eol = "\n"
         else:
@@ -149,7 +149,7 @@ class Dataset(EcospoldBase):
 
     def exportAttributes(
         self, outfile, level, already_processed, namespaceprefix="", name="Dataset"
-    ):
+    ) -> None:
         if self.number is not None and "number" not in already_processed:
             already_processed.add("number")
             outfile.write(
@@ -260,7 +260,7 @@ class Dataset(EcospoldBase):
         name="Dataset",
         fromsubclass=False,
         pretty_print=True,
-    ):
+    ) -> None:
         if pretty_print:
             eol = "\n"
         else:
@@ -284,7 +284,7 @@ class Dataset(EcospoldBase):
                 pretty_print=pretty_print,
             )
 
-    def build(self, node, collector=None):
+    def build(self, node, collector=None) -> None:
         self.collector = collector
         if SaveElementTreeNode:
             self.elementtree_node = node
@@ -293,9 +293,8 @@ class Dataset(EcospoldBase):
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName, collector=collector)
-        return self
 
-    def buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed) -> None:
         value = find_attr_value("number", node)
         if value is not None and "number" not in already_processed:
             already_processed.add("number")
@@ -336,7 +335,7 @@ class Dataset(EcospoldBase):
 
     def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
-    ):
+    ) -> None:
         if nodeName == "metaInformation":
             obj = MetaInformation(parent_object=self)
             obj.build(child_, collector=collector)

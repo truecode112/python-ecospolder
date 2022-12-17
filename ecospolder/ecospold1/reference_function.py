@@ -69,7 +69,7 @@ class ReferenceFunction(EcospoldBase):
         synonym=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -92,7 +92,7 @@ class ReferenceFunction(EcospoldBase):
         self.formula = cast_value_with_type(None, formula)
         self.synonym = [] if synonym is None else synonym
 
-    def validate_TString80(self, value):
+    def validate_TString80(self, value) -> bool:
         result = True
         # Validate type TString80, a restriction on xsd:string.
         if (
@@ -119,7 +119,7 @@ class ReferenceFunction(EcospoldBase):
                 result = False
         return result
 
-    def validate_TFloatNumber(self, value):
+    def validate_TFloatNumber(self, value) -> bool:
         # Validate type TFloatNumber, a restriction on xsd:double.
         if (
             value is not None
@@ -138,7 +138,7 @@ class ReferenceFunction(EcospoldBase):
                 return False
             pass
 
-    def validate_TUnit(self, value):
+    def validate_TUnit(self, value) -> bool:
         # Validate type TUnit, a restriction on xsd:string.
         if (
             value is not None
@@ -163,7 +163,7 @@ class ReferenceFunction(EcospoldBase):
                 )
                 result = False
 
-    def validate_TCategoryName(self, value):
+    def validate_TCategoryName(self, value) -> bool:
         # Validate type TCategoryName, a restriction on xsd:string.
         if (
             value is not None
@@ -195,7 +195,7 @@ class ReferenceFunction(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString32000(self, value):
+    def validate_TString32000(self, value) -> bool:
         # Validate type TString32000, a restriction on xsd:string.
         if (
             value is not None
@@ -220,7 +220,7 @@ class ReferenceFunction(EcospoldBase):
                 )
                 result = False
 
-    def validate_CASNumberType(self, value):
+    def validate_CASNumberType(self, value) -> bool:
         # Validate type CASNumberType, a restriction on xsd:string.
         if (
             value is not None
@@ -257,7 +257,7 @@ class ReferenceFunction(EcospoldBase):
 
     validate_CASNumberType_patterns_ = [["^(\\d{1,6}-\\d{2,2}-\\d)$"]]
 
-    def validate_statisticalClassificationType(self, value):
+    def validate_statisticalClassificationType(self, value) -> bool:
         # Validate type statisticalClassificationType, a restriction on xsd:long.
         if (
             value is not None
@@ -287,7 +287,7 @@ class ReferenceFunction(EcospoldBase):
 
     validate_statisticalClassificationType_patterns_ = [["^(\\d{1,8})$"]]
 
-    def validate_TString40(self, value):
+    def validate_TString40(self, value) -> bool:
         # Validate type TString40, a restriction on xsd:string.
         if (
             value is not None
@@ -311,8 +311,9 @@ class ReferenceFunction(EcospoldBase):
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
+                return result
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if self.synonym:
             return True
         else:

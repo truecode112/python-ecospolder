@@ -44,23 +44,23 @@ def cast_value_with_type(typ, value):
     return typ(value)
 
 class CollectorClass(object):
-    def __init__(self, messages=None):
+    def __init__(self, messages=None) -> None:
         self.messages = [] if messages is None else messages
 
-    def add_message(self, msg: str):
+    def add_message(self, msg: str) -> None:
         self.messages.append(msg)
 
-    def get_messages(self):
+    def get_messages(self) -> str:
         return self.messages
 
-    def clear_messages(self):
+    def clear_messages(self) -> None:
         self.messages = []
 
-    def print_messages(self):
+    def print_messages(self) -> None:
         for msg in self.messages:
             print("Warning: {}".format(msg))
 
-    def write_messages(self, outstream):
+    def write_messages(self, outstream) -> None:
         for msg in self.messages:
             outstream.write("Warning: {}\n".format(msg))
 
@@ -69,20 +69,20 @@ class EcospoldBase:
     tzoff_pattern = re.compile(r"(\+|-)((0\d|1[0-3]):[0-5]\d|14:00)$")
 
     class _FixedOffsetTZ(date_t.tzinfo):
-        def __init__(self, offset, name):
+        def __init__(self, offset, name) -> None:
             self.__offset = date_t.timedelta(minutes=offset)
             self.__name = name
 
-        def utcoffset(self, dt):
+        def utcoffset(self) -> date_t.timedelta:
             return self.__offset
 
-        def tzname(self, dt):
+        def tzname(self) -> str:
             return self.__name
 
-        def dst(self, dt):
+        def dst(self) -> None:
             return None
 
-    def __str__(self):
+    def __str__(self) -> str:
         settings = {
             "str_pretty_print": True,
             "str_indent_level": 0,
@@ -106,19 +106,19 @@ class EcospoldBase:
         output.close()
         return strval
 
-    def format_string(self, input_data : str, input_name=""):
+    def format_string(self, input_data : str, input_name="") -> str:
         return input_data
 
-    def parse_string(self, input_data : str, node=None, input_name=""):
+    def parse_string(self, input_data : str) -> str:
         return input_data
 
-    def validate_string(self, input_data : str, node=None, input_name=""):
+    def validate_string(self, input_data : str) -> str:
         if not input_data:
             return ""
         else:
             return input_data
 
-    def format_base64(self, input_data, input_name=""):
+    def format_base64(self, input_data) -> str:
         return base64.b64encode(input_data).decode("ascii")
 
     def validate_base64(self, input_data, node=None, input_name=""):
@@ -134,7 +134,7 @@ class EcospoldBase:
             raise_parse_error(node, "Requires integer value: %s" % exp)
         return ival
 
-    def validate_integer(self, input_data : int, node=None, input_name=""):
+    def validate_integer(self, input_data : int, node=None, input_name="") -> int:
         try:
             value = int(input_data)
         except (TypeError, ValueError):
@@ -146,7 +146,7 @@ class EcospoldBase:
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
 
-    def validate_integer_list(self, input_data : List[int], node=None, input_name=""):
+    def validate_integer_list(self, input_data : List[int], node=None, input_name="") -> List[int]:
         values = input_data.split()
         for value in values:
             try:
@@ -165,7 +165,7 @@ class EcospoldBase:
             raise_parse_error(node, "Requires float or double value: %s" % exp)
         return fval
 
-    def validate_float(self, input_data : float, node=None, input_name=""):
+    def validate_float(self, input_data : float, node=None, input_name="") -> float:
         try:
             value = float(input_data)
         except (TypeError, ValueError):
@@ -177,7 +177,7 @@ class EcospoldBase:
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
 
-    def validate_float_list(self, input_data : List[float], node=None, input_name=""):
+    def validate_float_list(self, input_data : List[float], node=None, input_name="") -> List[float]:
         values = input_data.split()
         for value in values:
             try:
@@ -201,7 +201,7 @@ class EcospoldBase:
             raise_parse_error(node, "Requires decimal value")
         return decimal_value
 
-    def validate_decimal(self, input_data : Decimal, node=None, input_name=""):
+    def validate_decimal(self, input_data : Decimal, node=None, input_name="") -> Decimal:
         try:
             value = Decimal(input_data)
         except (TypeError, ValueError):
@@ -213,7 +213,7 @@ class EcospoldBase:
             input_data = [str(s) for s in input_data]
         return " ".join([self.format_decimal(item) for item in input_data])
 
-    def validate_decimal_list(self, input_data : Decimal, node=None, input_name=""):
+    def validate_decimal_list(self, input_data : List[Decimal], node=None, input_name="") -> List[Decimal]:
         values = input_data.split()
         for value in values:
             try:
@@ -232,7 +232,7 @@ class EcospoldBase:
             raise_parse_error(node, "Requires double or float value: %s" % exp)
         return fval
 
-    def validate_double(self, input_data : float, node=None, input_name=""):
+    def validate_double(self, input_data : float, node=None, input_name="") -> float:
         try:
             value = float(input_data)
         except (TypeError, ValueError):
@@ -244,7 +244,7 @@ class EcospoldBase:
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
 
-    def validate_double_list(self, input_data : List[float], node=None, input_name=""):
+    def validate_double_list(self, input_data : List[float], node=None, input_name="") -> List[float]:
         values = input_data.split()
         for value in values:
             try:
@@ -266,7 +266,7 @@ class EcospoldBase:
             raise_parse_error(node, "Requires boolean value")
         return bval
 
-    def validate_boolean(self, input_data : bool, node=None, input_name=""):
+    def validate_boolean(self, input_data : bool, node=None, input_name="") -> bool:
         if input_data not in (
             True,
             1,
@@ -283,7 +283,7 @@ class EcospoldBase:
             input_data = [str(s) for s in input_data]
         return "%s" % " ".join(input_data)
 
-    def validate_boolean_list(self, input_data : List[bool], node=None, input_name=""):
+    def validate_boolean_list(self, input_data : List[bool], node=None, input_name="") -> List[bool]:
         values = input_data.split()
         for value in values:
             value = self.parse_boolean(value, node, input_name)
@@ -299,7 +299,7 @@ class EcospoldBase:
                 )
         return values
 
-    def validate_datetime(self, input_data : date_t, node=None, input_name=""):
+    def validate_datetime(self, input_data : date_t, node=None, input_name="") -> date_t:
         return input_data
 
     def format_datetime(self, input_data : date_t, input_name=""):
@@ -367,7 +367,7 @@ class EcospoldBase:
         dt = dt.replace(tzinfo=tz)
         return dt
 
-    def validate_date(self, input_data : date_t, node=None, input_name=""):
+    def validate_date(self, input_data : date_t, node=None, input_name="") -> date_t:
         return input_data
 
     def format_date(self, input_data : date_t, input_name=""):
@@ -449,7 +449,7 @@ class EcospoldBase:
                     _svalue += "{0:02d}:{1:02d}".format(hours, minutes)
         return _svalue
 
-    def validate_simple_patterns(self, patterns, target):
+    def validate_simple_patterns(self, patterns, target) -> bool:
         # pat is a list of lists of strings/patterns.
         # The target value must match at least one of the patterns
         # in order for the test to succeed.
@@ -530,12 +530,13 @@ class EcospoldBase:
         min_occurs=None,
         max_occurs=None,
         required=None,
-    ):
+    ) -> bool:
         if value is not None:
             try:
                 validator(value, input_name=input_name)
             except ParseError as parse_error:
                 self.collector.add_message(str(parse_error))
+        return True
 
     def validate_defined_ST(
         self,
@@ -545,12 +546,13 @@ class EcospoldBase:
         min_occurs=None,
         max_occurs=None,
         required=None,
-    ):
+    ) -> bool:
         if value is not None:
             try:
                 validator(value)
             except ParseError as parse_error:
                 self.collector.add_message(str(parse_error))
+        return True
 
     def str_lower(self, instring):
         return instring.lower()
@@ -813,7 +815,7 @@ class MixedContainer:
     TypeBoolean = 7
     TypeBase64 = 8
 
-    def __init__(self, category, content_type, name, value):
+    def __init__(self, category, content_type, name, value) -> None:
         self.category = category
         self.content_type = content_type
         self.name = name
@@ -939,7 +941,7 @@ class MemberSpec(object):
         optional=0,
         child_attrs=None,
         choice=None,
-    ):
+    ) -> None:
         self.name = name
         self.data_type = data_type
         self.container = container

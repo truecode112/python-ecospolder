@@ -12,7 +12,7 @@ class DataEntryBy(EcospoldBase):
 
     def __init__(
         self, person=None, qualityNetwork=None, collector=None, **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -20,7 +20,7 @@ class DataEntryBy(EcospoldBase):
         self.person = cast_value_with_type(int, person)
         self.qualityNetwork = cast_value_with_type(int, qualityNetwork)
 
-    def validate_TIndexNumber(self, value):
+    def validate_TIndexNumber(self, value) -> bool:
         # Validate type TIndexNumber, a restriction on xsd:int.
         if (
             value is not None
@@ -45,7 +45,7 @@ class DataEntryBy(EcospoldBase):
                 )
                 result = False
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if ():
             return True
         else:
@@ -59,7 +59,7 @@ class DataEntryBy(EcospoldBase):
         namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01"',
         name="DataEntryBy",
         pretty_print=True,
-    ):
+    ) -> None:
         if pretty_print:
             eol = "\n"
         else:
@@ -100,7 +100,7 @@ class DataEntryBy(EcospoldBase):
         already_processed,
         namespaceprefix="",
         name="DataEntryBy",
-    ):
+    ) -> None:
         if self.person is not None and "person" not in already_processed:
             already_processed.add("person")
             outfile.write(
@@ -128,10 +128,10 @@ class DataEntryBy(EcospoldBase):
         name="DataEntryBy",
         fromsubclass=False,
         pretty_print=True,
-    ):
+    ) -> None:
         pass
 
-    def build(self, node, collector=None):
+    def build(self, node, collector=None) -> None:
         self.collector = collector
         if SaveElementTreeNode:
             self.elementtree_node = node
@@ -140,9 +140,8 @@ class DataEntryBy(EcospoldBase):
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName, collector=collector)
-        return self
 
-    def buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed) -> None:
         value = find_attr_value("person", node)
         if value is not None and "person" not in already_processed:
             already_processed.add("person")
@@ -155,7 +154,7 @@ class DataEntryBy(EcospoldBase):
 
     def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
-    ):
+    ) -> None:
         pass
 
 

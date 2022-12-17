@@ -26,7 +26,7 @@ class AdministrativeInformation(EcospoldBase):
         person=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -35,7 +35,7 @@ class AdministrativeInformation(EcospoldBase):
         self.dataGeneratorAndPublication = dataGeneratorAndPublication
         self.person = [] if person is None else person
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if (
             self.dataEntryBy is not None
             or self.dataGeneratorAndPublication is not None
@@ -53,7 +53,7 @@ class AdministrativeInformation(EcospoldBase):
         namespacedef='xmlns:es="http://www.EcoInvent.org/EcoSpold01" xmlns:None="http://www.EcoInvent.org/EcoSpold01" ',
         name="AdministrativeInformation",
         pretty_print=True,
-    ):
+    ) -> None:
         if pretty_print:
             eol = "\n"
         else:
@@ -99,7 +99,7 @@ class AdministrativeInformation(EcospoldBase):
         already_processed,
         namespaceprefix="",
         name="AdministrativeInformation",
-    ):
+    ) -> None:
         pass
 
     def exportChildren(
@@ -111,7 +111,7 @@ class AdministrativeInformation(EcospoldBase):
         name="AdministrativeInformation",
         fromsubclass=False,
         pretty_print=True,
-    ):
+    ) -> None:
         if pretty_print:
             eol = "\n"
         else:
@@ -144,7 +144,7 @@ class AdministrativeInformation(EcospoldBase):
                 pretty_print=pretty_print,
             )
 
-    def build(self, node, collector=None):
+    def build(self, node, collector=None) -> None:
         self.collector = collector
         if SaveElementTreeNode:
             self.elementtree_node = node
@@ -153,14 +153,13 @@ class AdministrativeInformation(EcospoldBase):
         for child in node:
             nodeName = tag_pattern.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName, collector=collector)
-        return self
 
-    def buildAttributes(self, node, attrs, already_processed):
+    def buildAttributes(self, node, attrs, already_processed) -> None:
         pass
 
     def buildChildren(
         self, child_, node, nodeName, fromsubclass=False, collector=None
-    ):
+    ) -> None:
         if nodeName == "dataEntryBy":
             obj = DataEntryBy(parent_object=self)
             obj.build(child_, collector=collector)

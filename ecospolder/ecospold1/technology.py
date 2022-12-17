@@ -11,14 +11,14 @@ class Technology(EcospoldBase):
 
     """
 
-    def __init__(self, text=None, collector=None, **kwargs):
+    def __init__(self, text=None, collector=None, **kwargs) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
         self.parent_object = kwargs.get("parent_object")
         self.text = cast_value_with_type(None, text)
 
-    def validate_TString32000(self, value):
+    def validate_TString32000(self, value) -> bool:
         # Validate type TString32000, a restriction on xsd:string.
         if (
             value is not None
@@ -43,7 +43,7 @@ class Technology(EcospoldBase):
                 )
                 result = False
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if ():
             return True
         else:

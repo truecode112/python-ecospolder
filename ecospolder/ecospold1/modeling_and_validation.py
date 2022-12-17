@@ -20,7 +20,7 @@ class ModelingAndValidation(EcospoldBase):
         validation=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -29,7 +29,7 @@ class ModelingAndValidation(EcospoldBase):
         self.source = [] if source is None else source
         self.validation = validation
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if (
             self.representativeness is not None
             or self.source

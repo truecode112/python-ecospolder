@@ -13,7 +13,7 @@ class Geography(EcospoldBase):
 
     """
 
-    def __init__(self, location=None, text=None, collector=None, **kwargs):
+    def __init__(self, location=None, text=None, collector=None, **kwargs) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -21,7 +21,7 @@ class Geography(EcospoldBase):
         self.location = cast_value_with_type(None, location)
         self.text = cast_value_with_type(None, text)
 
-    def validate_TRegionalCode(self, value):
+    def validate_TRegionalCode(self, value) -> bool:
         # Validate type TRegionalCode, a restriction on xsd:string.
         if (
             value is not None
@@ -46,7 +46,7 @@ class Geography(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString32000(self, value):
+    def validate_TString32000(self, value) -> bool:
         # Validate type TString32000, a restriction on xsd:string.
         if (
             value is not None
@@ -71,11 +71,8 @@ class Geography(EcospoldBase):
                 )
                 result = False
 
-    def hasContent(self):
-        if ():
-            return True
-        else:
-            return False
+    def hasContent(self) -> bool:
+        return True
 
     def export(
         self,

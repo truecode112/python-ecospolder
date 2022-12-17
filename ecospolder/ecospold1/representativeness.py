@@ -27,7 +27,7 @@ class Representativeness(EcospoldBase):
         uncertaintyAdjustments=None,
         collector=None,
         **kwargs
-    ):
+    ) -> None:
         self.collector = collector
         self.elementtree_node = None
         self.original_tagname = None
@@ -38,7 +38,7 @@ class Representativeness(EcospoldBase):
         self.extrapolations = cast_value_with_type(None, extrapolations)
         self.uncertaintyAdjustments = cast_value_with_type(None, uncertaintyAdjustments)
 
-    def validate_percentType(self, value):
+    def validate_percentType(self, value) -> bool:
         # Validate type percentType, a restriction on TPercent.
         if (
             value is not None
@@ -72,10 +72,11 @@ class Representativeness(EcospoldBase):
                         self.validate_percentType_patterns_,
                     )
                 )
+            return result
 
     validate_percentType_patterns_ = [["^(\\d{1,3}\\.\\d)$"]]
 
-    def validate_TString80(self, value):
+    def validate_TString80(self, value) -> bool:
         # Validate type TString80, a restriction on xsd:string.
         if (
             value is not None
@@ -100,7 +101,7 @@ class Representativeness(EcospoldBase):
                 )
                 result = False
 
-    def validate_TString32000(self, value):
+    def validate_TString32000(self, value) -> bool:
         # Validate type TString32000, a restriction on xsd:string.
         if (
             value is not None
@@ -125,7 +126,7 @@ class Representativeness(EcospoldBase):
                 )
                 result = False
 
-    def hasContent(self):
+    def hasContent(self) -> bool:
         if ():
             return True
         else:
